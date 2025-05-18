@@ -11,7 +11,7 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
 
   const decoded = jwt.verify(acessToken, process.env.ACCESS_TOKEN_SECRET);
 
-  const user = db.user.findUnique({
+  const user = await db.user.findUnique({
     where: {
       id: decoded.id,
     },
@@ -27,8 +27,18 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
   if (!user) {
     throw new ApiError(400, "Invalid Access Token or Expired Token");
   }
-
+  console.log(user);
   req.user = user;
+
+  next();
+});
+
+export const isAdmin = asyncHandler(async (req, res, next) => {
+  const { role } = req.user;
+
+  if (role !== "ADMIN") {
+    throw new ApiError(403, "Forbidden request: You are not an admin");
+  }
 
   next();
 });
