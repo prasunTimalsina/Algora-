@@ -14,15 +14,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum UserRole {
   ADMIN
   USER
 }
 
-
 enum Difficulty {
-  EASY 
+  EASY
   MEDIUM
   HARD
 }
@@ -38,6 +36,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   problems Problem[]
+  submission    Submission[]
+  problemSolved ProblemSolved[]
 
 }
 
@@ -60,9 +60,65 @@ model Problem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  submissions Submission[]
+  solvedBy ProblemSolved[]
+
   //  Relationship
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Submission {
+  id            String  @id @default(uuid())
+  userId        String
+  problemId     String
+  sourceCode    Json
+  language      String
+  stdin         String?
+  stdout        String?
+  stderr        String?
+  compileOutput String?
+  status        String // Accepted or wrong answer
+  memory        String?
+  time          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  testCases TestCaseResult[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Problem   Problem          @relation(fields: [problemId], references: [id],onDelete: Cascade)
 
 }
 
+model TestCaseResult {
+  id            String  @id @default(uuid())
+  submissionId  String
+  testCaseId    String
+  status        String // Accepted or wrong answer
+  stdout        String?
+  expected      String
+  stderr        String?
+  compileOutput String?
+  memory        String?
+  time          String?
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@index([submissionId])
+}
+
+model ProblemSolved {
+  id        String @id @default(uuid())
+  userId    String
+  problemId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId] , references: [id] , onDelete: Cascade)
+}
