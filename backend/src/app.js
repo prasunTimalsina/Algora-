@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import problemRouter from "./routes/problem.routes.js";
-import authRouter from "./routes/auth.routes.js";
+import problemRoutes from "./routes/problem.routes.js";
+import authRoutes from "./routes/auth.routes.js";
+import executeCodeRoutes from "./routes/executeCode.routes.js";
 const router = express.Router();
 dotenv.config();
 
@@ -11,7 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/problems", problemRouter);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/problems", problemRoutes);
+app.use("/api/v1/execute-code", executeCodeRoutes);
 
 export default app;

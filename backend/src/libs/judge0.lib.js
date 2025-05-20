@@ -12,6 +12,16 @@ export const getJudge0LanguageId = (language) => {
   return languageMap[language.toUpperCase()];
 };
 
+export const getLanguageName = (languageId) => {
+  const languageMap = {
+    71: "PYTHON",
+    62: "JAVA",
+    63: "JAVASCRIPT",
+  };
+
+  return languageMap[languageId] || "Unknown";
+};
+
 export const pollBatchResults = async (tokens) => {
   while (true) {
     const { data } = await axios.get(

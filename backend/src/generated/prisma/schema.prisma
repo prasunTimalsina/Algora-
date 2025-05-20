@@ -80,9 +80,8 @@ model Submission {
   memory        String?
   time          String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt()
   testCases TestCaseResult[]
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -92,7 +91,8 @@ model Submission {
 model TestCaseResult {
   id            String  @id @default(uuid())
   submissionId  String
-  testCaseId    String
+  testCase      Int
+  passed        Boolean
   status        String // Accepted or wrong answer
   stdout        String?
   expected      String
@@ -119,4 +119,6 @@ model ProblemSolved {
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, problemId])
 }
