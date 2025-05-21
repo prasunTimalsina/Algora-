@@ -1,9 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+
+////Routes
 import problemRoutes from "./routes/problem.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import executeCodeRoutes from "./routes/executeCode.routes.js";
+import submissionRoutes from "./routes/submission.routes.js";
 const router = express.Router();
 dotenv.config();
 
@@ -15,5 +18,6 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/problems", problemRoutes);
 app.use("/api/v1/execute-code", executeCodeRoutes);
+app.use("/api/v1/submissions", submissionRoutes);
 
 export default app;
