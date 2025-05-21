@@ -27,7 +27,7 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
   if (!user) {
     throw new ApiError(400, "Invalid Access Token or Expired Token");
   }
-  console.log(user);
+
   req.user = user;
 
   next();
