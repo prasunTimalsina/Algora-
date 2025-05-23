@@ -9,7 +9,7 @@ import { ApiError } from "../utils/api.error.js";
 import { ApiResponse } from "../utils/api.response.js";
 import { asyncHandler } from "../utils/async.handler.js";
 
-export const executeCode = asyncHandler(async (req, res) => {
+export const submitCode = asyncHandler(async (req, res) => {
   const { source_code, language_id, stdin, expected_outputs, problemId } =
     req.body;
   const userId = req.user.id;
@@ -146,4 +146,60 @@ export const executeCode = asyncHandler(async (req, res) => {
         "Code executed successfully"
       )
     );
+});
+
+export const runCode = asyncHandler(async (req, res) => {
+  const { source_code, language_id, stdin, expected_outputs, problemId } =
+    req.body;
+  const userId = req.user.id;
+
+  if (
+    !Array.isArray(stdin) ||
+    stdin.length === 0 ||
+    !Array.isArray(expected_outputs) ||
+    expected_outputs.length !== stdin.length
+  ) {
+    throw new ApiError(400, "Invalid or Missing test cases");
+  }
+
+  const submissions = stdin.map((input) => {
+    return {
+      source_code,
+      language_id,
+      stdin: input,
+    };
+  });
+
+  const submitResponse = await submitBatch(submissions);
+  const tokens = submitResponse.map((res) => res.token);
+
+  const results = await pollBatchResults(tokens);
+
+  console.log("Results--------------", results);
+
+  let allPassed = true;
+  const detailResults = results.map((result, index) => {
+    const stdout = result.stdout?.trim();
+    const expected_output = expected_outputs[index]?.trim();
+    const passed = stdout === expected_output;
+    if (!passed) {
+      allPassed = false;
+    }
+
+    return {
+      testCase: index + 1,
+      passed,
+      stdout,
+      expected: expected_output,
+      stderr: result.stderr || null,
+      status: result.status.description,
+      compileOutput: result.compile_output || null,
+      memory: result.memory ? `${result.memory} KB` : undefined,
+      time: result.time ? `${result.time} s` : undefined,
+    };
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, detailResults, "Code executed successfully"));
 });
