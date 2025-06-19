@@ -39,6 +39,9 @@ model User {
   problems      Problem[]
   submission    Submission[]
   problemSolved ProblemSolved[]
+
+  DailyUserStats DailyUserStats[]
+  UserStats      UserStats?
 }
 
 model Problem {
@@ -153,4 +156,40 @@ model ProblemInPlaylist {
   problem  Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
 
   @@unique([playListId, problemId])
+}
+
+model DailyUserStats {
+  id             String   @id @default(uuid())
+  userId         String
+  date           DateTime // normalized to midnight UTC/local
+  problemsSolved Int      @default(0)
+  submissions    Int      @default(0)
+  accepted       Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+model UserStats {
+  id                  String @id @default(uuid())
+  userId              String @unique
+  totalSolved         Int    @default(0)
+  totalSubmissions    Int    @default(0)
+  totalAccepted       Int    @default(0)
+  successRate         Float  @default(0.0) // totalAccepted/totalSubmissions
+  longestStreak       Int    @default(0) // in days
+  currentStreak       Int    @default(0) // in days
+  difficultyBreakdown Json // e.g. { EASY: 10, MEDIUM: 5, HARD: 2 }
+  avgTimeMs           Float? // average runtime in ms
+  avgMemoryKb         Float? // average memory in KB
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

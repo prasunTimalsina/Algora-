@@ -22,7 +22,6 @@ export const createProblem = asyncHandler(async (req, res) => {
   } = req.body;
 
   for (const [language, code] of Object.entries(referenceSolutions)) {
-    console.log(language, code);
     const languageId = getJudge0LanguageId(language);
 
     if (!languageId) {
@@ -84,7 +83,46 @@ export const createProblem = asyncHandler(async (req, res) => {
 });
 
 export const getAllProblem = asyncHandler(async (req, res) => {
-  const problems = await db.problem.findMany();
+  /*  const problems = await db.problem.findMany(); */
+
+  //get queries
+  const {
+    page = 1,
+    limit = 2,
+    tags,
+    difficulty,
+    sortBy = "createdAt",
+    order = "desc",
+  } = req.query;
+  const where = {};
+
+  //Coverting values
+  const pageNumber = parseInt(page);
+  const pageSize = parseInt(limit);
+  const skip = (pageNumber - 1) * pageSize;
+
+  //filtering tags
+  if (tags) {
+    const tagsArr = tags.split(",").map((t) => t.trim());
+    where["tags"] = {
+      hasSome: tagsArr,
+    };
+  }
+
+  //filtering over difficulties
+  if (difficulty) {
+    where["difficulty"] = difficulty;
+  }
+
+  const problems = await db.problem.findMany({
+    where,
+    skip,
+    take: pageSize,
+    orderBy: {
+      [sortBy]: order,
+    },
+  });
+
   if (!problems) {
     throw new ApiError(400, "Error fetching Problems");
   }

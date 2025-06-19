@@ -207,6 +207,33 @@ exports.Prisma.ProblemInPlaylistScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DailyUserStatsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  date: 'date',
+  problemsSolved: 'problemsSolved',
+  submissions: 'submissions',
+  accepted: 'accepted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserStatsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  totalSolved: 'totalSolved',
+  totalSubmissions: 'totalSubmissions',
+  totalAccepted: 'totalAccepted',
+  successRate: 'successRate',
+  longestStreak: 'longestStreak',
+  currentStreak: 'currentStreak',
+  difficultyBreakdown: 'difficultyBreakdown',
+  avgTimeMs: 'avgTimeMs',
+  avgMemoryKb: 'avgMemoryKb',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -249,7 +276,9 @@ exports.Prisma.ModelName = {
   TestCaseResult: 'TestCaseResult',
   ProblemSolved: 'ProblemSolved',
   Playlist: 'Playlist',
-  ProblemInPlaylist: 'ProblemInPlaylist'
+  ProblemInPlaylist: 'ProblemInPlaylist',
+  DailyUserStats: 'DailyUserStats',
+  UserStats: 'UserStats'
 };
 
 /**
