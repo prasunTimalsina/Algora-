@@ -232,7 +232,7 @@ exports.Prisma.UserStatsScalarFieldEnum = {
   successRate: 'successRate',
   longestStreak: 'longestStreak',
   currentStreak: 'currentStreak',
-  difficultyBreakdown: 'difficultyBreakdown',
+  lastStreakUpdate: 'lastStreakUpdate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

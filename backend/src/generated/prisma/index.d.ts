@@ -11263,6 +11263,7 @@ export namespace Prisma {
     successRate: number | null
     longestStreak: number | null
     currentStreak: number | null
+    lastStreakUpdate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11276,6 +11277,7 @@ export namespace Prisma {
     successRate: number | null
     longestStreak: number | null
     currentStreak: number | null
+    lastStreakUpdate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11289,7 +11291,7 @@ export namespace Prisma {
     successRate: number
     longestStreak: number
     currentStreak: number
-    difficultyBreakdown: number
+    lastStreakUpdate: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -11323,6 +11325,7 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
+    lastStreakUpdate?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -11336,6 +11339,7 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
+    lastStreakUpdate?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -11349,7 +11353,7 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
-    difficultyBreakdown?: true
+    lastStreakUpdate?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -11450,7 +11454,7 @@ export namespace Prisma {
     successRate: number
     longestStreak: number
     currentStreak: number
-    difficultyBreakdown: JsonValue
+    lastStreakUpdate: Date | null
     createdAt: Date
     updatedAt: Date
     _count: UserStatsCountAggregateOutputType | null
@@ -11483,7 +11487,7 @@ export namespace Prisma {
     successRate?: boolean
     longestStreak?: boolean
     currentStreak?: boolean
-    difficultyBreakdown?: boolean
+    lastStreakUpdate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11498,7 +11502,7 @@ export namespace Prisma {
     successRate?: boolean
     longestStreak?: boolean
     currentStreak?: boolean
-    difficultyBreakdown?: boolean
+    lastStreakUpdate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11513,7 +11517,7 @@ export namespace Prisma {
     successRate?: boolean
     longestStreak?: boolean
     currentStreak?: boolean
-    difficultyBreakdown?: boolean
+    lastStreakUpdate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11528,12 +11532,12 @@ export namespace Prisma {
     successRate?: boolean
     longestStreak?: boolean
     currentStreak?: boolean
-    difficultyBreakdown?: boolean
+    lastStreakUpdate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "totalSolved" | "totalSubmissions" | "totalAccepted" | "successRate" | "longestStreak" | "currentStreak" | "difficultyBreakdown" | "createdAt" | "updatedAt", ExtArgs["result"]["userStats"]>
+  export type UserStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "totalSolved" | "totalSubmissions" | "totalAccepted" | "successRate" | "longestStreak" | "currentStreak" | "lastStreakUpdate" | "createdAt" | "updatedAt", ExtArgs["result"]["userStats"]>
   export type UserStatsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -11558,7 +11562,7 @@ export namespace Prisma {
       successRate: number
       longestStreak: number
       currentStreak: number
-      difficultyBreakdown: Prisma.JsonValue
+      lastStreakUpdate: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["userStats"]>
@@ -11993,7 +11997,7 @@ export namespace Prisma {
     readonly successRate: FieldRef<"UserStats", 'Float'>
     readonly longestStreak: FieldRef<"UserStats", 'Int'>
     readonly currentStreak: FieldRef<"UserStats", 'Int'>
-    readonly difficultyBreakdown: FieldRef<"UserStats", 'Json'>
+    readonly lastStreakUpdate: FieldRef<"UserStats", 'DateTime'>
     readonly createdAt: FieldRef<"UserStats", 'DateTime'>
     readonly updatedAt: FieldRef<"UserStats", 'DateTime'>
   }
@@ -12560,7 +12564,7 @@ export namespace Prisma {
     successRate: 'successRate',
     longestStreak: 'longestStreak',
     currentStreak: 'currentStreak',
-    difficultyBreakdown: 'difficultyBreakdown',
+    lastStreakUpdate: 'lastStreakUpdate',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13419,7 +13423,7 @@ export namespace Prisma {
     successRate?: FloatFilter<"UserStats"> | number
     longestStreak?: IntFilter<"UserStats"> | number
     currentStreak?: IntFilter<"UserStats"> | number
-    difficultyBreakdown?: JsonFilter<"UserStats">
+    lastStreakUpdate?: DateTimeNullableFilter<"UserStats"> | Date | string | null
     createdAt?: DateTimeFilter<"UserStats"> | Date | string
     updatedAt?: DateTimeFilter<"UserStats"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13434,7 +13438,7 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    difficultyBreakdown?: SortOrder
+    lastStreakUpdate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -13452,7 +13456,7 @@ export namespace Prisma {
     successRate?: FloatFilter<"UserStats"> | number
     longestStreak?: IntFilter<"UserStats"> | number
     currentStreak?: IntFilter<"UserStats"> | number
-    difficultyBreakdown?: JsonFilter<"UserStats">
+    lastStreakUpdate?: DateTimeNullableFilter<"UserStats"> | Date | string | null
     createdAt?: DateTimeFilter<"UserStats"> | Date | string
     updatedAt?: DateTimeFilter<"UserStats"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13467,7 +13471,7 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    difficultyBreakdown?: SortOrder
+    lastStreakUpdate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserStatsCountOrderByAggregateInput
@@ -13489,7 +13493,7 @@ export namespace Prisma {
     successRate?: FloatWithAggregatesFilter<"UserStats"> | number
     longestStreak?: IntWithAggregatesFilter<"UserStats"> | number
     currentStreak?: IntWithAggregatesFilter<"UserStats"> | number
-    difficultyBreakdown?: JsonWithAggregatesFilter<"UserStats">
+    lastStreakUpdate?: DateTimeNullableWithAggregatesFilter<"UserStats"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"UserStats"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserStats"> | Date | string
   }
@@ -14257,7 +14261,7 @@ export namespace Prisma {
     successRate?: number
     longestStreak?: number
     currentStreak?: number
-    difficultyBreakdown: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutUserStatsInput
@@ -14272,7 +14276,7 @@ export namespace Prisma {
     successRate?: number
     longestStreak?: number
     currentStreak?: number
-    difficultyBreakdown: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14285,7 +14289,7 @@ export namespace Prisma {
     successRate?: FloatFieldUpdateOperationsInput | number
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
-    difficultyBreakdown?: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutUserStatsNestedInput
@@ -14300,7 +14304,7 @@ export namespace Prisma {
     successRate?: FloatFieldUpdateOperationsInput | number
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
-    difficultyBreakdown?: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14314,7 +14318,7 @@ export namespace Prisma {
     successRate?: number
     longestStreak?: number
     currentStreak?: number
-    difficultyBreakdown: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14327,7 +14331,7 @@ export namespace Prisma {
     successRate?: FloatFieldUpdateOperationsInput | number
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
-    difficultyBreakdown?: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14341,7 +14345,7 @@ export namespace Prisma {
     successRate?: FloatFieldUpdateOperationsInput | number
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
-    difficultyBreakdown?: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15092,6 +15096,17 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type UserStatsCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -15101,7 +15116,7 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    difficultyBreakdown?: SortOrder
+    lastStreakUpdate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15124,6 +15139,7 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
+    lastStreakUpdate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15137,6 +15153,7 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
+    lastStreakUpdate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15164,6 +15181,20 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type PlaylistCreateNestedManyWithoutUserInput = {
@@ -15829,6 +15860,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type UserUpdateOneRequiredWithoutUserStatsNestedInput = {
     create?: XOR<UserCreateWithoutUserStatsInput, UserUncheckedCreateWithoutUserStatsInput>
     connectOrCreate?: UserCreateOrConnectWithoutUserStatsInput
@@ -16086,6 +16121,17 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -16100,6 +16146,20 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type PlaylistCreateWithoutUserInput = {
@@ -16296,7 +16356,7 @@ export namespace Prisma {
     successRate?: number
     longestStreak?: number
     currentStreak?: number
-    difficultyBreakdown: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16309,7 +16369,7 @@ export namespace Prisma {
     successRate?: number
     longestStreak?: number
     currentStreak?: number
-    difficultyBreakdown: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16501,7 +16561,7 @@ export namespace Prisma {
     successRate?: FloatFieldUpdateOperationsInput | number
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
-    difficultyBreakdown?: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16514,7 +16574,7 @@ export namespace Prisma {
     successRate?: FloatFieldUpdateOperationsInput | number
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
-    difficultyBreakdown?: JsonNullValueInput | InputJsonValue
+    lastStreakUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

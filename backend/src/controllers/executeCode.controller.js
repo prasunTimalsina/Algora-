@@ -5,6 +5,8 @@ import {
   pollBatchResults,
   getLanguageName,
 } from "../libs/judge0.lib.js";
+import { updateUserStats } from "../libs/userStats.lib.js";
+
 import { ApiError } from "../utils/api.error.js";
 import { ApiResponse } from "../utils/api.response.js";
 import { asyncHandler } from "../utils/async.handler.js";
@@ -85,8 +87,13 @@ export const submitCode = asyncHandler(async (req, res) => {
   });
 
   if (!submission) {
-    throw new ApiError(400, "Failed to submit your progra");
+    throw new ApiError(400, "Failed to submit your program");
   }
+
+  //udating user stats
+  //fake date for testing
+  // const fakeDate = new Date("2025-06-22T00:00:00.000Z");
+  await updateUserStats(userId, submission);
 
   // If all passed = true mark problem as solved for the user
   if (allPassed) {

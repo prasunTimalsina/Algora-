@@ -183,15 +183,15 @@ model DailyUserStats {
 }
 
 model UserStats {
-  id                  String @id @default(uuid())
-  userId              String @unique
-  totalSolved         Int    @default(0)
-  totalSubmissions    Int    @default(0)
-  totalAccepted       Int    @default(0)
-  successRate         Float  @default(0.0) // totalAccepted/totalSubmissions
-  longestStreak       Int    @default(0) // in days
-  currentStreak       Int    @default(0) // in days
-  difficultyBreakdown Json // e.g. { EASY: 10, MEDIUM: 5, HARD: 2 }
+  id               String    @id @default(uuid())
+  userId           String    @unique
+  totalSolved      Int       @default(0)
+  totalSubmissions Int       @default(0)
+  totalAccepted    Int       @default(0)
+  successRate      Float     @default(0.0) // totalAccepted/totalSubmissions
+  longestStreak    Int       @default(0) // in days
+  currentStreak    Int       @default(0) // in days
+  lastStreakUpdate DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
