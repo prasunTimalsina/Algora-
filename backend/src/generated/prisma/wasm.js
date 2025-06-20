@@ -145,6 +145,9 @@ exports.Prisma.ProblemScalarFieldEnum = {
   testcases: 'testcases',
   codeSnippets: 'codeSnippets',
   referenceSolutions: 'referenceSolutions',
+  avgTime: 'avgTime',
+  avgMemory: 'avgMemory',
+  totalAccepted: 'totalAccepted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -186,6 +189,8 @@ exports.Prisma.ProblemSolvedScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   problemId: 'problemId',
+  avgTime: 'avgTime',
+  avgMemory: 'avgMemory',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -228,8 +233,6 @@ exports.Prisma.UserStatsScalarFieldEnum = {
   longestStreak: 'longestStreak',
   currentStreak: 'currentStreak',
   difficultyBreakdown: 'difficultyBreakdown',
-  avgTimeMs: 'avgTimeMs',
-  avgMemoryKb: 'avgMemoryKb',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

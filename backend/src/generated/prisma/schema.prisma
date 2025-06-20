@@ -60,6 +60,10 @@ model Problem {
   codeSnippets       Json
   referenceSolutions Json
 
+  avgTime       Float?
+  avgMemory     Float?
+  totalAccepted Int?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -118,6 +122,9 @@ model ProblemSolved {
   id        String @id @default(uuid())
   userId    String
   problemId String
+
+  avgTime   Float?
+  avgMemory Float?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -185,8 +192,6 @@ model UserStats {
   longestStreak       Int    @default(0) // in days
   currentStreak       Int    @default(0) // in days
   difficultyBreakdown Json // e.g. { EASY: 10, MEDIUM: 5, HARD: 2 }
-  avgTimeMs           Float? // average runtime in ms
-  avgMemoryKb         Float? // average memory in KB
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -3054,8 +3054,22 @@ export namespace Prisma {
 
   export type AggregateProblem = {
     _count: ProblemCountAggregateOutputType | null
+    _avg: ProblemAvgAggregateOutputType | null
+    _sum: ProblemSumAggregateOutputType | null
     _min: ProblemMinAggregateOutputType | null
     _max: ProblemMaxAggregateOutputType | null
+  }
+
+  export type ProblemAvgAggregateOutputType = {
+    avgTime: number | null
+    avgMemory: number | null
+    totalAccepted: number | null
+  }
+
+  export type ProblemSumAggregateOutputType = {
+    avgTime: number | null
+    avgMemory: number | null
+    totalAccepted: number | null
   }
 
   export type ProblemMinAggregateOutputType = {
@@ -3067,6 +3081,9 @@ export namespace Prisma {
     constraints: string | null
     hints: string | null
     editorial: string | null
+    avgTime: number | null
+    avgMemory: number | null
+    totalAccepted: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3080,6 +3097,9 @@ export namespace Prisma {
     constraints: string | null
     hints: string | null
     editorial: string | null
+    avgTime: number | null
+    avgMemory: number | null
+    totalAccepted: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3098,11 +3118,26 @@ export namespace Prisma {
     testcases: number
     codeSnippets: number
     referenceSolutions: number
+    avgTime: number
+    avgMemory: number
+    totalAccepted: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type ProblemAvgAggregateInputType = {
+    avgTime?: true
+    avgMemory?: true
+    totalAccepted?: true
+  }
+
+  export type ProblemSumAggregateInputType = {
+    avgTime?: true
+    avgMemory?: true
+    totalAccepted?: true
+  }
 
   export type ProblemMinAggregateInputType = {
     id?: true
@@ -3113,6 +3148,9 @@ export namespace Prisma {
     constraints?: true
     hints?: true
     editorial?: true
+    avgTime?: true
+    avgMemory?: true
+    totalAccepted?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3126,6 +3164,9 @@ export namespace Prisma {
     constraints?: true
     hints?: true
     editorial?: true
+    avgTime?: true
+    avgMemory?: true
+    totalAccepted?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3144,6 +3185,9 @@ export namespace Prisma {
     testcases?: true
     codeSnippets?: true
     referenceSolutions?: true
+    avgTime?: true
+    avgMemory?: true
+    totalAccepted?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3187,6 +3231,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ProblemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProblemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ProblemMinAggregateInputType
@@ -3217,6 +3273,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ProblemCountAggregateInputType | true
+    _avg?: ProblemAvgAggregateInputType
+    _sum?: ProblemSumAggregateInputType
     _min?: ProblemMinAggregateInputType
     _max?: ProblemMaxAggregateInputType
   }
@@ -3235,9 +3293,14 @@ export namespace Prisma {
     testcases: JsonValue
     codeSnippets: JsonValue
     referenceSolutions: JsonValue
+    avgTime: number | null
+    avgMemory: number | null
+    totalAccepted: number | null
     createdAt: Date
     updatedAt: Date
     _count: ProblemCountAggregateOutputType | null
+    _avg: ProblemAvgAggregateOutputType | null
+    _sum: ProblemSumAggregateOutputType | null
     _min: ProblemMinAggregateOutputType | null
     _max: ProblemMaxAggregateOutputType | null
   }
@@ -3270,6 +3333,9 @@ export namespace Prisma {
     testcases?: boolean
     codeSnippets?: boolean
     referenceSolutions?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
+    totalAccepted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     submissions?: boolean | Problem$submissionsArgs<ExtArgs>
@@ -3293,6 +3359,9 @@ export namespace Prisma {
     testcases?: boolean
     codeSnippets?: boolean
     referenceSolutions?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
+    totalAccepted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3312,6 +3381,9 @@ export namespace Prisma {
     testcases?: boolean
     codeSnippets?: boolean
     referenceSolutions?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
+    totalAccepted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3331,11 +3403,14 @@ export namespace Prisma {
     testcases?: boolean
     codeSnippets?: boolean
     referenceSolutions?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
+    totalAccepted?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProblemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "difficulty" | "tags" | "userId" | "examples" | "constraints" | "hints" | "editorial" | "testcases" | "codeSnippets" | "referenceSolutions" | "createdAt" | "updatedAt", ExtArgs["result"]["problem"]>
+  export type ProblemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "difficulty" | "tags" | "userId" | "examples" | "constraints" | "hints" | "editorial" | "testcases" | "codeSnippets" | "referenceSolutions" | "avgTime" | "avgMemory" | "totalAccepted" | "createdAt" | "updatedAt", ExtArgs["result"]["problem"]>
   export type ProblemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     submissions?: boolean | Problem$submissionsArgs<ExtArgs>
     solvedBy?: boolean | Problem$solvedByArgs<ExtArgs>
@@ -3372,6 +3447,9 @@ export namespace Prisma {
       testcases: Prisma.JsonValue
       codeSnippets: Prisma.JsonValue
       referenceSolutions: Prisma.JsonValue
+      avgTime: number | null
+      avgMemory: number | null
+      totalAccepted: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["problem"]>
@@ -3814,6 +3892,9 @@ export namespace Prisma {
     readonly testcases: FieldRef<"Problem", 'Json'>
     readonly codeSnippets: FieldRef<"Problem", 'Json'>
     readonly referenceSolutions: FieldRef<"Problem", 'Json'>
+    readonly avgTime: FieldRef<"Problem", 'Float'>
+    readonly avgMemory: FieldRef<"Problem", 'Float'>
+    readonly totalAccepted: FieldRef<"Problem", 'Int'>
     readonly createdAt: FieldRef<"Problem", 'DateTime'>
     readonly updatedAt: FieldRef<"Problem", 'DateTime'>
   }
@@ -6713,14 +6794,28 @@ export namespace Prisma {
 
   export type AggregateProblemSolved = {
     _count: ProblemSolvedCountAggregateOutputType | null
+    _avg: ProblemSolvedAvgAggregateOutputType | null
+    _sum: ProblemSolvedSumAggregateOutputType | null
     _min: ProblemSolvedMinAggregateOutputType | null
     _max: ProblemSolvedMaxAggregateOutputType | null
+  }
+
+  export type ProblemSolvedAvgAggregateOutputType = {
+    avgTime: number | null
+    avgMemory: number | null
+  }
+
+  export type ProblemSolvedSumAggregateOutputType = {
+    avgTime: number | null
+    avgMemory: number | null
   }
 
   export type ProblemSolvedMinAggregateOutputType = {
     id: string | null
     userId: string | null
     problemId: string | null
+    avgTime: number | null
+    avgMemory: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6729,6 +6824,8 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     problemId: string | null
+    avgTime: number | null
+    avgMemory: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6737,16 +6834,30 @@ export namespace Prisma {
     id: number
     userId: number
     problemId: number
+    avgTime: number
+    avgMemory: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type ProblemSolvedAvgAggregateInputType = {
+    avgTime?: true
+    avgMemory?: true
+  }
+
+  export type ProblemSolvedSumAggregateInputType = {
+    avgTime?: true
+    avgMemory?: true
+  }
+
   export type ProblemSolvedMinAggregateInputType = {
     id?: true
     userId?: true
     problemId?: true
+    avgTime?: true
+    avgMemory?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6755,6 +6866,8 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
+    avgTime?: true
+    avgMemory?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6763,6 +6876,8 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
+    avgTime?: true
+    avgMemory?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6806,6 +6921,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ProblemSolvedAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProblemSolvedSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ProblemSolvedMinAggregateInputType
@@ -6836,6 +6963,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ProblemSolvedCountAggregateInputType | true
+    _avg?: ProblemSolvedAvgAggregateInputType
+    _sum?: ProblemSolvedSumAggregateInputType
     _min?: ProblemSolvedMinAggregateInputType
     _max?: ProblemSolvedMaxAggregateInputType
   }
@@ -6844,9 +6973,13 @@ export namespace Prisma {
     id: string
     userId: string
     problemId: string
+    avgTime: number | null
+    avgMemory: number | null
     createdAt: Date
     updatedAt: Date
     _count: ProblemSolvedCountAggregateOutputType | null
+    _avg: ProblemSolvedAvgAggregateOutputType | null
+    _sum: ProblemSolvedSumAggregateOutputType | null
     _min: ProblemSolvedMinAggregateOutputType | null
     _max: ProblemSolvedMaxAggregateOutputType | null
   }
@@ -6869,6 +7002,8 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -6879,6 +7014,8 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -6889,6 +7026,8 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -6899,11 +7038,13 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
+    avgTime?: boolean
+    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProblemSolvedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "createdAt" | "updatedAt", ExtArgs["result"]["problemSolved"]>
+  export type ProblemSolvedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "avgTime" | "avgMemory" | "createdAt" | "updatedAt", ExtArgs["result"]["problemSolved"]>
   export type ProblemSolvedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     problem?: boolean | ProblemDefaultArgs<ExtArgs>
@@ -6927,6 +7068,8 @@ export namespace Prisma {
       id: string
       userId: string
       problemId: string
+      avgTime: number | null
+      avgMemory: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["problemSolved"]>
@@ -7357,6 +7500,8 @@ export namespace Prisma {
     readonly id: FieldRef<"ProblemSolved", 'String'>
     readonly userId: FieldRef<"ProblemSolved", 'String'>
     readonly problemId: FieldRef<"ProblemSolved", 'String'>
+    readonly avgTime: FieldRef<"ProblemSolved", 'Float'>
+    readonly avgMemory: FieldRef<"ProblemSolved", 'Float'>
     readonly createdAt: FieldRef<"ProblemSolved", 'DateTime'>
     readonly updatedAt: FieldRef<"ProblemSolved", 'DateTime'>
   }
@@ -11098,8 +11243,6 @@ export namespace Prisma {
     successRate: number | null
     longestStreak: number | null
     currentStreak: number | null
-    avgTimeMs: number | null
-    avgMemoryKb: number | null
   }
 
   export type UserStatsSumAggregateOutputType = {
@@ -11109,8 +11252,6 @@ export namespace Prisma {
     successRate: number | null
     longestStreak: number | null
     currentStreak: number | null
-    avgTimeMs: number | null
-    avgMemoryKb: number | null
   }
 
   export type UserStatsMinAggregateOutputType = {
@@ -11122,8 +11263,6 @@ export namespace Prisma {
     successRate: number | null
     longestStreak: number | null
     currentStreak: number | null
-    avgTimeMs: number | null
-    avgMemoryKb: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11137,8 +11276,6 @@ export namespace Prisma {
     successRate: number | null
     longestStreak: number | null
     currentStreak: number | null
-    avgTimeMs: number | null
-    avgMemoryKb: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -11153,8 +11290,6 @@ export namespace Prisma {
     longestStreak: number
     currentStreak: number
     difficultyBreakdown: number
-    avgTimeMs: number
-    avgMemoryKb: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -11168,8 +11303,6 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
-    avgTimeMs?: true
-    avgMemoryKb?: true
   }
 
   export type UserStatsSumAggregateInputType = {
@@ -11179,8 +11312,6 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
-    avgTimeMs?: true
-    avgMemoryKb?: true
   }
 
   export type UserStatsMinAggregateInputType = {
@@ -11192,8 +11323,6 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
-    avgTimeMs?: true
-    avgMemoryKb?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -11207,8 +11336,6 @@ export namespace Prisma {
     successRate?: true
     longestStreak?: true
     currentStreak?: true
-    avgTimeMs?: true
-    avgMemoryKb?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -11223,8 +11350,6 @@ export namespace Prisma {
     longestStreak?: true
     currentStreak?: true
     difficultyBreakdown?: true
-    avgTimeMs?: true
-    avgMemoryKb?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -11326,8 +11451,6 @@ export namespace Prisma {
     longestStreak: number
     currentStreak: number
     difficultyBreakdown: JsonValue
-    avgTimeMs: number | null
-    avgMemoryKb: number | null
     createdAt: Date
     updatedAt: Date
     _count: UserStatsCountAggregateOutputType | null
@@ -11361,8 +11484,6 @@ export namespace Prisma {
     longestStreak?: boolean
     currentStreak?: boolean
     difficultyBreakdown?: boolean
-    avgTimeMs?: boolean
-    avgMemoryKb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11378,8 +11499,6 @@ export namespace Prisma {
     longestStreak?: boolean
     currentStreak?: boolean
     difficultyBreakdown?: boolean
-    avgTimeMs?: boolean
-    avgMemoryKb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11395,8 +11514,6 @@ export namespace Prisma {
     longestStreak?: boolean
     currentStreak?: boolean
     difficultyBreakdown?: boolean
-    avgTimeMs?: boolean
-    avgMemoryKb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -11412,13 +11529,11 @@ export namespace Prisma {
     longestStreak?: boolean
     currentStreak?: boolean
     difficultyBreakdown?: boolean
-    avgTimeMs?: boolean
-    avgMemoryKb?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "totalSolved" | "totalSubmissions" | "totalAccepted" | "successRate" | "longestStreak" | "currentStreak" | "difficultyBreakdown" | "avgTimeMs" | "avgMemoryKb" | "createdAt" | "updatedAt", ExtArgs["result"]["userStats"]>
+  export type UserStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "totalSolved" | "totalSubmissions" | "totalAccepted" | "successRate" | "longestStreak" | "currentStreak" | "difficultyBreakdown" | "createdAt" | "updatedAt", ExtArgs["result"]["userStats"]>
   export type UserStatsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -11444,8 +11559,6 @@ export namespace Prisma {
       longestStreak: number
       currentStreak: number
       difficultyBreakdown: Prisma.JsonValue
-      avgTimeMs: number | null
-      avgMemoryKb: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["userStats"]>
@@ -11881,8 +11994,6 @@ export namespace Prisma {
     readonly longestStreak: FieldRef<"UserStats", 'Int'>
     readonly currentStreak: FieldRef<"UserStats", 'Int'>
     readonly difficultyBreakdown: FieldRef<"UserStats", 'Json'>
-    readonly avgTimeMs: FieldRef<"UserStats", 'Float'>
-    readonly avgMemoryKb: FieldRef<"UserStats", 'Float'>
     readonly createdAt: FieldRef<"UserStats", 'DateTime'>
     readonly updatedAt: FieldRef<"UserStats", 'DateTime'>
   }
@@ -12341,6 +12452,9 @@ export namespace Prisma {
     testcases: 'testcases',
     codeSnippets: 'codeSnippets',
     referenceSolutions: 'referenceSolutions',
+    avgTime: 'avgTime',
+    avgMemory: 'avgMemory',
+    totalAccepted: 'totalAccepted',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12391,6 +12505,8 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     problemId: 'problemId',
+    avgTime: 'avgTime',
+    avgMemory: 'avgMemory',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12445,8 +12561,6 @@ export namespace Prisma {
     longestStreak: 'longestStreak',
     currentStreak: 'currentStreak',
     difficultyBreakdown: 'difficultyBreakdown',
-    avgTimeMs: 'avgTimeMs',
-    avgMemoryKb: 'avgMemoryKb',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12570,6 +12684,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -12587,20 +12715,6 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -12709,6 +12823,9 @@ export namespace Prisma {
     testcases?: JsonFilter<"Problem">
     codeSnippets?: JsonFilter<"Problem">
     referenceSolutions?: JsonFilter<"Problem">
+    avgTime?: FloatNullableFilter<"Problem"> | number | null
+    avgMemory?: FloatNullableFilter<"Problem"> | number | null
+    totalAccepted?: IntNullableFilter<"Problem"> | number | null
     createdAt?: DateTimeFilter<"Problem"> | Date | string
     updatedAt?: DateTimeFilter<"Problem"> | Date | string
     submissions?: SubmissionListRelationFilter
@@ -12731,6 +12848,9 @@ export namespace Prisma {
     testcases?: SortOrder
     codeSnippets?: SortOrder
     referenceSolutions?: SortOrder
+    avgTime?: SortOrderInput | SortOrder
+    avgMemory?: SortOrderInput | SortOrder
+    totalAccepted?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     submissions?: SubmissionOrderByRelationAggregateInput
@@ -12756,6 +12876,9 @@ export namespace Prisma {
     testcases?: JsonFilter<"Problem">
     codeSnippets?: JsonFilter<"Problem">
     referenceSolutions?: JsonFilter<"Problem">
+    avgTime?: FloatNullableFilter<"Problem"> | number | null
+    avgMemory?: FloatNullableFilter<"Problem"> | number | null
+    totalAccepted?: IntNullableFilter<"Problem"> | number | null
     createdAt?: DateTimeFilter<"Problem"> | Date | string
     updatedAt?: DateTimeFilter<"Problem"> | Date | string
     submissions?: SubmissionListRelationFilter
@@ -12778,11 +12901,16 @@ export namespace Prisma {
     testcases?: SortOrder
     codeSnippets?: SortOrder
     referenceSolutions?: SortOrder
+    avgTime?: SortOrderInput | SortOrder
+    avgMemory?: SortOrderInput | SortOrder
+    totalAccepted?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProblemCountOrderByAggregateInput
+    _avg?: ProblemAvgOrderByAggregateInput
     _max?: ProblemMaxOrderByAggregateInput
     _min?: ProblemMinOrderByAggregateInput
+    _sum?: ProblemSumOrderByAggregateInput
   }
 
   export type ProblemScalarWhereWithAggregatesInput = {
@@ -12802,6 +12930,9 @@ export namespace Prisma {
     testcases?: JsonWithAggregatesFilter<"Problem">
     codeSnippets?: JsonWithAggregatesFilter<"Problem">
     referenceSolutions?: JsonWithAggregatesFilter<"Problem">
+    avgTime?: FloatNullableWithAggregatesFilter<"Problem"> | number | null
+    avgMemory?: FloatNullableWithAggregatesFilter<"Problem"> | number | null
+    totalAccepted?: IntNullableWithAggregatesFilter<"Problem"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Problem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Problem"> | Date | string
   }
@@ -13016,6 +13147,8 @@ export namespace Prisma {
     id?: StringFilter<"ProblemSolved"> | string
     userId?: StringFilter<"ProblemSolved"> | string
     problemId?: StringFilter<"ProblemSolved"> | string
+    avgTime?: FloatNullableFilter<"ProblemSolved"> | number | null
+    avgMemory?: FloatNullableFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13026,6 +13159,8 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    avgTime?: SortOrderInput | SortOrder
+    avgMemory?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -13040,6 +13175,8 @@ export namespace Prisma {
     NOT?: ProblemSolvedWhereInput | ProblemSolvedWhereInput[]
     userId?: StringFilter<"ProblemSolved"> | string
     problemId?: StringFilter<"ProblemSolved"> | string
+    avgTime?: FloatNullableFilter<"ProblemSolved"> | number | null
+    avgMemory?: FloatNullableFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13050,11 +13187,15 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    avgTime?: SortOrderInput | SortOrder
+    avgMemory?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProblemSolvedCountOrderByAggregateInput
+    _avg?: ProblemSolvedAvgOrderByAggregateInput
     _max?: ProblemSolvedMaxOrderByAggregateInput
     _min?: ProblemSolvedMinOrderByAggregateInput
+    _sum?: ProblemSolvedSumOrderByAggregateInput
   }
 
   export type ProblemSolvedScalarWhereWithAggregatesInput = {
@@ -13064,6 +13205,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ProblemSolved"> | string
     userId?: StringWithAggregatesFilter<"ProblemSolved"> | string
     problemId?: StringWithAggregatesFilter<"ProblemSolved"> | string
+    avgTime?: FloatNullableWithAggregatesFilter<"ProblemSolved"> | number | null
+    avgMemory?: FloatNullableWithAggregatesFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ProblemSolved"> | Date | string
   }
@@ -13277,8 +13420,6 @@ export namespace Prisma {
     longestStreak?: IntFilter<"UserStats"> | number
     currentStreak?: IntFilter<"UserStats"> | number
     difficultyBreakdown?: JsonFilter<"UserStats">
-    avgTimeMs?: FloatNullableFilter<"UserStats"> | number | null
-    avgMemoryKb?: FloatNullableFilter<"UserStats"> | number | null
     createdAt?: DateTimeFilter<"UserStats"> | Date | string
     updatedAt?: DateTimeFilter<"UserStats"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13294,8 +13435,6 @@ export namespace Prisma {
     longestStreak?: SortOrder
     currentStreak?: SortOrder
     difficultyBreakdown?: SortOrder
-    avgTimeMs?: SortOrderInput | SortOrder
-    avgMemoryKb?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -13314,8 +13453,6 @@ export namespace Prisma {
     longestStreak?: IntFilter<"UserStats"> | number
     currentStreak?: IntFilter<"UserStats"> | number
     difficultyBreakdown?: JsonFilter<"UserStats">
-    avgTimeMs?: FloatNullableFilter<"UserStats"> | number | null
-    avgMemoryKb?: FloatNullableFilter<"UserStats"> | number | null
     createdAt?: DateTimeFilter<"UserStats"> | Date | string
     updatedAt?: DateTimeFilter<"UserStats"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13331,8 +13468,6 @@ export namespace Prisma {
     longestStreak?: SortOrder
     currentStreak?: SortOrder
     difficultyBreakdown?: SortOrder
-    avgTimeMs?: SortOrderInput | SortOrder
-    avgMemoryKb?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserStatsCountOrderByAggregateInput
@@ -13355,8 +13490,6 @@ export namespace Prisma {
     longestStreak?: IntWithAggregatesFilter<"UserStats"> | number
     currentStreak?: IntWithAggregatesFilter<"UserStats"> | number
     difficultyBreakdown?: JsonWithAggregatesFilter<"UserStats">
-    avgTimeMs?: FloatNullableWithAggregatesFilter<"UserStats"> | number | null
-    avgMemoryKb?: FloatNullableWithAggregatesFilter<"UserStats"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"UserStats"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserStats"> | Date | string
   }
@@ -13475,6 +13608,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionCreateNestedManyWithoutProblemInput
@@ -13497,6 +13633,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
@@ -13517,6 +13656,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUpdateManyWithoutProblemNestedInput
@@ -13539,6 +13681,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
@@ -13560,6 +13705,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13577,6 +13725,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13595,6 +13746,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13833,6 +13987,8 @@ export namespace Prisma {
 
   export type ProblemSolvedCreateInput = {
     id?: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProblemSolvedInput
@@ -13843,12 +13999,16 @@ export namespace Prisma {
     id?: string
     userId: string
     problemId: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProblemSolvedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProblemSolvedNestedInput
@@ -13859,6 +14019,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13867,12 +14029,16 @@ export namespace Prisma {
     id?: string
     userId: string
     problemId: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProblemSolvedUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13881,6 +14047,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14090,8 +14258,6 @@ export namespace Prisma {
     longestStreak?: number
     currentStreak?: number
     difficultyBreakdown: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: number | null
-    avgMemoryKb?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutUserStatsInput
@@ -14107,8 +14273,6 @@ export namespace Prisma {
     longestStreak?: number
     currentStreak?: number
     difficultyBreakdown: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: number | null
-    avgMemoryKb?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14122,8 +14286,6 @@ export namespace Prisma {
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
     difficultyBreakdown?: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemoryKb?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutUserStatsNestedInput
@@ -14139,8 +14301,6 @@ export namespace Prisma {
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
     difficultyBreakdown?: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemoryKb?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14155,8 +14315,6 @@ export namespace Prisma {
     longestStreak?: number
     currentStreak?: number
     difficultyBreakdown: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: number | null
-    avgMemoryKb?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14170,8 +14328,6 @@ export namespace Prisma {
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
     difficultyBreakdown?: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemoryKb?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14186,8 +14342,6 @@ export namespace Prisma {
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
     difficultyBreakdown?: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemoryKb?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14431,6 +14585,28 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type ProblemInPlaylistListRelationFilter = {
     every?: ProblemInPlaylistWhereInput
     some?: ProblemInPlaylistWhereInput
@@ -14460,8 +14636,17 @@ export namespace Prisma {
     testcases?: SortOrder
     codeSnippets?: SortOrder
     referenceSolutions?: SortOrder
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
+    totalAccepted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProblemAvgOrderByAggregateInput = {
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
+    totalAccepted?: SortOrder
   }
 
   export type ProblemMaxOrderByAggregateInput = {
@@ -14473,6 +14658,9 @@ export namespace Prisma {
     constraints?: SortOrder
     hints?: SortOrder
     editorial?: SortOrder
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
+    totalAccepted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14486,8 +14674,17 @@ export namespace Prisma {
     constraints?: SortOrder
     hints?: SortOrder
     editorial?: SortOrder
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
+    totalAccepted?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProblemSumOrderByAggregateInput = {
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
+    totalAccepted?: SortOrder
   }
 
   export type EnumDifficultyWithAggregatesFilter<$PrismaModel = never> = {
@@ -14524,6 +14721,38 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type TestCaseResultListRelationFilter = {
@@ -14700,14 +14929,23 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProblemSolvedAvgOrderByAggregateInput = {
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
   }
 
   export type ProblemSolvedMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14716,8 +14954,15 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProblemSolvedSumOrderByAggregateInput = {
+    avgTime?: SortOrder
+    avgMemory?: SortOrder
   }
 
   export type PlaylistUserIdNameCompoundUniqueInput = {
@@ -14847,17 +15092,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type UserStatsCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -14868,8 +15102,6 @@ export namespace Prisma {
     longestStreak?: SortOrder
     currentStreak?: SortOrder
     difficultyBreakdown?: SortOrder
-    avgTimeMs?: SortOrder
-    avgMemoryKb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14881,8 +15113,6 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    avgTimeMs?: SortOrder
-    avgMemoryKb?: SortOrder
   }
 
   export type UserStatsMaxOrderByAggregateInput = {
@@ -14894,8 +15124,6 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    avgTimeMs?: SortOrder
-    avgMemoryKb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14909,8 +15137,6 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    avgTimeMs?: SortOrder
-    avgMemoryKb?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14922,8 +15148,6 @@ export namespace Prisma {
     successRate?: SortOrder
     longestStreak?: SortOrder
     currentStreak?: SortOrder
-    avgTimeMs?: SortOrder
-    avgMemoryKb?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -14940,22 +15164,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type PlaylistCreateNestedManyWithoutUserInput = {
@@ -15275,6 +15483,22 @@ export namespace Prisma {
   export type ProblemUpdatetagsInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type SubmissionUpdateManyWithoutProblemNestedInput = {
@@ -15605,14 +15829,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type UserUpdateOneRequiredWithoutUserStatsNestedInput = {
     create?: XOR<UserCreateWithoutUserStatsInput, UserUncheckedCreateWithoutUserStatsInput>
     connectOrCreate?: UserCreateOrConnectWithoutUserStatsInput
@@ -15754,6 +15970,17 @@ export namespace Prisma {
     not?: NestedEnumDifficultyFilter<$PrismaModel> | $Enums.Difficulty
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumDifficultyWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Difficulty | EnumDifficultyFieldRefInput<$PrismaModel>
     in?: $Enums.Difficulty[] | ListEnumDifficultyFieldRefInput<$PrismaModel>
@@ -15785,6 +16012,38 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -15827,17 +16086,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -15852,22 +16100,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type PlaylistCreateWithoutUserInput = {
@@ -15911,6 +16143,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionCreateNestedManyWithoutProblemInput
@@ -15931,6 +16166,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
@@ -15994,6 +16232,8 @@ export namespace Prisma {
 
   export type ProblemSolvedCreateWithoutUserInput = {
     id?: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problem: ProblemCreateNestedOneWithoutSolvedByInput
@@ -16002,6 +16242,8 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedCreateWithoutUserInput = {
     id?: string
     problemId: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16055,8 +16297,6 @@ export namespace Prisma {
     longestStreak?: number
     currentStreak?: number
     difficultyBreakdown: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: number | null
-    avgMemoryKb?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16070,8 +16310,6 @@ export namespace Prisma {
     longestStreak?: number
     currentStreak?: number
     difficultyBreakdown: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: number | null
-    avgMemoryKb?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16142,6 +16380,9 @@ export namespace Prisma {
     testcases?: JsonFilter<"Problem">
     codeSnippets?: JsonFilter<"Problem">
     referenceSolutions?: JsonFilter<"Problem">
+    avgTime?: FloatNullableFilter<"Problem"> | number | null
+    avgMemory?: FloatNullableFilter<"Problem"> | number | null
+    totalAccepted?: IntNullableFilter<"Problem"> | number | null
     createdAt?: DateTimeFilter<"Problem"> | Date | string
     updatedAt?: DateTimeFilter<"Problem"> | Date | string
   }
@@ -16205,6 +16446,8 @@ export namespace Prisma {
     id?: StringFilter<"ProblemSolved"> | string
     userId?: StringFilter<"ProblemSolved"> | string
     problemId?: StringFilter<"ProblemSolved"> | string
+    avgTime?: FloatNullableFilter<"ProblemSolved"> | number | null
+    avgMemory?: FloatNullableFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeFilter<"ProblemSolved"> | Date | string
   }
@@ -16259,8 +16502,6 @@ export namespace Prisma {
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
     difficultyBreakdown?: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemoryKb?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16274,8 +16515,6 @@ export namespace Prisma {
     longestStreak?: IntFieldUpdateOperationsInput | number
     currentStreak?: IntFieldUpdateOperationsInput | number
     difficultyBreakdown?: JsonNullValueInput | InputJsonValue
-    avgTimeMs?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemoryKb?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16326,6 +16565,8 @@ export namespace Prisma {
 
   export type ProblemSolvedCreateWithoutProblemInput = {
     id?: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProblemSolvedInput
@@ -16334,6 +16575,8 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedCreateWithoutProblemInput = {
     id?: string
     userId: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16601,6 +16844,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     solvedBy?: ProblemSolvedCreateNestedManyWithoutProblemInput
@@ -16622,6 +16868,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     solvedBy?: ProblemSolvedUncheckedCreateNestedManyWithoutProblemInput
@@ -16735,6 +16984,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedBy?: ProblemSolvedUpdateManyWithoutProblemNestedInput
@@ -16756,6 +17008,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedBy?: ProblemSolvedUncheckedUpdateManyWithoutProblemNestedInput
@@ -16896,6 +17151,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionCreateNestedManyWithoutProblemInput
@@ -16917,6 +17175,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
@@ -16995,6 +17256,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUpdateManyWithoutProblemNestedInput
@@ -17016,6 +17280,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
@@ -17178,6 +17445,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionCreateNestedManyWithoutProblemInput
@@ -17199,6 +17469,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     submissions?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
@@ -17263,6 +17536,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUpdateManyWithoutProblemNestedInput
@@ -17284,6 +17560,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
@@ -17471,6 +17750,9 @@ export namespace Prisma {
     testcases: JsonNullValueInput | InputJsonValue
     codeSnippets: JsonNullValueInput | InputJsonValue
     referenceSolutions: JsonNullValueInput | InputJsonValue
+    avgTime?: number | null
+    avgMemory?: number | null
+    totalAccepted?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17494,6 +17776,8 @@ export namespace Prisma {
   export type ProblemSolvedCreateManyUserInput = {
     id?: string
     problemId: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17547,6 +17831,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUpdateManyWithoutProblemNestedInput
@@ -17567,6 +17854,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissions?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
@@ -17587,6 +17877,9 @@ export namespace Prisma {
     testcases?: JsonNullValueInput | InputJsonValue
     codeSnippets?: JsonNullValueInput | InputJsonValue
     referenceSolutions?: JsonNullValueInput | InputJsonValue
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
+    totalAccepted?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17643,6 +17936,8 @@ export namespace Prisma {
 
   export type ProblemSolvedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problem?: ProblemUpdateOneRequiredWithoutSolvedByNestedInput
@@ -17651,6 +17946,8 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17658,6 +17955,8 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17711,6 +18010,8 @@ export namespace Prisma {
   export type ProblemSolvedCreateManyProblemInput = {
     id?: string
     userId: string
+    avgTime?: number | null
+    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17774,6 +18075,8 @@ export namespace Prisma {
 
   export type ProblemSolvedUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProblemSolvedNestedInput
@@ -17782,6 +18085,8 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17789,6 +18094,8 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateManyWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
+    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
