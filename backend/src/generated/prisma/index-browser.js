@@ -165,6 +165,7 @@ exports.Prisma.SubmissionScalarFieldEnum = {
   status: 'status',
   memory: 'memory',
   time: 'time',
+  fasterThanPercentile: 'fasterThanPercentile',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -189,8 +190,6 @@ exports.Prisma.ProblemSolvedScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   problemId: 'problemId',
-  avgTime: 'avgTime',
-  avgMemory: 'avgMemory',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

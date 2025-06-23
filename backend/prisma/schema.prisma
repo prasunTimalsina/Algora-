@@ -76,18 +76,19 @@ model Problem {
 }
 
 model Submission {
-  id            String  @id @default(uuid())
-  userId        String
-  problemId     String
-  sourceCode    Json
-  language      String
-  stdin         String?
-  stdout        String?
-  stderr        String?
-  compileOutput String?
-  status        String // Accepted or wrong answer
-  memory        String?
-  time          String?
+  id                   String  @id @default(uuid())
+  userId               String
+  problemId            String
+  sourceCode           Json
+  language             String
+  stdin                String?
+  stdout               String?
+  stderr               String?
+  compileOutput        String?
+  status               String // Accepted or wrong answer
+  memory               String?
+  time                 String?
+  fasterThanPercentile Float?
 
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt()
@@ -122,9 +123,6 @@ model ProblemSolved {
   id        String @id @default(uuid())
   userId    String
   problemId String
-
-  avgTime   Float?
-  avgMemory Float?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

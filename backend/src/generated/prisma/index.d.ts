@@ -4389,8 +4389,18 @@ export namespace Prisma {
 
   export type AggregateSubmission = {
     _count: SubmissionCountAggregateOutputType | null
+    _avg: SubmissionAvgAggregateOutputType | null
+    _sum: SubmissionSumAggregateOutputType | null
     _min: SubmissionMinAggregateOutputType | null
     _max: SubmissionMaxAggregateOutputType | null
+  }
+
+  export type SubmissionAvgAggregateOutputType = {
+    fasterThanPercentile: number | null
+  }
+
+  export type SubmissionSumAggregateOutputType = {
+    fasterThanPercentile: number | null
   }
 
   export type SubmissionMinAggregateOutputType = {
@@ -4405,6 +4415,7 @@ export namespace Prisma {
     status: string | null
     memory: string | null
     time: string | null
+    fasterThanPercentile: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4421,6 +4432,7 @@ export namespace Prisma {
     status: string | null
     memory: string | null
     time: string | null
+    fasterThanPercentile: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4438,11 +4450,20 @@ export namespace Prisma {
     status: number
     memory: number
     time: number
+    fasterThanPercentile: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type SubmissionAvgAggregateInputType = {
+    fasterThanPercentile?: true
+  }
+
+  export type SubmissionSumAggregateInputType = {
+    fasterThanPercentile?: true
+  }
 
   export type SubmissionMinAggregateInputType = {
     id?: true
@@ -4456,6 +4477,7 @@ export namespace Prisma {
     status?: true
     memory?: true
     time?: true
+    fasterThanPercentile?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4472,6 +4494,7 @@ export namespace Prisma {
     status?: true
     memory?: true
     time?: true
+    fasterThanPercentile?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4489,6 +4512,7 @@ export namespace Prisma {
     status?: true
     memory?: true
     time?: true
+    fasterThanPercentile?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4532,6 +4556,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: SubmissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubmissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: SubmissionMinAggregateInputType
@@ -4562,6 +4598,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: SubmissionCountAggregateInputType | true
+    _avg?: SubmissionAvgAggregateInputType
+    _sum?: SubmissionSumAggregateInputType
     _min?: SubmissionMinAggregateInputType
     _max?: SubmissionMaxAggregateInputType
   }
@@ -4579,9 +4617,12 @@ export namespace Prisma {
     status: string
     memory: string | null
     time: string | null
+    fasterThanPercentile: number | null
     createdAt: Date
     updatedAt: Date
     _count: SubmissionCountAggregateOutputType | null
+    _avg: SubmissionAvgAggregateOutputType | null
+    _sum: SubmissionSumAggregateOutputType | null
     _min: SubmissionMinAggregateOutputType | null
     _max: SubmissionMaxAggregateOutputType | null
   }
@@ -4613,6 +4654,7 @@ export namespace Prisma {
     status?: boolean
     memory?: boolean
     time?: boolean
+    fasterThanPercentile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     testCases?: boolean | Submission$testCasesArgs<ExtArgs>
@@ -4634,6 +4676,7 @@ export namespace Prisma {
     status?: boolean
     memory?: boolean
     time?: boolean
+    fasterThanPercentile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -4653,6 +4696,7 @@ export namespace Prisma {
     status?: boolean
     memory?: boolean
     time?: boolean
+    fasterThanPercentile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -4672,11 +4716,12 @@ export namespace Prisma {
     status?: boolean
     memory?: boolean
     time?: boolean
+    fasterThanPercentile?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "sourceCode" | "language" | "stdin" | "stdout" | "stderr" | "compileOutput" | "status" | "memory" | "time" | "createdAt" | "updatedAt", ExtArgs["result"]["submission"]>
+  export type SubmissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "sourceCode" | "language" | "stdin" | "stdout" | "stderr" | "compileOutput" | "status" | "memory" | "time" | "fasterThanPercentile" | "createdAt" | "updatedAt", ExtArgs["result"]["submission"]>
   export type SubmissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     testCases?: boolean | Submission$testCasesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -4712,6 +4757,7 @@ export namespace Prisma {
       status: string
       memory: string | null
       time: string | null
+      fasterThanPercentile: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["submission"]>
@@ -5152,6 +5198,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Submission", 'String'>
     readonly memory: FieldRef<"Submission", 'String'>
     readonly time: FieldRef<"Submission", 'String'>
+    readonly fasterThanPercentile: FieldRef<"Submission", 'Float'>
     readonly createdAt: FieldRef<"Submission", 'DateTime'>
     readonly updatedAt: FieldRef<"Submission", 'DateTime'>
   }
@@ -6794,28 +6841,14 @@ export namespace Prisma {
 
   export type AggregateProblemSolved = {
     _count: ProblemSolvedCountAggregateOutputType | null
-    _avg: ProblemSolvedAvgAggregateOutputType | null
-    _sum: ProblemSolvedSumAggregateOutputType | null
     _min: ProblemSolvedMinAggregateOutputType | null
     _max: ProblemSolvedMaxAggregateOutputType | null
-  }
-
-  export type ProblemSolvedAvgAggregateOutputType = {
-    avgTime: number | null
-    avgMemory: number | null
-  }
-
-  export type ProblemSolvedSumAggregateOutputType = {
-    avgTime: number | null
-    avgMemory: number | null
   }
 
   export type ProblemSolvedMinAggregateOutputType = {
     id: string | null
     userId: string | null
     problemId: string | null
-    avgTime: number | null
-    avgMemory: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6824,8 +6857,6 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     problemId: string | null
-    avgTime: number | null
-    avgMemory: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6834,30 +6865,16 @@ export namespace Prisma {
     id: number
     userId: number
     problemId: number
-    avgTime: number
-    avgMemory: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type ProblemSolvedAvgAggregateInputType = {
-    avgTime?: true
-    avgMemory?: true
-  }
-
-  export type ProblemSolvedSumAggregateInputType = {
-    avgTime?: true
-    avgMemory?: true
-  }
-
   export type ProblemSolvedMinAggregateInputType = {
     id?: true
     userId?: true
     problemId?: true
-    avgTime?: true
-    avgMemory?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6866,8 +6883,6 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
-    avgTime?: true
-    avgMemory?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6876,8 +6891,6 @@ export namespace Prisma {
     id?: true
     userId?: true
     problemId?: true
-    avgTime?: true
-    avgMemory?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6921,18 +6934,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: ProblemSolvedAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ProblemSolvedSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: ProblemSolvedMinAggregateInputType
@@ -6963,8 +6964,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ProblemSolvedCountAggregateInputType | true
-    _avg?: ProblemSolvedAvgAggregateInputType
-    _sum?: ProblemSolvedSumAggregateInputType
     _min?: ProblemSolvedMinAggregateInputType
     _max?: ProblemSolvedMaxAggregateInputType
   }
@@ -6973,13 +6972,9 @@ export namespace Prisma {
     id: string
     userId: string
     problemId: string
-    avgTime: number | null
-    avgMemory: number | null
     createdAt: Date
     updatedAt: Date
     _count: ProblemSolvedCountAggregateOutputType | null
-    _avg: ProblemSolvedAvgAggregateOutputType | null
-    _sum: ProblemSolvedSumAggregateOutputType | null
     _min: ProblemSolvedMinAggregateOutputType | null
     _max: ProblemSolvedMaxAggregateOutputType | null
   }
@@ -7002,8 +6997,6 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
-    avgTime?: boolean
-    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -7014,8 +7007,6 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
-    avgTime?: boolean
-    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -7026,8 +7017,6 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
-    avgTime?: boolean
-    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -7038,13 +7027,11 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     problemId?: boolean
-    avgTime?: boolean
-    avgMemory?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProblemSolvedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "avgTime" | "avgMemory" | "createdAt" | "updatedAt", ExtArgs["result"]["problemSolved"]>
+  export type ProblemSolvedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "createdAt" | "updatedAt", ExtArgs["result"]["problemSolved"]>
   export type ProblemSolvedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     problem?: boolean | ProblemDefaultArgs<ExtArgs>
@@ -7068,8 +7055,6 @@ export namespace Prisma {
       id: string
       userId: string
       problemId: string
-      avgTime: number | null
-      avgMemory: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["problemSolved"]>
@@ -7500,8 +7485,6 @@ export namespace Prisma {
     readonly id: FieldRef<"ProblemSolved", 'String'>
     readonly userId: FieldRef<"ProblemSolved", 'String'>
     readonly problemId: FieldRef<"ProblemSolved", 'String'>
-    readonly avgTime: FieldRef<"ProblemSolved", 'Float'>
-    readonly avgMemory: FieldRef<"ProblemSolved", 'Float'>
     readonly createdAt: FieldRef<"ProblemSolved", 'DateTime'>
     readonly updatedAt: FieldRef<"ProblemSolved", 'DateTime'>
   }
@@ -12479,6 +12462,7 @@ export namespace Prisma {
     status: 'status',
     memory: 'memory',
     time: 'time',
+    fasterThanPercentile: 'fasterThanPercentile',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12509,8 +12493,6 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     problemId: 'problemId',
-    avgTime: 'avgTime',
-    avgMemory: 'avgMemory',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12957,6 +12939,7 @@ export namespace Prisma {
     status?: StringFilter<"Submission"> | string
     memory?: StringNullableFilter<"Submission"> | string | null
     time?: StringNullableFilter<"Submission"> | string | null
+    fasterThanPercentile?: FloatNullableFilter<"Submission"> | number | null
     createdAt?: DateTimeFilter<"Submission"> | Date | string
     updatedAt?: DateTimeFilter<"Submission"> | Date | string
     testCases?: TestCaseResultListRelationFilter
@@ -12977,6 +12960,7 @@ export namespace Prisma {
     status?: SortOrder
     memory?: SortOrderInput | SortOrder
     time?: SortOrderInput | SortOrder
+    fasterThanPercentile?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     testCases?: TestCaseResultOrderByRelationAggregateInput
@@ -13000,6 +12984,7 @@ export namespace Prisma {
     status?: StringFilter<"Submission"> | string
     memory?: StringNullableFilter<"Submission"> | string | null
     time?: StringNullableFilter<"Submission"> | string | null
+    fasterThanPercentile?: FloatNullableFilter<"Submission"> | number | null
     createdAt?: DateTimeFilter<"Submission"> | Date | string
     updatedAt?: DateTimeFilter<"Submission"> | Date | string
     testCases?: TestCaseResultListRelationFilter
@@ -13020,11 +13005,14 @@ export namespace Prisma {
     status?: SortOrder
     memory?: SortOrderInput | SortOrder
     time?: SortOrderInput | SortOrder
+    fasterThanPercentile?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SubmissionCountOrderByAggregateInput
+    _avg?: SubmissionAvgOrderByAggregateInput
     _max?: SubmissionMaxOrderByAggregateInput
     _min?: SubmissionMinOrderByAggregateInput
+    _sum?: SubmissionSumOrderByAggregateInput
   }
 
   export type SubmissionScalarWhereWithAggregatesInput = {
@@ -13043,6 +13031,7 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"Submission"> | string
     memory?: StringNullableWithAggregatesFilter<"Submission"> | string | null
     time?: StringNullableWithAggregatesFilter<"Submission"> | string | null
+    fasterThanPercentile?: FloatNullableWithAggregatesFilter<"Submission"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Submission"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Submission"> | Date | string
   }
@@ -13151,8 +13140,6 @@ export namespace Prisma {
     id?: StringFilter<"ProblemSolved"> | string
     userId?: StringFilter<"ProblemSolved"> | string
     problemId?: StringFilter<"ProblemSolved"> | string
-    avgTime?: FloatNullableFilter<"ProblemSolved"> | number | null
-    avgMemory?: FloatNullableFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13163,8 +13150,6 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
-    avgTime?: SortOrderInput | SortOrder
-    avgMemory?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -13179,8 +13164,6 @@ export namespace Prisma {
     NOT?: ProblemSolvedWhereInput | ProblemSolvedWhereInput[]
     userId?: StringFilter<"ProblemSolved"> | string
     problemId?: StringFilter<"ProblemSolved"> | string
-    avgTime?: FloatNullableFilter<"ProblemSolved"> | number | null
-    avgMemory?: FloatNullableFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13191,15 +13174,11 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
-    avgTime?: SortOrderInput | SortOrder
-    avgMemory?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProblemSolvedCountOrderByAggregateInput
-    _avg?: ProblemSolvedAvgOrderByAggregateInput
     _max?: ProblemSolvedMaxOrderByAggregateInput
     _min?: ProblemSolvedMinOrderByAggregateInput
-    _sum?: ProblemSolvedSumOrderByAggregateInput
   }
 
   export type ProblemSolvedScalarWhereWithAggregatesInput = {
@@ -13209,8 +13188,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ProblemSolved"> | string
     userId?: StringWithAggregatesFilter<"ProblemSolved"> | string
     problemId?: StringWithAggregatesFilter<"ProblemSolved"> | string
-    avgTime?: FloatNullableWithAggregatesFilter<"ProblemSolved"> | number | null
-    avgMemory?: FloatNullableWithAggregatesFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ProblemSolved"> | Date | string
   }
@@ -13768,6 +13745,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     testCases?: TestCaseResultCreateNestedManyWithoutSubmissionInput
@@ -13788,6 +13766,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     testCases?: TestCaseResultUncheckedCreateNestedManyWithoutSubmissionInput
@@ -13804,6 +13783,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     testCases?: TestCaseResultUpdateManyWithoutSubmissionNestedInput
@@ -13824,6 +13804,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     testCases?: TestCaseResultUncheckedUpdateManyWithoutSubmissionNestedInput
@@ -13842,6 +13823,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -13857,6 +13839,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13874,6 +13857,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13991,8 +13975,6 @@ export namespace Prisma {
 
   export type ProblemSolvedCreateInput = {
     id?: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProblemSolvedInput
@@ -14003,16 +13985,12 @@ export namespace Prisma {
     id?: string
     userId: string
     problemId: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProblemSolvedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProblemSolvedNestedInput
@@ -14023,8 +14001,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14033,16 +14009,12 @@ export namespace Prisma {
     id?: string
     userId: string
     problemId: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProblemSolvedUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14051,8 +14023,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14787,8 +14757,13 @@ export namespace Prisma {
     status?: SortOrder
     memory?: SortOrder
     time?: SortOrder
+    fasterThanPercentile?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type SubmissionAvgOrderByAggregateInput = {
+    fasterThanPercentile?: SortOrder
   }
 
   export type SubmissionMaxOrderByAggregateInput = {
@@ -14803,6 +14778,7 @@ export namespace Prisma {
     status?: SortOrder
     memory?: SortOrder
     time?: SortOrder
+    fasterThanPercentile?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14819,8 +14795,13 @@ export namespace Prisma {
     status?: SortOrder
     memory?: SortOrder
     time?: SortOrder
+    fasterThanPercentile?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type SubmissionSumOrderByAggregateInput = {
+    fasterThanPercentile?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -14933,23 +14914,14 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
-    avgTime?: SortOrder
-    avgMemory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type ProblemSolvedAvgOrderByAggregateInput = {
-    avgTime?: SortOrder
-    avgMemory?: SortOrder
   }
 
   export type ProblemSolvedMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
-    avgTime?: SortOrder
-    avgMemory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14958,15 +14930,8 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     problemId?: SortOrder
-    avgTime?: SortOrder
-    avgMemory?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type ProblemSolvedSumOrderByAggregateInput = {
-    avgTime?: SortOrder
-    avgMemory?: SortOrder
   }
 
   export type PlaylistUserIdNameCompoundUniqueInput = {
@@ -16257,6 +16222,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     testCases?: TestCaseResultCreateNestedManyWithoutSubmissionInput
@@ -16275,6 +16241,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     testCases?: TestCaseResultUncheckedCreateNestedManyWithoutSubmissionInput
@@ -16292,8 +16259,6 @@ export namespace Prisma {
 
   export type ProblemSolvedCreateWithoutUserInput = {
     id?: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     problem: ProblemCreateNestedOneWithoutSolvedByInput
@@ -16302,8 +16267,6 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedCreateWithoutUserInput = {
     id?: string
     problemId: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16479,6 +16442,7 @@ export namespace Prisma {
     status?: StringFilter<"Submission"> | string
     memory?: StringNullableFilter<"Submission"> | string | null
     time?: StringNullableFilter<"Submission"> | string | null
+    fasterThanPercentile?: FloatNullableFilter<"Submission"> | number | null
     createdAt?: DateTimeFilter<"Submission"> | Date | string
     updatedAt?: DateTimeFilter<"Submission"> | Date | string
   }
@@ -16506,8 +16470,6 @@ export namespace Prisma {
     id?: StringFilter<"ProblemSolved"> | string
     userId?: StringFilter<"ProblemSolved"> | string
     problemId?: StringFilter<"ProblemSolved"> | string
-    avgTime?: FloatNullableFilter<"ProblemSolved"> | number | null
-    avgMemory?: FloatNullableFilter<"ProblemSolved"> | number | null
     createdAt?: DateTimeFilter<"ProblemSolved"> | Date | string
     updatedAt?: DateTimeFilter<"ProblemSolved"> | Date | string
   }
@@ -16590,6 +16552,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     testCases?: TestCaseResultCreateNestedManyWithoutSubmissionInput
@@ -16608,6 +16571,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     testCases?: TestCaseResultUncheckedCreateNestedManyWithoutSubmissionInput
@@ -16625,8 +16589,6 @@ export namespace Prisma {
 
   export type ProblemSolvedCreateWithoutProblemInput = {
     id?: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProblemSolvedInput
@@ -16635,8 +16597,6 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedCreateWithoutProblemInput = {
     id?: string
     userId: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17088,6 +17048,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutSubmissionInput
@@ -17107,6 +17068,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17138,6 +17100,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutSubmissionNestedInput
@@ -17157,6 +17120,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17829,6 +17793,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17836,8 +17801,6 @@ export namespace Prisma {
   export type ProblemSolvedCreateManyUserInput = {
     id?: string
     problemId: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17955,6 +17918,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     testCases?: TestCaseResultUpdateManyWithoutSubmissionNestedInput
@@ -17973,6 +17937,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     testCases?: TestCaseResultUncheckedUpdateManyWithoutSubmissionNestedInput
@@ -17990,14 +17955,13 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProblemSolvedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     problem?: ProblemUpdateOneRequiredWithoutSolvedByNestedInput
@@ -18006,8 +17970,6 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18015,8 +17977,6 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     problemId?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18063,6 +18023,7 @@ export namespace Prisma {
     status: string
     memory?: string | null
     time?: string | null
+    fasterThanPercentile?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18070,8 +18031,6 @@ export namespace Prisma {
   export type ProblemSolvedCreateManyProblemInput = {
     id?: string
     userId: string
-    avgTime?: number | null
-    avgMemory?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18094,6 +18053,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     testCases?: TestCaseResultUpdateManyWithoutSubmissionNestedInput
@@ -18112,6 +18072,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     testCases?: TestCaseResultUncheckedUpdateManyWithoutSubmissionNestedInput
@@ -18129,14 +18090,13 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     memory?: NullableStringFieldUpdateOperationsInput | string | null
     time?: NullableStringFieldUpdateOperationsInput | string | null
+    fasterThanPercentile?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProblemSolvedUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProblemSolvedNestedInput
@@ -18145,8 +18105,6 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18154,8 +18112,6 @@ export namespace Prisma {
   export type ProblemSolvedUncheckedUpdateManyWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    avgTime?: NullableFloatFieldUpdateOperationsInput | number | null
-    avgMemory?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

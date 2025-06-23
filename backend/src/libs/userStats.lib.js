@@ -2,6 +2,7 @@ import { db } from "./db.js";
 export const updateUserStats = async (userId, submission) => {
   ///need to fix only for testing
   // const today = overrideDate ?? new Date();
+  const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
 
   const isAccepted = submission.status === "Accepted";

@@ -6,6 +6,7 @@ import {
   getLanguageName,
 } from "../libs/judge0.lib.js";
 import { updateUserStats } from "../libs/userStats.lib.js";
+import { updateProblemStat } from "../libs/problemStat.lib.js";
 
 import { ApiError } from "../utils/api.error.js";
 import { ApiResponse } from "../utils/api.response.js";
@@ -89,6 +90,23 @@ export const submitCode = asyncHandler(async (req, res) => {
   if (!submission) {
     throw new ApiError(400, "Failed to submit your program");
   }
+
+  const avgTimeForProblem = results.reduce(
+    (acc, result, _, arr) => acc + result.time / arr.length,
+    0
+  );
+
+  const avgMemoryForProblem = results.reduce(
+    (acc, result, _, arr) => acc + result.memory / arr.length,
+    0
+  );
+
+  //updating problem stats
+  await updateProblemStat(
+    problemId,
+    parseFloat(avgTimeForProblem),
+    parseFloat(avgMemoryForProblem)
+  );
 
   //udating user stats
   //fake date for testing
