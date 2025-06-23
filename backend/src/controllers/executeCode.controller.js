@@ -6,7 +6,10 @@ import {
   getLanguageName,
 } from "../libs/judge0.lib.js";
 import { updateUserStats } from "../libs/userStats.lib.js";
-import { updateProblemStat } from "../libs/problemStat.lib.js";
+import {
+  calculatePercentile,
+  updateProblemStat,
+} from "../libs/problemStat.lib.js";
 
 import { ApiError } from "../utils/api.error.js";
 import { ApiResponse } from "../utils/api.response.js";
@@ -63,6 +66,49 @@ export const submitCode = asyncHandler(async (req, res) => {
     };
   });
 
+  const avgTimeForProblem = results.reduce(
+    (acc, result, _, arr) => acc + result.time / arr.length,
+    0
+  );
+
+  const avgMemoryForProblem = results.reduce(
+    (acc, result, _, arr) => acc + result.memory / arr.length,
+    0
+  );
+
+  //calculating faster than this much time percentile of users
+
+  const submissionTimesInString = await db.submission.findMany({
+    where: {
+      problemId,
+      status: "Accepted",
+    },
+    select: {
+      time: true,
+    },
+  });
+
+  const submissionTimes = submissionTimesInString.map((inputStr) => {
+    const timesArray = JSON.parse(inputStr.time); // assuming inputStr is an object with a `time` field that's a JSON string array
+    const timesInSeconds = timesArray.map((t) =>
+      parseFloat(t.replace(" s", ""))
+    );
+    const average =
+      timesInSeconds.reduce((acc, val) => acc + val, 0) / timesInSeconds.length;
+
+    return average;
+  });
+
+  // remove your own time from the list before percentile calculation
+  const filteredTimes = submissionTimes.filter(
+    (time) => time !== avgTimeForProblem
+  );
+
+  const fasterThanPercentile = calculatePercentile(
+    filteredTimes,
+    avgTimeForProblem
+  );
+
   const submission = await db.submission.create({
     data: {
       userId,
@@ -84,22 +130,13 @@ export const submitCode = asyncHandler(async (req, res) => {
       time: detailResults.some((result) => result.time)
         ? JSON.stringify(detailResults.map((result) => result.time))
         : null,
+      fasterThanPercentile,
     },
   });
 
   if (!submission) {
     throw new ApiError(400, "Failed to submit your program");
   }
-
-  const avgTimeForProblem = results.reduce(
-    (acc, result, _, arr) => acc + result.time / arr.length,
-    0
-  );
-
-  const avgMemoryForProblem = results.reduce(
-    (acc, result, _, arr) => acc + result.memory / arr.length,
-    0
-  );
 
   //updating problem stats
   await updateProblemStat(
