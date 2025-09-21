@@ -26,22 +26,33 @@ enum Difficulty {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String?
-  email     String   @unique
-  image     String?
-  role      UserRole @default(USER)
-  password  String
+  id       String   @id @default(uuid())
+  username String?  @unique
+  fullName String?
+  email    String   @unique
+  image    String?  @default("https://via.placeholder.com/200x200.png")
+  role     UserRole @default(USER)
+  password String
+
+  isEmailVerified         Boolean?  @default(false)
+  refreshToken            String?
+  forgotPasswordToken     String?
+  forgotPasswordExpiry    DateTime?
+  emailVerificationToken  String?
+  emailVerificationExpiry DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  playlists     Playlist[]
   problems      Problem[]
   submission    Submission[]
   problemSolved ProblemSolved[]
+  playlists     Playlist[]
 
   DailyUserStats DailyUserStats[]
   UserStats      UserStats?
+
+  @@index([username])
 }
 
 model Problem {
