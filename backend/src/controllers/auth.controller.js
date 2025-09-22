@@ -187,14 +187,6 @@ export const logout = asyncHandler(async (req, res) => {
   //validation
 });
 
-export const check = async (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "User authenticated successfully",
-    user: req.user,
-  });
-};
-
 export const verifyEmail = asyncHandler(async (req, res) => {
   const { verificationToken } = req.params;
 
