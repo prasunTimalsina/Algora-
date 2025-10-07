@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap");
+
+@import "tailwindcss";
+
+/* Add these after your existing @theme block */
+
+/* Grid Background Effect */
+.grid-background {
+  background-image: linear-gradient(to right, #f973161a 1px, transparent 1px),
+    linear-gradient(to bottom, #f973161a 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+.dark .grid-background {
+  background-image: linear-gradient(to right, #f9731633 1px, transparent 1px),
+    linear-gradient(to bottom, #f9731633 1px, transparent 1px);
+}
+
+/* Grid Animation */
+@keyframes grid-pan {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 30px 30px;
+  }
+}
+
+.animate-grid-pan {
+  animation: grid-pan 3s linear infinite;
+}
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  /* CORRECTED Colors from HTML */
+  --color-primary: #000000; /* BLACK, not orange! */
+  --color-background-light: #f7f7f7;
+  --color-background-dark: #191919;
+  --color-text-light: #1f2937;
+  --color-text-dark: #f9fafb;
+  --color-subtext-light: #6b7280;
+  --color-subtext-dark: #9ca3af;
+  --color-border-light: #e5e7eb;
+  --color-border-dark: #21262d;
+  --color-editor-bg: #161b22;
+}
+
+/* Code Editor Styles */
+.code-editor {
+  font-family: "Fira Code", monospace;
+}
+
+.line-number {
+  color: #484f58;
+  user-select: none;
+}
+
+.code-line:hover {
+  background-color: #21262d50;
+}
+
+/* Cursor Blink Animation */
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 1.2s infinite step-end;
+}
+
+/* Parallax Container */
+.parallax-container {
+  perspective: 1000px;
+  overflow: visible;
+}
+
+/* 3D Transform Optimization */
+.parallax-container > div {
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Smooth transitions for better performance */
+@media (prefers-reduced-motion: no-preference) {
+  .parallax-container > div {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .parallax-container > div:hover {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Disable parallax on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .parallax-container > div {
+    transform: rotateX(10deg) rotateY(-5deg) rotateZ(5deg) !important;
+  }
+}
