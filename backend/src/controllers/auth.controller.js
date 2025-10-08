@@ -16,7 +16,6 @@ import {
   emailVerificationMailgenContent,
   sendEmail,
 } from "../utils/mail.util.js";
-import { use, useReducer } from "react";
 
 export const register = asyncHandler(async (req, res) => {
   const { email, password } = req.body;

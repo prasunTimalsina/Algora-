@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { db } from "../libs/db";
+import { db } from "../libs/db.js";
 
 export const generateTemporaryToken = () => {
   // This token should be client facing
@@ -44,3 +44,75 @@ export const generateRefreshToken = async (userId) => {
     { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
   );
 };
+
+/**
+ * For OAuth
+ */
+
+export async function getUserWithOauthId({ provider, email }) {
+  const user = db.user.findUnique({
+    where: { email },
+    select: {
+      id: true,
+      email: true,
+      username: true,
+      isEmailVerified: true,
+      oauthAccounts: {
+        where: { provider },
+        select: {
+          providerAccountId: true,
+          provider: true,
+        },
+      },
+    },
+  });
+  return user;
+}
+
+export async function linkUserWithOauth({
+  userId,
+  provider,
+  providerAccountId,
+}) {
+  await db.oauthaccounts.create({
+    userId,
+    provider,
+    providerAccountId,
+  });
+}
+
+export async function createUserWithOauth(
+  name,
+  email,
+  provider,
+  providerAccountId
+) {
+  const result = await db.$transaction(async (prisma) => {
+    const user = await prisma.user.create({
+      data: {
+        email,
+        isEmailVerified: true,
+        password: "12345", //FIXME: you need to fix this , the password is set for temporary transaction only
+        fullName: name,
+      },
+    });
+
+    await prisma.oAuthAccount.create({
+      data: {
+        provider,
+        providerAccountId,
+        userId: user.id,
+      },
+    });
+
+    return {
+      id: user.id,
+      name,
+      email,
+      provider,
+      providerAccountId,
+    };
+  });
+
+  return result;
+}

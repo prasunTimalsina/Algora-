@@ -58,6 +58,11 @@ export type DailyUserStats = $Result.DefaultSelection<Prisma.$DailyUserStatsPayl
  * 
  */
 export type UserStats = $Result.DefaultSelection<Prisma.$UserStatsPayload>
+/**
+ * Model OAuthAccount
+ * 
+ */
+export type OAuthAccount = $Result.DefaultSelection<Prisma.$OAuthAccountPayload>
 
 /**
  * Enums
@@ -79,6 +84,14 @@ export const Difficulty: {
 
 export type Difficulty = (typeof Difficulty)[keyof typeof Difficulty]
 
+
+export const Provider: {
+  GOOGLE: 'GOOGLE',
+  GITHUB: 'GITHUB'
+};
+
+export type Provider = (typeof Provider)[keyof typeof Provider]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -88,6 +101,10 @@ export const UserRole: typeof $Enums.UserRole
 export type Difficulty = $Enums.Difficulty
 
 export const Difficulty: typeof $Enums.Difficulty
+
+export type Provider = $Enums.Provider
+
+export const Provider: typeof $Enums.Provider
 
 /**
  * ##  Prisma Client ʲˢ
@@ -303,6 +320,16 @@ export class PrismaClient<
     * ```
     */
   get userStats(): Prisma.UserStatsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.oAuthAccount`: Exposes CRUD operations for the **OAuthAccount** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OAuthAccounts
+    * const oAuthAccounts = await prisma.oAuthAccount.findMany()
+    * ```
+    */
+  get oAuthAccount(): Prisma.OAuthAccountDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -751,7 +778,8 @@ export namespace Prisma {
     Playlist: 'Playlist',
     ProblemInPlaylist: 'ProblemInPlaylist',
     DailyUserStats: 'DailyUserStats',
-    UserStats: 'UserStats'
+    UserStats: 'UserStats',
+    OAuthAccount: 'OAuthAccount'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -770,7 +798,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problem" | "submission" | "testCaseResult" | "problemSolved" | "playlist" | "problemInPlaylist" | "dailyUserStats" | "userStats"
+      modelProps: "user" | "problem" | "submission" | "testCaseResult" | "problemSolved" | "playlist" | "problemInPlaylist" | "dailyUserStats" | "userStats" | "oAuthAccount"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1440,6 +1468,80 @@ export namespace Prisma {
           }
         }
       }
+      OAuthAccount: {
+        payload: Prisma.$OAuthAccountPayload<ExtArgs>
+        fields: Prisma.OAuthAccountFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OAuthAccountFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OAuthAccountFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+          }
+          findFirst: {
+            args: Prisma.OAuthAccountFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OAuthAccountFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+          }
+          findMany: {
+            args: Prisma.OAuthAccountFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>[]
+          }
+          create: {
+            args: Prisma.OAuthAccountCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+          }
+          createMany: {
+            args: Prisma.OAuthAccountCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OAuthAccountCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>[]
+          }
+          delete: {
+            args: Prisma.OAuthAccountDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+          }
+          update: {
+            args: Prisma.OAuthAccountUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+          }
+          deleteMany: {
+            args: Prisma.OAuthAccountDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OAuthAccountUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OAuthAccountUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>[]
+          }
+          upsert: {
+            args: Prisma.OAuthAccountUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+          }
+          aggregate: {
+            args: Prisma.OAuthAccountAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOAuthAccount>
+          }
+          groupBy: {
+            args: Prisma.OAuthAccountGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OAuthAccountGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OAuthAccountCountArgs<ExtArgs>
+            result: $Utils.Optional<OAuthAccountCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1533,6 +1635,7 @@ export namespace Prisma {
     problemInPlaylist?: ProblemInPlaylistOmit
     dailyUserStats?: DailyUserStatsOmit
     userStats?: UserStatsOmit
+    oAuthAccount?: OAuthAccountOmit
   }
 
   /* Types for Logging */
@@ -1631,6 +1734,7 @@ export namespace Prisma {
     submission: number
     problemSolved: number
     playlists: number
+    oauthAccounts: number
     DailyUserStats: number
   }
 
@@ -1639,6 +1743,7 @@ export namespace Prisma {
     submission?: boolean | UserCountOutputTypeCountSubmissionArgs
     problemSolved?: boolean | UserCountOutputTypeCountProblemSolvedArgs
     playlists?: boolean | UserCountOutputTypeCountPlaylistsArgs
+    oauthAccounts?: boolean | UserCountOutputTypeCountOauthAccountsArgs
     DailyUserStats?: boolean | UserCountOutputTypeCountDailyUserStatsArgs
   }
 
@@ -1679,6 +1784,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPlaylistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PlaylistWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOauthAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OAuthAccountWhereInput
   }
 
   /**
@@ -2052,6 +2164,7 @@ export namespace Prisma {
     submission?: boolean | User$submissionArgs<ExtArgs>
     problemSolved?: boolean | User$problemSolvedArgs<ExtArgs>
     playlists?: boolean | User$playlistsArgs<ExtArgs>
+    oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>
     DailyUserStats?: boolean | User$DailyUserStatsArgs<ExtArgs>
     UserStats?: boolean | User$UserStatsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2117,6 +2230,7 @@ export namespace Prisma {
     submission?: boolean | User$submissionArgs<ExtArgs>
     problemSolved?: boolean | User$problemSolvedArgs<ExtArgs>
     playlists?: boolean | User$playlistsArgs<ExtArgs>
+    oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>
     DailyUserStats?: boolean | User$DailyUserStatsArgs<ExtArgs>
     UserStats?: boolean | User$UserStatsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2131,6 +2245,7 @@ export namespace Prisma {
       submission: Prisma.$SubmissionPayload<ExtArgs>[]
       problemSolved: Prisma.$ProblemSolvedPayload<ExtArgs>[]
       playlists: Prisma.$PlaylistPayload<ExtArgs>[]
+      oauthAccounts: Prisma.$OAuthAccountPayload<ExtArgs>[]
       DailyUserStats: Prisma.$DailyUserStatsPayload<ExtArgs>[]
       UserStats: Prisma.$UserStatsPayload<ExtArgs> | null
     }
@@ -2548,6 +2663,7 @@ export namespace Prisma {
     submission<T extends User$submissionArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     problemSolved<T extends User$problemSolvedArgs<ExtArgs> = {}>(args?: Subset<T, User$problemSolvedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProblemSolvedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     playlists<T extends User$playlistsArgs<ExtArgs> = {}>(args?: Subset<T, User$playlistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlaylistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    oauthAccounts<T extends User$oauthAccountsArgs<ExtArgs> = {}>(args?: Subset<T, User$oauthAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     DailyUserStats<T extends User$DailyUserStatsArgs<ExtArgs> = {}>(args?: Subset<T, User$DailyUserStatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyUserStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     UserStats<T extends User$UserStatsArgs<ExtArgs> = {}>(args?: Subset<T, User$UserStatsArgs<ExtArgs>>): Prisma__UserStatsClient<$Result.GetResult<Prisma.$UserStatsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -3075,6 +3191,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PlaylistScalarFieldEnum | PlaylistScalarFieldEnum[]
+  }
+
+  /**
+   * User.oauthAccounts
+   */
+  export type User$oauthAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    where?: OAuthAccountWhereInput
+    orderBy?: OAuthAccountOrderByWithRelationInput | OAuthAccountOrderByWithRelationInput[]
+    cursor?: OAuthAccountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OAuthAccountScalarFieldEnum | OAuthAccountScalarFieldEnum[]
   }
 
   /**
@@ -12489,6 +12629,1064 @@ export namespace Prisma {
 
 
   /**
+   * Model OAuthAccount
+   */
+
+  export type AggregateOAuthAccount = {
+    _count: OAuthAccountCountAggregateOutputType | null
+    _min: OAuthAccountMinAggregateOutputType | null
+    _max: OAuthAccountMaxAggregateOutputType | null
+  }
+
+  export type OAuthAccountMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    provider: $Enums.Provider | null
+    providerAccountId: string | null
+    createdAt: Date | null
+  }
+
+  export type OAuthAccountMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    provider: $Enums.Provider | null
+    providerAccountId: string | null
+    createdAt: Date | null
+  }
+
+  export type OAuthAccountCountAggregateOutputType = {
+    id: number
+    userId: number
+    provider: number
+    providerAccountId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type OAuthAccountMinAggregateInputType = {
+    id?: true
+    userId?: true
+    provider?: true
+    providerAccountId?: true
+    createdAt?: true
+  }
+
+  export type OAuthAccountMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    provider?: true
+    providerAccountId?: true
+    createdAt?: true
+  }
+
+  export type OAuthAccountCountAggregateInputType = {
+    id?: true
+    userId?: true
+    provider?: true
+    providerAccountId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type OAuthAccountAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OAuthAccount to aggregate.
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OAuthAccounts to fetch.
+     */
+    orderBy?: OAuthAccountOrderByWithRelationInput | OAuthAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OAuthAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OAuthAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OAuthAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OAuthAccounts
+    **/
+    _count?: true | OAuthAccountCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OAuthAccountMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OAuthAccountMaxAggregateInputType
+  }
+
+  export type GetOAuthAccountAggregateType<T extends OAuthAccountAggregateArgs> = {
+        [P in keyof T & keyof AggregateOAuthAccount]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOAuthAccount[P]>
+      : GetScalarType<T[P], AggregateOAuthAccount[P]>
+  }
+
+
+
+
+  export type OAuthAccountGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OAuthAccountWhereInput
+    orderBy?: OAuthAccountOrderByWithAggregationInput | OAuthAccountOrderByWithAggregationInput[]
+    by: OAuthAccountScalarFieldEnum[] | OAuthAccountScalarFieldEnum
+    having?: OAuthAccountScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OAuthAccountCountAggregateInputType | true
+    _min?: OAuthAccountMinAggregateInputType
+    _max?: OAuthAccountMaxAggregateInputType
+  }
+
+  export type OAuthAccountGroupByOutputType = {
+    id: string
+    userId: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt: Date
+    _count: OAuthAccountCountAggregateOutputType | null
+    _min: OAuthAccountMinAggregateOutputType | null
+    _max: OAuthAccountMaxAggregateOutputType | null
+  }
+
+  type GetOAuthAccountGroupByPayload<T extends OAuthAccountGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OAuthAccountGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OAuthAccountGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OAuthAccountGroupByOutputType[P]>
+            : GetScalarType<T[P], OAuthAccountGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OAuthAccountSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    providerAccountId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["oAuthAccount"]>
+
+  export type OAuthAccountSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    providerAccountId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["oAuthAccount"]>
+
+  export type OAuthAccountSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    providerAccountId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["oAuthAccount"]>
+
+  export type OAuthAccountSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    providerAccountId?: boolean
+    createdAt?: boolean
+  }
+
+  export type OAuthAccountOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "provider" | "providerAccountId" | "createdAt", ExtArgs["result"]["oAuthAccount"]>
+  export type OAuthAccountInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OAuthAccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OAuthAccountIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $OAuthAccountPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OAuthAccount"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      provider: $Enums.Provider
+      providerAccountId: string
+      createdAt: Date
+    }, ExtArgs["result"]["oAuthAccount"]>
+    composites: {}
+  }
+
+  type OAuthAccountGetPayload<S extends boolean | null | undefined | OAuthAccountDefaultArgs> = $Result.GetResult<Prisma.$OAuthAccountPayload, S>
+
+  type OAuthAccountCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OAuthAccountFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OAuthAccountCountAggregateInputType | true
+    }
+
+  export interface OAuthAccountDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OAuthAccount'], meta: { name: 'OAuthAccount' } }
+    /**
+     * Find zero or one OAuthAccount that matches the filter.
+     * @param {OAuthAccountFindUniqueArgs} args - Arguments to find a OAuthAccount
+     * @example
+     * // Get one OAuthAccount
+     * const oAuthAccount = await prisma.oAuthAccount.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OAuthAccountFindUniqueArgs>(args: SelectSubset<T, OAuthAccountFindUniqueArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OAuthAccount that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OAuthAccountFindUniqueOrThrowArgs} args - Arguments to find a OAuthAccount
+     * @example
+     * // Get one OAuthAccount
+     * const oAuthAccount = await prisma.oAuthAccount.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OAuthAccountFindUniqueOrThrowArgs>(args: SelectSubset<T, OAuthAccountFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OAuthAccount that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountFindFirstArgs} args - Arguments to find a OAuthAccount
+     * @example
+     * // Get one OAuthAccount
+     * const oAuthAccount = await prisma.oAuthAccount.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OAuthAccountFindFirstArgs>(args?: SelectSubset<T, OAuthAccountFindFirstArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OAuthAccount that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountFindFirstOrThrowArgs} args - Arguments to find a OAuthAccount
+     * @example
+     * // Get one OAuthAccount
+     * const oAuthAccount = await prisma.oAuthAccount.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OAuthAccountFindFirstOrThrowArgs>(args?: SelectSubset<T, OAuthAccountFindFirstOrThrowArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OAuthAccounts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OAuthAccounts
+     * const oAuthAccounts = await prisma.oAuthAccount.findMany()
+     * 
+     * // Get first 10 OAuthAccounts
+     * const oAuthAccounts = await prisma.oAuthAccount.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const oAuthAccountWithIdOnly = await prisma.oAuthAccount.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OAuthAccountFindManyArgs>(args?: SelectSubset<T, OAuthAccountFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OAuthAccount.
+     * @param {OAuthAccountCreateArgs} args - Arguments to create a OAuthAccount.
+     * @example
+     * // Create one OAuthAccount
+     * const OAuthAccount = await prisma.oAuthAccount.create({
+     *   data: {
+     *     // ... data to create a OAuthAccount
+     *   }
+     * })
+     * 
+     */
+    create<T extends OAuthAccountCreateArgs>(args: SelectSubset<T, OAuthAccountCreateArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OAuthAccounts.
+     * @param {OAuthAccountCreateManyArgs} args - Arguments to create many OAuthAccounts.
+     * @example
+     * // Create many OAuthAccounts
+     * const oAuthAccount = await prisma.oAuthAccount.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OAuthAccountCreateManyArgs>(args?: SelectSubset<T, OAuthAccountCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OAuthAccounts and returns the data saved in the database.
+     * @param {OAuthAccountCreateManyAndReturnArgs} args - Arguments to create many OAuthAccounts.
+     * @example
+     * // Create many OAuthAccounts
+     * const oAuthAccount = await prisma.oAuthAccount.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OAuthAccounts and only return the `id`
+     * const oAuthAccountWithIdOnly = await prisma.oAuthAccount.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OAuthAccountCreateManyAndReturnArgs>(args?: SelectSubset<T, OAuthAccountCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OAuthAccount.
+     * @param {OAuthAccountDeleteArgs} args - Arguments to delete one OAuthAccount.
+     * @example
+     * // Delete one OAuthAccount
+     * const OAuthAccount = await prisma.oAuthAccount.delete({
+     *   where: {
+     *     // ... filter to delete one OAuthAccount
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OAuthAccountDeleteArgs>(args: SelectSubset<T, OAuthAccountDeleteArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OAuthAccount.
+     * @param {OAuthAccountUpdateArgs} args - Arguments to update one OAuthAccount.
+     * @example
+     * // Update one OAuthAccount
+     * const oAuthAccount = await prisma.oAuthAccount.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OAuthAccountUpdateArgs>(args: SelectSubset<T, OAuthAccountUpdateArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OAuthAccounts.
+     * @param {OAuthAccountDeleteManyArgs} args - Arguments to filter OAuthAccounts to delete.
+     * @example
+     * // Delete a few OAuthAccounts
+     * const { count } = await prisma.oAuthAccount.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OAuthAccountDeleteManyArgs>(args?: SelectSubset<T, OAuthAccountDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OAuthAccounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OAuthAccounts
+     * const oAuthAccount = await prisma.oAuthAccount.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OAuthAccountUpdateManyArgs>(args: SelectSubset<T, OAuthAccountUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OAuthAccounts and returns the data updated in the database.
+     * @param {OAuthAccountUpdateManyAndReturnArgs} args - Arguments to update many OAuthAccounts.
+     * @example
+     * // Update many OAuthAccounts
+     * const oAuthAccount = await prisma.oAuthAccount.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OAuthAccounts and only return the `id`
+     * const oAuthAccountWithIdOnly = await prisma.oAuthAccount.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OAuthAccountUpdateManyAndReturnArgs>(args: SelectSubset<T, OAuthAccountUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OAuthAccount.
+     * @param {OAuthAccountUpsertArgs} args - Arguments to update or create a OAuthAccount.
+     * @example
+     * // Update or create a OAuthAccount
+     * const oAuthAccount = await prisma.oAuthAccount.upsert({
+     *   create: {
+     *     // ... data to create a OAuthAccount
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OAuthAccount we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OAuthAccountUpsertArgs>(args: SelectSubset<T, OAuthAccountUpsertArgs<ExtArgs>>): Prisma__OAuthAccountClient<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OAuthAccounts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountCountArgs} args - Arguments to filter OAuthAccounts to count.
+     * @example
+     * // Count the number of OAuthAccounts
+     * const count = await prisma.oAuthAccount.count({
+     *   where: {
+     *     // ... the filter for the OAuthAccounts we want to count
+     *   }
+     * })
+    **/
+    count<T extends OAuthAccountCountArgs>(
+      args?: Subset<T, OAuthAccountCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OAuthAccountCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OAuthAccount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OAuthAccountAggregateArgs>(args: Subset<T, OAuthAccountAggregateArgs>): Prisma.PrismaPromise<GetOAuthAccountAggregateType<T>>
+
+    /**
+     * Group by OAuthAccount.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OAuthAccountGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OAuthAccountGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OAuthAccountGroupByArgs['orderBy'] }
+        : { orderBy?: OAuthAccountGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OAuthAccountGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOAuthAccountGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OAuthAccount model
+   */
+  readonly fields: OAuthAccountFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OAuthAccount.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OAuthAccountClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OAuthAccount model
+   */
+  interface OAuthAccountFieldRefs {
+    readonly id: FieldRef<"OAuthAccount", 'String'>
+    readonly userId: FieldRef<"OAuthAccount", 'String'>
+    readonly provider: FieldRef<"OAuthAccount", 'Provider'>
+    readonly providerAccountId: FieldRef<"OAuthAccount", 'String'>
+    readonly createdAt: FieldRef<"OAuthAccount", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OAuthAccount findUnique
+   */
+  export type OAuthAccountFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which OAuthAccount to fetch.
+     */
+    where: OAuthAccountWhereUniqueInput
+  }
+
+  /**
+   * OAuthAccount findUniqueOrThrow
+   */
+  export type OAuthAccountFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which OAuthAccount to fetch.
+     */
+    where: OAuthAccountWhereUniqueInput
+  }
+
+  /**
+   * OAuthAccount findFirst
+   */
+  export type OAuthAccountFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which OAuthAccount to fetch.
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OAuthAccounts to fetch.
+     */
+    orderBy?: OAuthAccountOrderByWithRelationInput | OAuthAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OAuthAccounts.
+     */
+    cursor?: OAuthAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OAuthAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OAuthAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OAuthAccounts.
+     */
+    distinct?: OAuthAccountScalarFieldEnum | OAuthAccountScalarFieldEnum[]
+  }
+
+  /**
+   * OAuthAccount findFirstOrThrow
+   */
+  export type OAuthAccountFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which OAuthAccount to fetch.
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OAuthAccounts to fetch.
+     */
+    orderBy?: OAuthAccountOrderByWithRelationInput | OAuthAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OAuthAccounts.
+     */
+    cursor?: OAuthAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OAuthAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OAuthAccounts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OAuthAccounts.
+     */
+    distinct?: OAuthAccountScalarFieldEnum | OAuthAccountScalarFieldEnum[]
+  }
+
+  /**
+   * OAuthAccount findMany
+   */
+  export type OAuthAccountFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * Filter, which OAuthAccounts to fetch.
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OAuthAccounts to fetch.
+     */
+    orderBy?: OAuthAccountOrderByWithRelationInput | OAuthAccountOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OAuthAccounts.
+     */
+    cursor?: OAuthAccountWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OAuthAccounts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OAuthAccounts.
+     */
+    skip?: number
+    distinct?: OAuthAccountScalarFieldEnum | OAuthAccountScalarFieldEnum[]
+  }
+
+  /**
+   * OAuthAccount create
+   */
+  export type OAuthAccountCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OAuthAccount.
+     */
+    data: XOR<OAuthAccountCreateInput, OAuthAccountUncheckedCreateInput>
+  }
+
+  /**
+   * OAuthAccount createMany
+   */
+  export type OAuthAccountCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OAuthAccounts.
+     */
+    data: OAuthAccountCreateManyInput | OAuthAccountCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OAuthAccount createManyAndReturn
+   */
+  export type OAuthAccountCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * The data used to create many OAuthAccounts.
+     */
+    data: OAuthAccountCreateManyInput | OAuthAccountCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OAuthAccount update
+   */
+  export type OAuthAccountUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OAuthAccount.
+     */
+    data: XOR<OAuthAccountUpdateInput, OAuthAccountUncheckedUpdateInput>
+    /**
+     * Choose, which OAuthAccount to update.
+     */
+    where: OAuthAccountWhereUniqueInput
+  }
+
+  /**
+   * OAuthAccount updateMany
+   */
+  export type OAuthAccountUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OAuthAccounts.
+     */
+    data: XOR<OAuthAccountUpdateManyMutationInput, OAuthAccountUncheckedUpdateManyInput>
+    /**
+     * Filter which OAuthAccounts to update
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * Limit how many OAuthAccounts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OAuthAccount updateManyAndReturn
+   */
+  export type OAuthAccountUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * The data used to update OAuthAccounts.
+     */
+    data: XOR<OAuthAccountUpdateManyMutationInput, OAuthAccountUncheckedUpdateManyInput>
+    /**
+     * Filter which OAuthAccounts to update
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * Limit how many OAuthAccounts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OAuthAccount upsert
+   */
+  export type OAuthAccountUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OAuthAccount to update in case it exists.
+     */
+    where: OAuthAccountWhereUniqueInput
+    /**
+     * In case the OAuthAccount found by the `where` argument doesn't exist, create a new OAuthAccount with this data.
+     */
+    create: XOR<OAuthAccountCreateInput, OAuthAccountUncheckedCreateInput>
+    /**
+     * In case the OAuthAccount was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OAuthAccountUpdateInput, OAuthAccountUncheckedUpdateInput>
+  }
+
+  /**
+   * OAuthAccount delete
+   */
+  export type OAuthAccountDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+    /**
+     * Filter which OAuthAccount to delete.
+     */
+    where: OAuthAccountWhereUniqueInput
+  }
+
+  /**
+   * OAuthAccount deleteMany
+   */
+  export type OAuthAccountDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OAuthAccounts to delete
+     */
+    where?: OAuthAccountWhereInput
+    /**
+     * Limit how many OAuthAccounts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OAuthAccount without action
+   */
+  export type OAuthAccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OAuthAccount
+     */
+    select?: OAuthAccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OAuthAccount
+     */
+    omit?: OAuthAccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OAuthAccountInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12652,6 +13850,17 @@ export namespace Prisma {
   export type UserStatsScalarFieldEnum = (typeof UserStatsScalarFieldEnum)[keyof typeof UserStatsScalarFieldEnum]
 
 
+  export const OAuthAccountScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    provider: 'provider',
+    providerAccountId: 'providerAccountId',
+    createdAt: 'createdAt'
+  };
+
+  export type OAuthAccountScalarFieldEnum = (typeof OAuthAccountScalarFieldEnum)[keyof typeof OAuthAccountScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -12800,6 +14009,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Provider'
+   */
+  export type EnumProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Provider'>
+    
+
+
+  /**
+   * Reference to a field of type 'Provider[]'
+   */
+  export type ListEnumProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Provider[]'>
+    
   /**
    * Deep Input Types
    */
@@ -12828,6 +14051,7 @@ export namespace Prisma {
     submission?: SubmissionListRelationFilter
     problemSolved?: ProblemSolvedListRelationFilter
     playlists?: PlaylistListRelationFilter
+    oauthAccounts?: OAuthAccountListRelationFilter
     DailyUserStats?: DailyUserStatsListRelationFilter
     UserStats?: XOR<UserStatsNullableScalarRelationFilter, UserStatsWhereInput> | null
   }
@@ -12852,6 +14076,7 @@ export namespace Prisma {
     submission?: SubmissionOrderByRelationAggregateInput
     problemSolved?: ProblemSolvedOrderByRelationAggregateInput
     playlists?: PlaylistOrderByRelationAggregateInput
+    oauthAccounts?: OAuthAccountOrderByRelationAggregateInput
     DailyUserStats?: DailyUserStatsOrderByRelationAggregateInput
     UserStats?: UserStatsOrderByWithRelationInput
   }
@@ -12879,6 +14104,7 @@ export namespace Prisma {
     submission?: SubmissionListRelationFilter
     problemSolved?: ProblemSolvedListRelationFilter
     playlists?: PlaylistListRelationFilter
+    oauthAccounts?: OAuthAccountListRelationFilter
     DailyUserStats?: DailyUserStatsListRelationFilter
     UserStats?: XOR<UserStatsNullableScalarRelationFilter, UserStatsWhereInput> | null
   }, "id" | "username" | "email">
@@ -13608,6 +14834,61 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"UserStats"> | Date | string
   }
 
+  export type OAuthAccountWhereInput = {
+    AND?: OAuthAccountWhereInput | OAuthAccountWhereInput[]
+    OR?: OAuthAccountWhereInput[]
+    NOT?: OAuthAccountWhereInput | OAuthAccountWhereInput[]
+    id?: StringFilter<"OAuthAccount"> | string
+    userId?: StringFilter<"OAuthAccount"> | string
+    provider?: EnumProviderFilter<"OAuthAccount"> | $Enums.Provider
+    providerAccountId?: StringFilter<"OAuthAccount"> | string
+    createdAt?: DateTimeFilter<"OAuthAccount"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type OAuthAccountOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    providerAccountId?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type OAuthAccountWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    providerAccountId?: string
+    AND?: OAuthAccountWhereInput | OAuthAccountWhereInput[]
+    OR?: OAuthAccountWhereInput[]
+    NOT?: OAuthAccountWhereInput | OAuthAccountWhereInput[]
+    userId?: StringFilter<"OAuthAccount"> | string
+    provider?: EnumProviderFilter<"OAuthAccount"> | $Enums.Provider
+    createdAt?: DateTimeFilter<"OAuthAccount"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "providerAccountId">
+
+  export type OAuthAccountOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    providerAccountId?: SortOrder
+    createdAt?: SortOrder
+    _count?: OAuthAccountCountOrderByAggregateInput
+    _max?: OAuthAccountMaxOrderByAggregateInput
+    _min?: OAuthAccountMinOrderByAggregateInput
+  }
+
+  export type OAuthAccountScalarWhereWithAggregatesInput = {
+    AND?: OAuthAccountScalarWhereWithAggregatesInput | OAuthAccountScalarWhereWithAggregatesInput[]
+    OR?: OAuthAccountScalarWhereWithAggregatesInput[]
+    NOT?: OAuthAccountScalarWhereWithAggregatesInput | OAuthAccountScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OAuthAccount"> | string
+    userId?: StringWithAggregatesFilter<"OAuthAccount"> | string
+    provider?: EnumProviderWithAggregatesFilter<"OAuthAccount"> | $Enums.Provider
+    providerAccountId?: StringWithAggregatesFilter<"OAuthAccount"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"OAuthAccount"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     username?: string | null
@@ -13628,6 +14909,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
     UserStats?: UserStatsCreateNestedOneWithoutUserInput
   }
@@ -13652,6 +14934,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
     UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
   }
@@ -13676,6 +14959,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUpdateOneWithoutUserNestedInput
   }
@@ -13700,6 +14984,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -14502,6 +15787,61 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OAuthAccountCreateInput = {
+    id?: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutOauthAccountsInput
+  }
+
+  export type OAuthAccountUncheckedCreateInput = {
+    id?: string
+    userId: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt?: Date | string
+  }
+
+  export type OAuthAccountUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutOauthAccountsNestedInput
+  }
+
+  export type OAuthAccountUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OAuthAccountCreateManyInput = {
+    id?: string
+    userId: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt?: Date | string
+  }
+
+  export type OAuthAccountUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OAuthAccountUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -14590,6 +15930,12 @@ export namespace Prisma {
     none?: PlaylistWhereInput
   }
 
+  export type OAuthAccountListRelationFilter = {
+    every?: OAuthAccountWhereInput
+    some?: OAuthAccountWhereInput
+    none?: OAuthAccountWhereInput
+  }
+
   export type DailyUserStatsListRelationFilter = {
     every?: DailyUserStatsWhereInput
     some?: DailyUserStatsWhereInput
@@ -14619,6 +15965,10 @@ export namespace Prisma {
   }
 
   export type PlaylistOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OAuthAccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15378,6 +16728,47 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type EnumProviderFilter<$PrismaModel = never> = {
+    equals?: $Enums.Provider | EnumProviderFieldRefInput<$PrismaModel>
+    in?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    not?: NestedEnumProviderFilter<$PrismaModel> | $Enums.Provider
+  }
+
+  export type OAuthAccountCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    providerAccountId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OAuthAccountMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    providerAccountId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OAuthAccountMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    providerAccountId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumProviderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Provider | EnumProviderFieldRefInput<$PrismaModel>
+    in?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    not?: NestedEnumProviderWithAggregatesFilter<$PrismaModel> | $Enums.Provider
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProviderFilter<$PrismaModel>
+    _max?: NestedEnumProviderFilter<$PrismaModel>
+  }
+
   export type ProblemCreateNestedManyWithoutUserInput = {
     create?: XOR<ProblemCreateWithoutUserInput, ProblemUncheckedCreateWithoutUserInput> | ProblemCreateWithoutUserInput[] | ProblemUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProblemCreateOrConnectWithoutUserInput | ProblemCreateOrConnectWithoutUserInput[]
@@ -15404,6 +16795,13 @@ export namespace Prisma {
     connectOrCreate?: PlaylistCreateOrConnectWithoutUserInput | PlaylistCreateOrConnectWithoutUserInput[]
     createMany?: PlaylistCreateManyUserInputEnvelope
     connect?: PlaylistWhereUniqueInput | PlaylistWhereUniqueInput[]
+  }
+
+  export type OAuthAccountCreateNestedManyWithoutUserInput = {
+    create?: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput> | OAuthAccountCreateWithoutUserInput[] | OAuthAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OAuthAccountCreateOrConnectWithoutUserInput | OAuthAccountCreateOrConnectWithoutUserInput[]
+    createMany?: OAuthAccountCreateManyUserInputEnvelope
+    connect?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
   }
 
   export type DailyUserStatsCreateNestedManyWithoutUserInput = {
@@ -15445,6 +16843,13 @@ export namespace Prisma {
     connectOrCreate?: PlaylistCreateOrConnectWithoutUserInput | PlaylistCreateOrConnectWithoutUserInput[]
     createMany?: PlaylistCreateManyUserInputEnvelope
     connect?: PlaylistWhereUniqueInput | PlaylistWhereUniqueInput[]
+  }
+
+  export type OAuthAccountUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput> | OAuthAccountCreateWithoutUserInput[] | OAuthAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OAuthAccountCreateOrConnectWithoutUserInput | OAuthAccountCreateOrConnectWithoutUserInput[]
+    createMany?: OAuthAccountCreateManyUserInputEnvelope
+    connect?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
   }
 
   export type DailyUserStatsUncheckedCreateNestedManyWithoutUserInput = {
@@ -15540,6 +16945,20 @@ export namespace Prisma {
     deleteMany?: PlaylistScalarWhereInput | PlaylistScalarWhereInput[]
   }
 
+  export type OAuthAccountUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput> | OAuthAccountCreateWithoutUserInput[] | OAuthAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OAuthAccountCreateOrConnectWithoutUserInput | OAuthAccountCreateOrConnectWithoutUserInput[]
+    upsert?: OAuthAccountUpsertWithWhereUniqueWithoutUserInput | OAuthAccountUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OAuthAccountCreateManyUserInputEnvelope
+    set?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    disconnect?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    delete?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    connect?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    update?: OAuthAccountUpdateWithWhereUniqueWithoutUserInput | OAuthAccountUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OAuthAccountUpdateManyWithWhereWithoutUserInput | OAuthAccountUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OAuthAccountScalarWhereInput | OAuthAccountScalarWhereInput[]
+  }
+
   export type DailyUserStatsUpdateManyWithoutUserNestedInput = {
     create?: XOR<DailyUserStatsCreateWithoutUserInput, DailyUserStatsUncheckedCreateWithoutUserInput> | DailyUserStatsCreateWithoutUserInput[] | DailyUserStatsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: DailyUserStatsCreateOrConnectWithoutUserInput | DailyUserStatsCreateOrConnectWithoutUserInput[]
@@ -15618,6 +17037,20 @@ export namespace Prisma {
     update?: PlaylistUpdateWithWhereUniqueWithoutUserInput | PlaylistUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PlaylistUpdateManyWithWhereWithoutUserInput | PlaylistUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PlaylistScalarWhereInput | PlaylistScalarWhereInput[]
+  }
+
+  export type OAuthAccountUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput> | OAuthAccountCreateWithoutUserInput[] | OAuthAccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: OAuthAccountCreateOrConnectWithoutUserInput | OAuthAccountCreateOrConnectWithoutUserInput[]
+    upsert?: OAuthAccountUpsertWithWhereUniqueWithoutUserInput | OAuthAccountUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: OAuthAccountCreateManyUserInputEnvelope
+    set?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    disconnect?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    delete?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    connect?: OAuthAccountWhereUniqueInput | OAuthAccountWhereUniqueInput[]
+    update?: OAuthAccountUpdateWithWhereUniqueWithoutUserInput | OAuthAccountUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: OAuthAccountUpdateManyWithWhereWithoutUserInput | OAuthAccountUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: OAuthAccountScalarWhereInput | OAuthAccountScalarWhereInput[]
   }
 
   export type DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput = {
@@ -16057,6 +17490,24 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserStatsInput, UserUpdateWithoutUserStatsInput>, UserUncheckedUpdateWithoutUserStatsInput>
   }
 
+  export type UserCreateNestedOneWithoutOauthAccountsInput = {
+    create?: XOR<UserCreateWithoutOauthAccountsInput, UserUncheckedCreateWithoutOauthAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOauthAccountsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumProviderFieldUpdateOperationsInput = {
+    set?: $Enums.Provider
+  }
+
+  export type UserUpdateOneRequiredWithoutOauthAccountsNestedInput = {
+    create?: XOR<UserCreateWithoutOauthAccountsInput, UserUncheckedCreateWithoutOauthAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOauthAccountsInput
+    upsert?: UserUpsertWithoutOauthAccountsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOauthAccountsInput, UserUpdateWithoutOauthAccountsInput>, UserUncheckedUpdateWithoutOauthAccountsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16360,6 +17811,23 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedEnumProviderFilter<$PrismaModel = never> = {
+    equals?: $Enums.Provider | EnumProviderFieldRefInput<$PrismaModel>
+    in?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    not?: NestedEnumProviderFilter<$PrismaModel> | $Enums.Provider
+  }
+
+  export type NestedEnumProviderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Provider | EnumProviderFieldRefInput<$PrismaModel>
+    in?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel>
+    not?: NestedEnumProviderWithAggregatesFilter<$PrismaModel> | $Enums.Provider
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumProviderFilter<$PrismaModel>
+    _max?: NestedEnumProviderFilter<$PrismaModel>
+  }
+
   export type ProblemCreateWithoutUserInput = {
     id?: string
     title: string
@@ -16511,6 +17979,30 @@ export namespace Prisma {
 
   export type PlaylistCreateManyUserInputEnvelope = {
     data: PlaylistCreateManyUserInput | PlaylistCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OAuthAccountCreateWithoutUserInput = {
+    id?: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt?: Date | string
+  }
+
+  export type OAuthAccountUncheckedCreateWithoutUserInput = {
+    id?: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt?: Date | string
+  }
+
+  export type OAuthAccountCreateOrConnectWithoutUserInput = {
+    where: OAuthAccountWhereUniqueInput
+    create: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput>
+  }
+
+  export type OAuthAccountCreateManyUserInputEnvelope = {
+    data: OAuthAccountCreateManyUserInput | OAuthAccountCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16707,6 +18199,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Playlist"> | Date | string
   }
 
+  export type OAuthAccountUpsertWithWhereUniqueWithoutUserInput = {
+    where: OAuthAccountWhereUniqueInput
+    update: XOR<OAuthAccountUpdateWithoutUserInput, OAuthAccountUncheckedUpdateWithoutUserInput>
+    create: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput>
+  }
+
+  export type OAuthAccountUpdateWithWhereUniqueWithoutUserInput = {
+    where: OAuthAccountWhereUniqueInput
+    data: XOR<OAuthAccountUpdateWithoutUserInput, OAuthAccountUncheckedUpdateWithoutUserInput>
+  }
+
+  export type OAuthAccountUpdateManyWithWhereWithoutUserInput = {
+    where: OAuthAccountScalarWhereInput
+    data: XOR<OAuthAccountUpdateManyMutationInput, OAuthAccountUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type OAuthAccountScalarWhereInput = {
+    AND?: OAuthAccountScalarWhereInput | OAuthAccountScalarWhereInput[]
+    OR?: OAuthAccountScalarWhereInput[]
+    NOT?: OAuthAccountScalarWhereInput | OAuthAccountScalarWhereInput[]
+    id?: StringFilter<"OAuthAccount"> | string
+    userId?: StringFilter<"OAuthAccount"> | string
+    provider?: EnumProviderFilter<"OAuthAccount"> | $Enums.Provider
+    providerAccountId?: StringFilter<"OAuthAccount"> | string
+    createdAt?: DateTimeFilter<"OAuthAccount"> | Date | string
+  }
+
   export type DailyUserStatsUpsertWithWhereUniqueWithoutUserInput = {
     where: DailyUserStatsWhereUniqueInput
     update: XOR<DailyUserStatsUpdateWithoutUserInput, DailyUserStatsUncheckedUpdateWithoutUserInput>
@@ -16887,6 +18406,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
     UserStats?: UserStatsCreateNestedOneWithoutUserInput
   }
@@ -16910,6 +18430,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
     UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
   }
@@ -17008,6 +18529,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUpdateOneWithoutUserNestedInput
   }
@@ -17031,6 +18553,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -17094,6 +18617,7 @@ export namespace Prisma {
     problems?: ProblemCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
     UserStats?: UserStatsCreateNestedOneWithoutUserInput
   }
@@ -17117,6 +18641,7 @@ export namespace Prisma {
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
     UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
   }
@@ -17242,6 +18767,7 @@ export namespace Prisma {
     problems?: ProblemUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUpdateOneWithoutUserNestedInput
   }
@@ -17265,6 +18791,7 @@ export namespace Prisma {
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -17433,6 +18960,7 @@ export namespace Prisma {
     problems?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
     UserStats?: UserStatsCreateNestedOneWithoutUserInput
   }
@@ -17456,6 +18984,7 @@ export namespace Prisma {
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
     UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
   }
@@ -17546,6 +19075,7 @@ export namespace Prisma {
     problems?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUpdateOneWithoutUserNestedInput
   }
@@ -17569,6 +19099,7 @@ export namespace Prisma {
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -17673,6 +19204,7 @@ export namespace Prisma {
     problems?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
     UserStats?: UserStatsCreateNestedOneWithoutUserInput
   }
@@ -17696,6 +19228,7 @@ export namespace Prisma {
     problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
     UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
   }
@@ -17751,6 +19284,7 @@ export namespace Prisma {
     problems?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUpdateOneWithoutUserNestedInput
   }
@@ -17774,6 +19308,7 @@ export namespace Prisma {
     problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
@@ -17958,6 +19493,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     UserStats?: UserStatsCreateNestedOneWithoutUserInput
   }
 
@@ -17981,6 +19517,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -18020,6 +19557,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUpdateOneWithoutUserNestedInput
   }
 
@@ -18043,6 +19581,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -18066,6 +19605,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
   }
 
@@ -18089,6 +19629,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -18128,6 +19669,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
   }
 
@@ -18151,7 +19693,120 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutOauthAccountsInput = {
+    id?: string
+    username?: string | null
+    fullName?: string | null
+    email: string
+    image?: string | null
+    role?: $Enums.UserRole
+    password: string
+    isEmailVerified?: boolean | null
+    refreshToken?: string | null
+    forgotPasswordToken?: string | null
+    forgotPasswordExpiry?: Date | string | null
+    emailVerificationToken?: string | null
+    emailVerificationExpiry?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    problems?: ProblemCreateNestedManyWithoutUserInput
+    submission?: SubmissionCreateNestedManyWithoutUserInput
+    problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
+    playlists?: PlaylistCreateNestedManyWithoutUserInput
+    DailyUserStats?: DailyUserStatsCreateNestedManyWithoutUserInput
+    UserStats?: UserStatsCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOauthAccountsInput = {
+    id?: string
+    username?: string | null
+    fullName?: string | null
+    email: string
+    image?: string | null
+    role?: $Enums.UserRole
+    password: string
+    isEmailVerified?: boolean | null
+    refreshToken?: string | null
+    forgotPasswordToken?: string | null
+    forgotPasswordExpiry?: Date | string | null
+    emailVerificationToken?: string | null
+    emailVerificationExpiry?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    problems?: ProblemUncheckedCreateNestedManyWithoutUserInput
+    submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
+    playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    DailyUserStats?: DailyUserStatsUncheckedCreateNestedManyWithoutUserInput
+    UserStats?: UserStatsUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOauthAccountsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOauthAccountsInput, UserUncheckedCreateWithoutOauthAccountsInput>
+  }
+
+  export type UserUpsertWithoutOauthAccountsInput = {
+    update: XOR<UserUpdateWithoutOauthAccountsInput, UserUncheckedUpdateWithoutOauthAccountsInput>
+    create: XOR<UserCreateWithoutOauthAccountsInput, UserUncheckedCreateWithoutOauthAccountsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOauthAccountsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOauthAccountsInput, UserUncheckedUpdateWithoutOauthAccountsInput>
+  }
+
+  export type UserUpdateWithoutOauthAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    password?: StringFieldUpdateOperationsInput | string
+    isEmailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
+    forgotPasswordExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    problems?: ProblemUpdateManyWithoutUserNestedInput
+    submission?: SubmissionUpdateManyWithoutUserNestedInput
+    problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
+    playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    DailyUserStats?: DailyUserStatsUpdateManyWithoutUserNestedInput
+    UserStats?: UserStatsUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOauthAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    password?: StringFieldUpdateOperationsInput | string
+    isEmailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    forgotPasswordToken?: NullableStringFieldUpdateOperationsInput | string | null
+    forgotPasswordExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    emailVerificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerificationExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    problems?: ProblemUncheckedUpdateManyWithoutUserNestedInput
+    submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
+    playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    DailyUserStats?: DailyUserStatsUncheckedUpdateManyWithoutUserNestedInput
+    UserStats?: UserStatsUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ProblemCreateManyUserInput = {
@@ -18204,6 +19859,13 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type OAuthAccountCreateManyUserInput = {
+    id?: string
+    provider: $Enums.Provider
+    providerAccountId: string
+    createdAt?: Date | string
   }
 
   export type DailyUserStatsCreateManyUserInput = {
@@ -18380,6 +20042,27 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OAuthAccountUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OAuthAccountUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OAuthAccountUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+    providerAccountId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DailyUserStatsUpdateWithoutUserInput = {

@@ -243,6 +243,14 @@ exports.Prisma.UserStatsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OAuthAccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -278,6 +286,11 @@ exports.Difficulty = exports.$Enums.Difficulty = {
   HARD: 'HARD'
 };
 
+exports.Provider = exports.$Enums.Provider = {
+  GOOGLE: 'GOOGLE',
+  GITHUB: 'GITHUB'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Problem: 'Problem',
@@ -287,7 +300,8 @@ exports.Prisma.ModelName = {
   Playlist: 'Playlist',
   ProblemInPlaylist: 'ProblemInPlaylist',
   DailyUserStats: 'DailyUserStats',
-  UserStats: 'UserStats'
+  UserStats: 'UserStats',
+  OAuthAccount: 'OAuthAccount'
 };
 
 /**

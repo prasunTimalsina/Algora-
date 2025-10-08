@@ -25,6 +25,11 @@ enum Difficulty {
   HARD
 }
 
+enum Provider {
+  google
+  github
+}
+
 model User {
   id       String   @id @default(uuid())
   username String?  @unique
@@ -32,6 +37,10 @@ model User {
   email    String   @unique
   image    String?  @default("https://via.placeholder.com/200x200.png")
   role     UserRole @default(USER)
+  /**
+   * TODO: The password here is not mandatory for the oauth implementation
+   * you need tothough fix this by seeing the best practices there to implement
+   */
   password String
 
   isEmailVerified         Boolean?  @default(false)
@@ -48,6 +57,7 @@ model User {
   submission    Submission[]
   problemSolved ProblemSolved[]
   playlists     Playlist[]
+  oauthAccounts OAuthAccount[]
 
   DailyUserStats DailyUserStats[]
   UserStats      UserStats?
@@ -206,4 +216,17 @@ model UserStats {
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OAuthAccount {
+  id                String   @id @default(cuid())
+  userId            String
+  provider          Provider
+  providerAccountId String   @db.VarChar(255)
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerAccountId])
 }

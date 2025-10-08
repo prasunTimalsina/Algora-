@@ -55,7 +55,7 @@ var twoSum = function(nums, target) {
     >
       {/* Code Editor Container with 3D Transform */}
       <div
-        className="bg-editor-bg rounded-xl shadow-2xl border border-border-dark overflow-hidden transform  hover:scale-[1.03] hover:shadow-[0_0_80px_-10px_rgba(249,115,22,0.6)] hover:-translate-y-2 w-[140%] -ml-[20%] relative z-10 transition duration-150 ease-in-out mt-14"
+        className="bg-editor-bg rounded-xl shadow-2xl border border-border-dark overflow-hidden transform  hover:scale-[1.03] hover:shadow-[0_0_80px_-10px_rgba(249,115,22,0.6)] hover:-translate-y-2 w-[140%] -ml-[20%] relative z-10  mt-14"
         style={{
           transform: `translateY(${y}px) rotateX(10deg) rotateY(-5deg) rotateZ(${rotateZ}deg)`,
           transformStyle: "preserve-3d",
