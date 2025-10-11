@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 /**
  * AuthFooter Component
  *
@@ -9,12 +11,12 @@ export const AuthFooter = () => {
     <div className="mt-6 text-center text-sm">
       <p className="text-subtext-light dark:text-subtext-dark">
         Don't have an account?{" "}
-        <a
-          href="#"
+        <Link
+          to="/signup"
           className="font-medium text-subtext-light dark:text-subtext-dark hover:text-primary/80 transition-colors"
         >
           Sign up
-        </a>
+        </Link>
       </p>
     </div>
   );

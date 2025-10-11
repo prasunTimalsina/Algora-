@@ -41,13 +41,13 @@ export const Navbar = () => {
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link, idx) => (
-            <a
+            <Link
               key={idx}
               className="text-subtext-light dark:text-subtext-dark hover:text-primary dark:hover:text-primary"
-              href={link.href}
+              to={link.href}
             >
               {link.icon ? link.icon : link.label}
-            </a>
+            </Link>
           ))}
         </div>
         {/* Desktop Auth Buttons */}

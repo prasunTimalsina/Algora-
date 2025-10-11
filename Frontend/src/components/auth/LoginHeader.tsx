@@ -1,4 +1,5 @@
 import CodeIcon from "@mui/icons-material/Code";
+import { Link } from "react-router-dom";
 
 /**
  * LoginHeader Component
@@ -12,7 +13,9 @@ export const LoginHeader = () => {
       {/* Logo and App Name */}
       <div className="flex items-center text-text-light dark:text-text-dark mb-2">
         <CodeIcon className="text-2xl mr-2" />
-        <h2 className="text-2xl font-bold font-display">algora</h2>
+        <Link to="/" className="text-2xl font-bold font-display">
+          algora
+        </Link>
       </div>
 
       {/* Subtitle */}

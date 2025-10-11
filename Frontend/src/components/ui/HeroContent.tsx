@@ -1,15 +1,17 @@
+import { Link } from "react-router-dom";
+
 const ctaButtons = [
   {
-    text: "Sign up free",
-    href: "#",
+    text: "Sign up",
+    href: "signup",
     className:
-      "w-full sm:w-auto text-center bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-lg",
+      "w-full sm:w-auto text-center bg-primary text-white px-10 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-lg",
   },
   {
-    text: "Book a demo",
-    href: "#",
+    text: "Log in",
+    href: "login",
     className:
-      "w-full sm:w-auto text-center bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark px-8 py-4 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-lg",
+      "w-full sm:w-auto text-center bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark px-10 py-2 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-lg",
   },
 ];
 
@@ -28,9 +30,9 @@ export const HeroContent = () => {
 
       <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 items-start">
         {ctaButtons.map((button, index) => (
-          <a key={index} className={button.className} href={button.href}>
+          <Link key={index} className={button.className} to={button.href}>
             {button.text}
-          </a>
+          </Link>
         ))}
       </div>
 

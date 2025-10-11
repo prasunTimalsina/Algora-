@@ -1,13 +1,13 @@
 interface FormFieldProps {
-  id: string;
-  name: string;
-  type: string;
-  label: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  autoComplete?: string;
-  required?: boolean;
+  id: string
+  name: string
+  type: string
+  label: string
+  placeholder: string
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  autoComplete?: string
+  required?: boolean
 }
 
 /**
@@ -49,5 +49,5 @@ export const FormField = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
