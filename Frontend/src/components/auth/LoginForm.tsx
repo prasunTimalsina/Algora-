@@ -5,12 +5,17 @@ import { Link } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginUserSchema } from '../../types/schema'
 
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
+
 interface LoginFormData {
   email: string
   password: string
 }
 
 export const LoginForm: React.FC = () => {
+  const [showPassword, setShowPassword] = React.useState(false)
+
   const {
     register,
     handleSubmit,
@@ -56,14 +61,27 @@ export const LoginForm: React.FC = () => {
         >
           Password
         </label>
-        <input
-          id="password"
-          type="password"
-          autoComplete="off"
-          placeholder="••••••••"
-          className="block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          {...register('password', { required: 'Password is required' })}
-        />
+        <div className="relative">
+          <input
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="off"
+            placeholder="••••••••"
+            className="block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white pr-10"
+            {...register('password', { required: 'Password is required' })}
+          />
+          <button
+            type="button"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <VisibilityOffOutlinedIcon className="h-5 w-5" />
+            ) : (
+              <VisibilityOutlinedIcon className="h-5 w-5" />
+            )}
+          </button>
+        </div>
         {errors?.password && (
           <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
         )}
