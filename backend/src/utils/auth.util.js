@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { db } from "../libs/db.js";
+import jwt from "jsonwebtoken";
 
 export const generateTemporaryToken = () => {
   // This token should be client facing

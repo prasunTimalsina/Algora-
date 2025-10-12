@@ -18,7 +18,7 @@ import {
 } from "../utils/mail.util.js";
 
 export const register = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   // Check if user already exist
   const existingUser = await db.user.findUnique({
