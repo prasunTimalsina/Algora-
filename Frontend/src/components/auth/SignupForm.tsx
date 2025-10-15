@@ -6,9 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
+import { useAuthStore } from '../../store/useAuthStore'
 
 export const SignupForm: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false)
+
+  //TODO: Check isSigninUp or formState is better to show loading state
+  const { signup, isSigninUp } = useAuthStore()
 
   const {
     register,
@@ -20,9 +24,13 @@ export const SignupForm: React.FC = () => {
   })
 
   const onSubmit = async (data: RegisterUserInput) => {
-    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulate network request
-    console.log('Signup attempt:', data)
-    reset()
+    try {
+      await signup(data)
+    } catch (error) {
+      console.log('Error signing up', error)
+    } finally {
+      reset()
+    }
   }
 
   return (

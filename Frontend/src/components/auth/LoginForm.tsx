@@ -7,6 +7,7 @@ import { loginUserSchema } from '../../types/schema'
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
+import { useAuthStore } from '../../store/useAuthStore'
 
 interface LoginFormData {
   email: string
@@ -16,18 +17,25 @@ interface LoginFormData {
 export const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false)
 
+  const { login, isLoggingIn } = useAuthStore()
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginUserSchema),
   })
 
   const onSubmit = async (data: LoginFormData) => {
-    await new Promise(resolve => setTimeout(resolve, 3000)) // Simulate network request
-    console.log('Login attempt:', data)
-    // Handle login logic here
+    try {
+      await login(data)
+    } catch (error) {
+      console.log('Error logging in', error)
+    } finally {
+      reset()
+    }
   }
 
   return (
