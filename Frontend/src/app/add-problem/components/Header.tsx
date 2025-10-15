@@ -2,7 +2,11 @@ import { Code2, Sparkles } from 'lucide-react'
 import { Button } from '../../../components/ui/button'
 import { Link } from 'react-router-dom'
 
-const Header = () => {
+interface HeaderProps {
+  loadSampleProblem: (type: 'dp' | 'string') => void
+}
+
+const Header = ({ loadSampleProblem }: HeaderProps) => {
   return (
     <header className="border-b border-border bg-card">
       <div className="mx-auto max-w-7xl px-6 py-4">

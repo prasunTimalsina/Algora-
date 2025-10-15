@@ -1,8 +1,16 @@
 import { FormProvider, useForm } from 'react-hook-form'
+import { Button } from '@/components/ui/button'
 import Header from './components/Header'
 import { problemSchema, type TProblemInput } from '../../types/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import BasicInformation from './components/BasicInformation'
+import TestCases from './components/TestCases'
+import Examples from './components/Examples'
+import StarterCode from './components/StarterCode'
+import SolutionCode from './components/SolutionCode'
+import AdditionalInformation from './components/AdditionalInformation'
+import toast from 'react-hot-toast'
+import { SAMPLE_PROBLEMS } from './constants/sampleProblems'
 
 const AddProblemPage = () => {
   const form = useForm<TProblemInput>({
@@ -25,17 +33,43 @@ const AddProblemPage = () => {
         PYTHON: '# Add your reference solution here',
         JAVA: '// Add your reference solution here',
       },
+      hints: '',
+      followUpQuestion: '',
     },
   })
 
-  const onSubmit = (data: TProblemInput) => {
-    console.log(data)
+  const onSubmit = async (data: TProblemInput) => {
+    try {
+      console.log('Problem submitted:', data)
+      toast.success('Problem created successfully!')
+    } catch (error) {
+      console.error('Error creating problem:', error)
+      toast.error('Failed to create problem')
+    }
+  }
+
+  const handleSaveDraft = () => {
+    const data = form.getValues()
+    console.log('Saving draft:', data)
+    toast.success('Draft saved successfully!')
+  }
+
+  const loadSampleProblem = (type: 'dp' | 'string') => {
+    const sampleData = SAMPLE_PROBLEMS[type]
+    if (sampleData) {
+      // Reset the form with sample data
+      form.reset(sampleData)
+      toast.success(
+        `${type === 'dp' ? 'Dynamic Programming' : 'String'} sample problem loaded!`
+      )
+    } else {
+      toast.error('Sample problem not found')
+    }
   }
 
   return (
     <div className="min-h-screen bg-background">
-      {/* TODO: Implement the load form Insider header */}
-      <Header />
+      <Header loadSampleProblem={loadSampleProblem} />
 
       <main className="mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8">
@@ -51,6 +85,31 @@ const AddProblemPage = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Basic Information  */}
             <BasicInformation />
+
+            {/* Test Cases */}
+            <TestCases />
+
+            {/* Examples */}
+            <Examples />
+
+            {/* Starter Code Templates */}
+            <StarterCode />
+
+            {/* Reference Solutions */}
+            <SolutionCode />
+
+            {/* Additional Information */}
+            <AdditionalInformation />
+
+            {/* Submit Buttons */}
+            <div className="flex justify-end gap-4">
+              <Button type="button" variant="outline" onClick={handleSaveDraft}>
+                Save as Draft
+              </Button>
+              <Button type="submit" size="lg">
+                Publish Problem
+              </Button>
+            </div>
           </form>
         </FormProvider>
       </main>

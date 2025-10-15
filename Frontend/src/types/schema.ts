@@ -64,6 +64,7 @@ export const problemSchema = z.object({
   tags: z.array(z.string()).min(1, 'At least one tag is required'),
   constraints: z.string().min(1, 'Constraints are required'),
   hints: z.string().optional(),
+  followUpQuestion: z.string().optional(),
   editorial: z.string().optional(),
   testcases: z
     .array(
