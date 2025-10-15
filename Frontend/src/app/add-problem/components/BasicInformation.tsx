@@ -81,9 +81,9 @@ const BasicInformation = () => {
                     <SelectValue placeholder="Select difficulty" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="easy">Easy</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="hard">Hard</SelectItem>
+                    <SelectItem value="EASY">Easy</SelectItem>
+                    <SelectItem value="MEDIUM">Medium</SelectItem>
+                    <SelectItem value="HARD">Hard</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -112,7 +112,7 @@ const BasicInformation = () => {
 
             {tagFields.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-3">
-                {tags.map((tag, index) => (
+                {tags.map((tag: string, index: number) => (
                   <Badge key={index} variant="secondary" className="gap-1">
                     {tag}
                     <button
