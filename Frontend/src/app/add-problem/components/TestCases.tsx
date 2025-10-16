@@ -25,7 +25,7 @@ const TestCases = () => {
     remove: removeTestCase,
   } = useFieldArray({
     control,
-    name: 'testCases',
+    name: 'testcases',
   })
 
   // Ensure at least one test case exists
@@ -47,7 +47,7 @@ const TestCases = () => {
 
   // Helper function to safely get field errors
   const getFieldError = (index: number, field: 'input' | 'output') => {
-    const testCaseErrors = errors?.testCases
+    const testCaseErrors = errors?.testcases
     if (Array.isArray(testCaseErrors) && testCaseErrors[index]) {
       return testCaseErrors[index]?.[field]
     }
@@ -86,11 +86,11 @@ const TestCases = () => {
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor={`testCases.${index}.input`}>Input</Label>
+                <Label htmlFor={`testcases.${index}.input`}>Input</Label>
                 <Textarea
-                  id={`testCases.${index}.input`}
+                  id={`testcases.${index}.input`}
                   placeholder="Enter input..."
-                  {...register(`testCases.${index}.input`, {
+                  {...register(`testcases.${index}.input`, {
                     required: 'Input is required',
                   })}
                   rows={3}
@@ -106,13 +106,13 @@ const TestCases = () => {
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor={`testCases.${index}.output`}>
+                <Label htmlFor={`testcases.${index}.output`}>
                   Expected Output
                 </Label>
                 <Textarea
-                  id={`testCases.${index}.output`}
+                  id={`testcases.${index}.output`}
                   placeholder="Enter expected output..."
-                  {...register(`testCases.${index}.output`, {
+                  {...register(`testcases.${index}.output`, {
                     required: 'Expected output is required',
                   })}
                   rows={3}
@@ -132,7 +132,7 @@ const TestCases = () => {
         ))}
 
         {/* Global test cases error */}
-        {errors?.testCases && (
+        {errors?.testcases && (
           <p className="text-red-500 text-sm">
             Please ensure all test cases have valid input and output values.
           </p>

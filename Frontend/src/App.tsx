@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom'
-import { LoaderIcon, Toaster } from 'react-hot-toast'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
 import { LandingPage } from './pages/LandingPage'
 import { LoginPage } from './pages/LoginPage'
@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import { useAuthStore } from './store/useAuthStore'
 import HomePage from './pages/HomePage'
 import AddProblemPage from './app/add-problem/AddProblemPage'
+import { LoaderOne } from './components/Loader'
+import AdminRoute from './components/AdminRoute'
 
 function App() {
   const { authUser, isCheckingAuth, checkAuth } = useAuthStore()
@@ -17,16 +19,13 @@ function App() {
   }, [checkAuth])
 
   if (isCheckingAuth && !authUser) {
-    return (
-      <LoaderIcon className="text-10xl text-primary animate-spin m-auto mt-20" />
-    )
+    return <LoaderOne />
   }
 
   return (
     <div className="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
       <Toaster />
       <Routes>
-        <Route path="/add-problem" element={<AddProblemPage />} />
         <Route path="/" element={!authUser ? <LandingPage /> : <HomePage />} />
         <Route
           path="/login"
@@ -36,6 +35,13 @@ function App() {
           path="/signup"
           element={!authUser ? <SignupPage /> : <HomePage />}
         />
+
+        <Route element={<AdminRoute />}>
+          <Route
+            path="/add-problem"
+            element={authUser ? <AddProblemPage /> : <Navigate to="/" />}
+          />
+        </Route>
       </Routes>
     </div>
   )

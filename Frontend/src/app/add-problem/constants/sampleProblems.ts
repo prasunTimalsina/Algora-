@@ -1,273 +1,245 @@
 import type { TProblemInput } from '../../../types/schema'
 
-export const SAMPLE_PROBLEMS: Record<string, TProblemInput> = {
+export const SAMPLE_PROBLEMS: Record<'dp' | 'string', TProblemInput> = {
   dp: {
     title: 'Climbing Stairs',
     description: `You are climbing a staircase. It takes n steps to reach the top.
 
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
-**Example 1:**
-- Input: n = 2
-- Output: 2
-- Explanation: There are two ways to climb to the top.
-  1. 1 step + 1 step
-  2. 2 steps
-
-**Example 2:**
-- Input: n = 3
-- Output: 3
-- Explanation: There are three ways to climb to the top.
-  1. 1 step + 1 step + 1 step
-  2. 1 step + 2 steps
-  3. 2 steps + 1 step`,
-    difficulty: 'EASY' as const,
+Input: A single integer n (1 ≤ n ≤ 45)
+Output: Number of distinct ways to reach the top`,
+    difficulty: 'EASY',
     tags: ['Dynamic Programming', 'Math', 'Memoization'],
-    constraints: `- 1 <= n <= 45
-- The answer is guaranteed to fit in a 32-bit integer`,
-    hints:
-      'Think about this problem as building the solution bottom-up. How many ways can you reach step i if you know the number of ways to reach step i-1 and step i-2?',
-    followUpQuestion:
-      'Can you solve this problem in O(1) space complexity instead of O(n)?',
+    constraints: '1 ≤ n ≤ 45',
     testcases: [
       { input: '2', output: '2' },
       { input: '3', output: '3' },
-      { input: '4', output: '5' },
-      { input: '5', output: '8' },
       { input: '1', output: '1' },
+      { input: '5', output: '8' },
     ],
     examples: {
       JAVASCRIPT: {
-        input: 'n = 2',
-        output: '2',
-        explanation:
-          'There are two ways to climb to the top: 1+1 steps or 2 steps',
+        input: '3',
+        output: '3',
+        explanation: 'There are 3 ways: (1+1+1), (1+2), (2+1)',
       },
       PYTHON: {
-        input: 'n = 3',
-        output: '3',
-        explanation: 'There are three ways: 1+1+1, 1+2, or 2+1 steps',
+        input: '2',
+        output: '2',
+        explanation: 'There are 2 ways: (1+1), (2)',
       },
       JAVA: {
-        input: 'n = 4',
+        input: '4',
         output: '5',
-        explanation: 'Five ways: 1+1+1+1, 1+1+2, 1+2+1, 2+1+1, 2+2',
+        explanation:
+          'There are 5 ways: (1+1+1+1), (1+1+2), (1+2+1), (2+1+1), (2+2)',
       },
     },
     codeSnippets: {
-      JAVASCRIPT: `function climbStairs(n) {
-    // Write your solution here
-    // Hint: Use dynamic programming
-}`,
-      PYTHON: `def climbStairs(n):
-    """
-    :type n: int
-    :rtype: int
-    """
-    # Write your solution here
-    # Hint: Use dynamic programming
-    pass`,
-      JAVA: `public class Solution {
-    public int climbStairs(int n) {
+      JAVASCRIPT: `// Read input
+const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());
+
+// Write your solution here
+// Use console.log() to output the result
+
+console.log(result);`,
+      PYTHON: `import sys
+
+# Read input
+n = int(sys.stdin.read().strip())
+
+# Write your solution here
+# Use print() to output the result
+
+print(result)`,
+      JAVA: `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Read input
+        int n = sc.nextInt();
+        
         // Write your solution here
-        // Hint: Use dynamic programming
+        // Use System.out.println() to output the result
+        
+        System.out.println(result);
     }
 }`,
     },
     referenceSolutions: {
-      JAVASCRIPT: `function climbStairs(n) {
-    if (n <= 1) return 1;
+      JAVASCRIPT: `const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());
+
+if (n <= 2) {
+    console.log(n);
+} else {
+    let dp = new Array(n + 1);
+    dp[1] = 1;
+    dp[2] = 2;
     
-    let prev1 = 1, prev2 = 1;
-    
-    for (let i = 2; i <= n; i++) {
-        let current = prev1 + prev2;
-        prev2 = prev1;
-        prev1 = current;
+    for (let i = 3; i <= n; i++) {
+        dp[i] = dp[i-1] + dp[i-2];
     }
     
-    return prev1;
+    console.log(dp[n]);
 }`,
-      PYTHON: `def climbStairs(n):
-    if n <= 1:
-        return 1
+      PYTHON: `import sys
+
+n = int(sys.stdin.read().strip())
+
+if n <= 2:
+    print(n)
+else:
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    dp[2] = 2
     
-    prev1, prev2 = 1, 1
+    for i in range(3, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
     
-    for i in range(2, n + 1):
-        current = prev1 + prev2
-        prev2 = prev1
-        prev1 = current
-    
-    return prev1`,
-      JAVA: `public class Solution {
-    public int climbStairs(int n) {
-        if (n <= 1) return 1;
+    print(dp[n])`,
+      JAVA: `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
         
-        int prev1 = 1, prev2 = 1;
-        
-        for (int i = 2; i <= n; i++) {
-            int current = prev1 + prev2;
-            prev2 = prev1;
-            prev1 = current;
+        if (n <= 2) {
+            System.out.println(n);
+        } else {
+            int[] dp = new int[n + 1];
+            dp[1] = 1;
+            dp[2] = 2;
+            
+            for (int i = 3; i <= n; i++) {
+                dp[i] = dp[i-1] + dp[i-2];
+            }
+            
+            System.out.println(dp[n]);
         }
-        
-        return prev1;
     }
 }`,
     },
+    hints:
+      'Think about how many ways you can reach step n from step n-1 and n-2. This follows the Fibonacci sequence pattern.',
+    followUpQuestion:
+      'Can you solve this with O(1) space complexity instead of O(n)?',
   },
 
   string: {
-    title: 'Valid Palindrome',
-    description: `A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+    title: 'Palindrome Number',
+    description: `Given an integer, determine if it is a palindrome. An integer is a palindrome when it reads the same backward as forward.
 
-Given a string s, return true if it is a palindrome, or false otherwise.
+Input: A single integer n
+Output: "Yes" if it's a palindrome, "No" otherwise
 
-**Example 1:**
-- Input: s = "A man, a plan, a canal: Panama"
-- Output: true
-- Explanation: "amanaplanacanalpanama" is a palindrome.
-
-**Example 2:**
-- Input: s = "race a car"
-- Output: false
-- Explanation: "raceacar" is not a palindrome.`,
-    difficulty: 'EASY' as const,
-    tags: ['Two Pointers', 'String'],
-    constraints: `- 1 <= s.length <= 2 * 10^5
-- s consists only of printable ASCII characters`,
-    hints:
-      'Use two pointers approach. Start from both ends and move towards the center, skipping non-alphanumeric characters.',
-    followUpQuestion:
-      'How would you modify this solution to find the longest palindromic substring instead?',
+Note: Negative numbers are not palindromes.`,
+    difficulty: 'EASY',
+    tags: ['Math', 'String'],
+    constraints: '-2^31 ≤ n ≤ 2^31 - 1',
     testcases: [
-      { input: '"A man, a plan, a canal: Panama"', output: 'true' },
-      { input: '"race a car"', output: 'false' },
-      { input: '" "', output: 'true' },
-      { input: '"Madam"', output: 'true' },
-      { input: '"No \'x\' in Nixon"', output: 'true' },
+      { input: '121', output: 'Yes' },
+      { input: '-121', output: 'No' },
+      { input: '10', output: 'No' },
+      { input: '0', output: 'Yes' },
+      { input: '12321', output: 'Yes' },
     ],
     examples: {
       JAVASCRIPT: {
-        input: 's = "A man, a plan, a canal: Panama"',
-        output: 'true',
-        explanation:
-          'After processing: "amanaplanacanalpanama" which reads the same forwards and backwards',
+        input: '121',
+        output: 'Yes',
+        explanation: '121 reads the same backward as forward',
       },
       PYTHON: {
-        input: 's = "race a car"',
-        output: 'false',
-        explanation:
-          'After processing: "raceacar" which does not read the same forwards and backwards',
+        input: '-121',
+        output: 'No',
+        explanation: 'Negative numbers are not palindromes',
       },
       JAVA: {
-        input: 's = " "',
-        output: 'true',
-        explanation:
-          'After removing non-alphanumeric characters, we get an empty string which is considered a palindrome',
+        input: '10',
+        output: 'No',
+        explanation: '10 reversed is 01, which is different from 10',
       },
     },
     codeSnippets: {
-      JAVASCRIPT: `function isPalindrome(s) {
-    // Write your solution here
-    // Hint: Use two pointers and process the string
-}`,
-      PYTHON: `def isPalindrome(s):
-    """
-    :type s: str
-    :rtype: bool
-    """
-    # Write your solution here
-    # Hint: Use two pointers and process the string
-    pass`,
-      JAVA: `public class Solution {
-    public boolean isPalindrome(String s) {
+      JAVASCRIPT: `// Read input
+const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());
+
+// Write your solution here
+// Check if n is a palindrome
+// Use console.log("Yes") or console.log("No")
+
+console.log(result);`,
+      PYTHON: `import sys
+
+# Read input  
+n = int(sys.stdin.read().strip())
+
+# Write your solution here
+# Check if n is a palindrome
+# Use print("Yes") or print("No")
+
+print(result)`,
+      JAVA: `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Read input
+        int n = sc.nextInt();
+        
         // Write your solution here
-        // Hint: Use two pointers and process the string
+        // Check if n is a palindrome
+        // Use System.out.println("Yes") or System.out.println("No")
+        
+        System.out.println(result);
     }
 }`,
     },
     referenceSolutions: {
-      JAVASCRIPT: `function isPalindrome(s) {
-    let left = 0;
-    let right = s.length - 1;
-    
-    while (left < right) {
-        // Skip non-alphanumeric characters from left
-        while (left < right && !isAlphanumeric(s[left])) {
-            left++;
-        }
-        
-        // Skip non-alphanumeric characters from right
-        while (left < right && !isAlphanumeric(s[right])) {
-            right--;
-        }
-        
-        // Compare characters (case-insensitive)
-        if (s[left].toLowerCase() !== s[right].toLowerCase()) {
-            return false;
-        }
-        
-        left++;
-        right--;
-    }
-    
-    return true;
-}
+      JAVASCRIPT: `const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());
 
-function isAlphanumeric(char) {
-    return /[a-zA-Z0-9]/.test(char);
+if (n < 0) {
+    console.log("No");
+} else {
+    const str = n.toString();
+    const reversed = str.split('').reverse().join('');
+    console.log(str === reversed ? "Yes" : "No");
 }`,
-      PYTHON: `def isPalindrome(s):
-    left, right = 0, len(s) - 1
-    
-    while left < right:
-        # Skip non-alphanumeric characters from left
-        while left < right and not s[left].isalnum():
-            left += 1
+      PYTHON: `import sys
+
+n = int(sys.stdin.read().strip())
+
+if n < 0:
+    print("No")
+else:
+    str_n = str(n)
+    reversed_n = str_n[::-1]
+    print("Yes" if str_n == reversed_n else "No")`,
+      JAVA: `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
         
-        # Skip non-alphanumeric characters from right  
-        while left < right and not s[right].isalnum():
-            right -= 1
-        
-        # Compare characters (case-insensitive)
-        if s[left].lower() != s[right].lower():
-            return False
-        
-        left += 1
-        right -= 1
-    
-    return True`,
-      JAVA: `public class Solution {
-    public boolean isPalindrome(String s) {
-        int left = 0;
-        int right = s.length() - 1;
-        
-        while (left < right) {
-            // Skip non-alphanumeric characters from left
-            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
-                left++;
-            }
-            
-            // Skip non-alphanumeric characters from right
-            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
-                right--;
-            }
-            
-            // Compare characters (case-insensitive)
-            if (Character.toLowerCase(s.charAt(left)) != 
-                Character.toLowerCase(s.charAt(right))) {
-                return false;
-            }
-            
-            left++;
-            right--;
+        if (n < 0) {
+            System.out.println("No");
+        } else {
+            String str = String.valueOf(n);
+            String reversed = new StringBuilder(str).reverse().toString();
+            System.out.println(str.equals(reversed) ? "Yes" : "No");
         }
-        
-        return true;
     }
 }`,
     },
+    hints:
+      'Convert the number to string and compare with its reverse. Remember that negative numbers cannot be palindromes.',
+    followUpQuestion:
+      'Can you solve this without converting the integer to a string?',
   },
 }

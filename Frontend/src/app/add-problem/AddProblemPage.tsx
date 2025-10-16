@@ -11,6 +11,7 @@ import SolutionCode from './components/SolutionCode'
 import AdditionalInformation from './components/AdditionalInformation'
 import toast from 'react-hot-toast'
 import { SAMPLE_PROBLEMS } from './constants/sampleProblems'
+import axiosInstance from '@/lib/axios'
 
 const AddProblemPage = () => {
   const form = useForm<TProblemInput>({
@@ -40,8 +41,9 @@ const AddProblemPage = () => {
 
   const onSubmit = async (data: TProblemInput) => {
     try {
-      console.log('Problem submitted:', data)
-      toast.success('Problem created successfully!')
+      const res = await axiosInstance.post('/problems/create-problem', data)
+      console.log('Problem submitted:', res.data.data)
+      toast.success(res.data.message || 'Problem created successfully!')
     } catch (error) {
       console.error('Error creating problem:', error)
       toast.error('Failed to create problem')
@@ -106,7 +108,11 @@ const AddProblemPage = () => {
               <Button type="button" variant="outline" onClick={handleSaveDraft}>
                 Save as Draft
               </Button>
-              <Button type="submit" size="lg">
+              <Button
+                disabled={form.formState.isSubmitting}
+                type="submit"
+                size="lg"
+              >
                 Publish Problem
               </Button>
             </div>
