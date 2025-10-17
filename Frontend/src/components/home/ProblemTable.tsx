@@ -1,0 +1,334 @@
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import {
+  Plus,
+  Edit,
+  Trash2,
+  BookmarkPlus,
+  CheckCircle2,
+  Circle,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  X,
+} from 'lucide-react'
+import { Link } from 'react-router-dom'
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
+import { useState } from 'react'
+import { capitalizeFirstLetter } from '@/lib/utils'
+
+interface Problem {
+  id: number
+  title: string
+  difficulty: string
+  tags: string[]
+  solved: boolean
+}
+
+interface ProblemsTableProps {
+  problems: Problem[]
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  itemsPerPage: number
+  isAdmin: boolean
+}
+
+export default function ProblemsTable({
+  problems,
+  currentPage,
+  setCurrentPage,
+  itemsPerPage,
+  isAdmin,
+}: ProblemsTableProps) {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
+    null
+  )
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+  const totalPages = Math.ceil(problems.length / itemsPerPage)
+  const paginatedProblems = problems.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+  const allTags = Array.from(new Set(problems.flatMap(p => p.tags)))
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'Easy':
+        return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'
+      case 'Medium':
+        return 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
+      case 'Hard':
+        return 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20'
+      default:
+        return 'bg-muted text-muted-foreground'
+    }
+  }
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    )
+    setCurrentPage(1)
+  }
+
+  const clearFilters = () => {
+    setSearchQuery('')
+    setSelectedDifficulty(null)
+    setSelectedTags([])
+    setCurrentPage(1)
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-semibold">Problems</h2>
+        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+          <Plus className="mr-2 h-4 w-4" />
+          Add to Playlist
+        </Button>
+      </div>
+
+      <div className="space-y-4">
+        {/* Search Bar and Filters in same row with dropdown indicators */}
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+          {/* Search Bar */}
+          <div className="relative flex-1 w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search problems by title..."
+              value={searchQuery}
+              onChange={e => {
+                setSearchQuery(e.target.value)
+                setCurrentPage(1)
+              }}
+              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+          </div>
+
+          {/* Difficulty Filter with Dropdown Indicator */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="whitespace-nowrap bg-transparent"
+              >
+                Difficulty {selectedDifficulty && `(${selectedDifficulty})`}
+                <ChevronRight className="ml-2 h-4 w-4 rotate-90" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuItem
+                onClick={() => {
+                  setSelectedDifficulty(null)
+                  setCurrentPage(1)
+                }}
+              >
+                All Difficulties
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {['Easy', 'Medium', 'Hard'].map(diff => (
+                <DropdownMenuItem
+                  key={diff}
+                  onClick={() => {
+                    setSelectedDifficulty(diff)
+                    setCurrentPage(1)
+                  }}
+                  className={selectedDifficulty === diff ? 'bg-muted' : ''}
+                >
+                  {diff}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Tags Filter with Dropdown Indicator */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="whitespace-nowrap bg-transparent"
+              >
+                Tags {selectedTags.length > 0 && `(${selectedTags.length})`}
+                <ChevronRight className="ml-2 h-4 w-4 rotate-90" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-48">
+              {allTags.map(tag => (
+                <DropdownMenuItem
+                  key={tag}
+                  onClick={() => toggleTag(tag)}
+                  className={selectedTags.includes(tag) ? 'bg-muted' : ''}
+                >
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`h-4 w-4 rounded border ${
+                        selectedTags.includes(tag)
+                          ? 'bg-primary border-primary'
+                          : 'border-border'
+                      }`}
+                    />
+                    {tag}
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Clear Filters Button */}
+          {(searchQuery || selectedDifficulty || selectedTags.length > 0) && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <X className="mr-1 h-4 w-4" />
+              Clear
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Problems Table */}
+      <div className="rounded-lg border border-border bg-card overflow-hidden">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="text-left p-4 w-12 text-sm font-medium text-muted-foreground">
+                Status
+              </th>
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                Title
+              </th>
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                Difficulty
+              </th>
+              <th className="text-left p-4 text-sm font-medium text-muted-foreground">
+                Tags
+              </th>
+              <th className="text-right p-4 text-sm font-medium text-muted-foreground">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedProblems.map(problem => (
+              <tr
+                key={problem.id}
+                className="border-b border-border hover:bg-muted/50 transition-colors"
+              >
+                <td className="p-4">
+                  {problem.solved ? (
+                    <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  ) : (
+                    <Circle className="h-5 w-5 text-muted-foreground/30" />
+                  )}
+                </td>
+                <td className="p-4">
+                  <Link
+                    to={`/problem/${problem.id}`}
+                    className="font-medium hover:underline"
+                  >
+                    {problem.title}
+                  </Link>
+                </td>
+                <td className="p-4">
+                  <Badge
+                    variant="outline"
+                    className={`${getDifficultyColor(capitalizeFirstLetter(problem.difficulty))} font-medium`}
+                  >
+                    {capitalizeFirstLetter(problem.difficulty)}
+                  </Badge>
+                </td>
+                <td className="p-4">
+                  <div className="flex flex-wrap gap-1">
+                    {problem.tags.map(tag => (
+                      <Badge key={tag} variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </td>
+                <td className="p-4 text-right">
+                  <div className="flex items-center justify-end gap-1">
+                    <Button size="icon" variant="ghost" className="h-8 w-8">
+                      <BookmarkPlus className="h-4 w-4" />
+                    </Button>
+                    {isAdmin && (
+                      <>
+                        <Button size="icon" variant="ghost" className="h-8 w-8">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-8 w-8 hover:text-destructive"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between pt-4">
+        <p className="text-sm text-muted-foreground">
+          Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
+          {Math.min(currentPage * itemsPerPage, problems.length)} of{' '}
+          {problems.length} problems
+        </p>
+        <div className="flex items-center gap-1">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            disabled={currentPage === 1}
+            className="h-9 w-9"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <Button
+              key={page}
+              variant={currentPage === page ? 'default' : 'outline'}
+              size="icon"
+              onClick={() => setCurrentPage(page)}
+              className="h-9 w-9"
+            >
+              {page}
+            </Button>
+          ))}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() =>
+              setCurrentPage(Math.min(totalPages, currentPage + 1))
+            }
+            disabled={currentPage === totalPages}
+            className="h-9 w-9"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}

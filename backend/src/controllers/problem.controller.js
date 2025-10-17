@@ -87,13 +87,14 @@ export const getAllProblem = asyncHandler(async (req, res) => {
 
   //get queries
   const {
-    page = 1,
-    limit = 2,
+    page,
+    limit,
     tags,
     difficulty,
     sortBy = "createdAt",
     order = "desc",
   } = req.query;
+
   const where = {};
 
   //Coverting values

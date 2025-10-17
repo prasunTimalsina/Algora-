@@ -1,0 +1,72 @@
+import { create } from 'zustand'
+import axiosInstance from '@/lib/axios'
+import toast from 'react-hot-toast'
+import type { TProblem } from '@/types/schema'
+
+type ProblemStore = {
+  problems: TProblem[] | []
+  problem: TProblem | null
+  solvedProblems: TProblem[] | []
+  isProblemsLoading: boolean
+  isProblemLoading: boolean
+
+  getAllProblems: (page?: number, limit?: number) => Promise<void>
+  getProblemById: (id: number) => Promise<void>
+  // getSolvedProblemByUser: () => Promise<void>
+}
+
+export const useProblemStore = create<ProblemStore>(set => ({
+  problems: [],
+  problem: null,
+  solvedProblems: [],
+  isProblemsLoading: false,
+  isProblemLoading: false,
+
+  getAllProblems: async (
+    page: number = 1,
+    limit: number = 5
+  ): Promise<void> => {
+    try {
+      set({ isProblemsLoading: true })
+
+      const res = await axiosInstance.get(
+        `problems/get-all-problem?page=${page}&limit=${limit}`
+      )
+      console.log(res.data.data)
+      set({ problems: res.data.data })
+    } catch (error) {
+      console.log('Error getting all problems', error)
+      toast.error('Error in getting problems')
+    } finally {
+      set({ isProblemsLoading: false })
+    }
+  },
+
+  getProblemById: async id => {
+    try {
+      set({ isProblemLoading: true })
+
+      const res = await axiosInstance.get(`/problems/get-problem/${id}`)
+
+      set({ problem: res.data.problem })
+      toast.success(res.data.message)
+    } catch (error) {
+      console.log('Error getting all problems', error)
+      toast.error('Error in getting problems')
+    } finally {
+      set({ isProblemLoading: false })
+    }
+  },
+
+  //TODO:: need to implement later
+  // getSolvedProblemByUser: async () => {
+  //   try {
+  //     const res = await axiosInstance.get('/problems/get-solved-problem')
+
+  //     set({ solvedProblems: res.data.problems })
+  //   } catch (error) {
+  //     console.log('Error getting solved problems', error)
+  //     toast.error('Error getting solved problems')
+  //   }
+  // },
+}))

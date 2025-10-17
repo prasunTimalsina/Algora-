@@ -1,6 +1,6 @@
-import type { TProblemInput } from '../../../types/schema'
+import type { TProblem } from '../../../types/schema'
 
-export const SAMPLE_PROBLEMS: Record<'dp' | 'string', TProblemInput> = {
+export const SAMPLE_PROBLEMS: Record<'dp' | 'string', TProblem> = {
   dp: {
     title: 'Climbing Stairs',
     description: `You are climbing a staircase. It takes n steps to reach the top.

@@ -16,6 +16,7 @@ import {
   emailVerificationMailgenContent,
   sendEmail,
 } from "../utils/mail.util.js";
+import { create } from "domain";
 
 export const register = asyncHandler(async (req, res) => {
   const { email, password, username } = req.body;
@@ -36,6 +37,7 @@ export const register = asyncHandler(async (req, res) => {
   const newUser = await db.user.create({
     data: {
       email,
+      username,
       password: hashedPassword,
       role: UserRole.USER,
     },
@@ -74,9 +76,15 @@ export const register = asyncHandler(async (req, res) => {
     where: {
       id: newUser.id,
     },
-    select: {
-      id: true,
-      email: true,
+    omit: {
+      password: true,
+      refreshToken: true,
+      emailVerificationToken: true,
+      emailVerificationExpiry: true,
+      createdAt: true,
+      updatedAt: true,
+      forgotPasswordToken: true,
+      forgotPasswordExpiry: true,
       isEmailVerified: true,
     },
   });
@@ -149,6 +157,11 @@ export const login = asyncHandler(async (req, res) => {
       refreshToken: true,
       emailVerificationToken: true,
       emailVerificationExpiry: true,
+      createdAt: true,
+      updatedAt: true,
+      forgotPasswordToken: true,
+      forgotPasswordExpiry: true,
+      isEmailVerified: true,
     },
   });
 
@@ -440,6 +453,16 @@ export const changeCurrentPassword = asyncHandler(async (req, res) => {
 export const getCurrentUser = asyncHandler(async (req, res) => {
   const user = await db.user.findUnique({
     where: { id: req.user.id },
+    omit: {
+      password: true,
+      refreshToken: true,
+      emailVerificationToken: true,
+      emailVerificationExpiry: true,
+      createdAt: true,
+      updatedAt: true,
+      forgotPasswordToken: true,
+      forgotPasswordExpiry: true,
+    },
   });
 
   if (!user) {
