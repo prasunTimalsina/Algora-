@@ -23,21 +23,17 @@ import {
 } from '../ui/dropdown-menu'
 import { useState } from 'react'
 import { capitalizeFirstLetter } from '@/lib/utils'
-
-interface Problem {
-  id: number
-  title: string
-  difficulty: string
-  tags: string[]
-  solved: boolean
-}
+import type { TProblem } from '@/types/schema'
 
 interface ProblemsTableProps {
-  problems: Problem[]
+  problems: TProblem[]
   currentPage: number
+  allTags: string[] | []
   setCurrentPage: (page: number) => void
   itemsPerPage: number
   isAdmin: boolean
+  isProblemLoading: boolean
+  totalProblems: number
 }
 
 export default function ProblemsTable({
@@ -46,6 +42,9 @@ export default function ProblemsTable({
   setCurrentPage,
   itemsPerPage,
   isAdmin,
+  isProblemLoading,
+  totalProblems,
+  allTags,
 }: ProblemsTableProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
@@ -53,12 +52,12 @@ export default function ProblemsTable({
   )
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
-  const totalPages = Math.ceil(problems.length / itemsPerPage)
-  const paginatedProblems = problems.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  )
-  const allTags = Array.from(new Set(problems.flatMap(p => p.tags)))
+  const totalPages = Math.ceil(totalProblems / itemsPerPage)
+  console.log('Total Problems:', totalPages)
+  // const paginatedProblems = problems.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage
+  // )
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -224,7 +223,7 @@ export default function ProblemsTable({
             </tr>
           </thead>
           <tbody>
-            {paginatedProblems.map(problem => (
+            {problems.map(problem => (
               <tr
                 key={problem.id}
                 className="border-b border-border hover:bg-muted/50 transition-colors"
@@ -292,8 +291,8 @@ export default function ProblemsTable({
       <div className="flex items-center justify-between pt-4">
         <p className="text-sm text-muted-foreground">
           Showing {(currentPage - 1) * itemsPerPage + 1} to{' '}
-          {Math.min(currentPage * itemsPerPage, problems.length)} of{' '}
-          {problems.length} problems
+          {Math.min(currentPage * itemsPerPage, totalProblems)} of{' '}
+          {totalProblems} problems
         </p>
         <div className="flex items-center gap-1">
           <Button

@@ -11,6 +11,25 @@ interface StatsCardsProps {
 }
 
 export default function StatsCards({ stats }: StatsCardsProps) {
+  function getMotivationalMessage(solvedCount: number) {
+    switch (true) {
+      case solvedCount === 0:
+        return "Let's get started! Your first problem awaits."
+      case solvedCount < 5:
+        return 'Great start! Keep practicing to build momentum.'
+      case solvedCount < 10:
+        return "Keep up the great work! You're improving with every problem."
+      case solvedCount < 20:
+        return 'Awesome consistency! Each solved question sharpens your skills.'
+      case solvedCount < 50:
+        return "Impressive effort! You're becoming a problem-solving pro."
+      case solvedCount >= 50:
+        return "Outstanding dedication! You're mastering the art of algorithms!"
+      default:
+        return "Keep going — you're on the right path!"
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="rounded-lg border border-border bg-card p-6 hover:shadow-md transition-shadow">
@@ -24,7 +43,7 @@ export default function StatsCards({ stats }: StatsCardsProps) {
         </div>
         <p className="text-3xl font-bold">{stats.problemsSolved}</p>
         <p className="text-xs text-muted-foreground mt-1">
-          Keep up the great work!
+          {getMotivationalMessage(stats.problemsSolved)}
         </p>
       </div>
 
@@ -57,7 +76,9 @@ export default function StatsCards({ stats }: StatsCardsProps) {
         <p className="text-3xl font-bold">
           #{stats.globalRank.toLocaleString()}
         </p>
-        <p className="text-xs text-muted-foreground mt-1">Top 5% worldwide</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          Top {100}% worldwide
+        </p>
       </div>
     </div>
   )

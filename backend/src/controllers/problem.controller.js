@@ -124,13 +124,30 @@ export const getAllProblem = asyncHandler(async (req, res) => {
     },
   });
 
+  const totalNoOfProblems = await db.problem.count({ where });
+  const allTags = await db.problem.findMany({
+    select: {
+      tags: true,
+    },
+  });
+
   if (!problems) {
     throw new ApiError(400, "Error fetching Problems");
   }
 
-  res
-    .status(200)
-    .json(new ApiResponse(200, problems, "Problems Fetched successfully"));
+  res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        problems,
+        meta: {
+          totalNoOfProblems,
+          tags: Array.from(new Set(allTags.flatMap((tag) => tag.tags))),
+        },
+      },
+      "Problems Fetched successfully"
+    )
+  );
 });
 
 export const getProblemById = asyncHandler(async (req, res) => {

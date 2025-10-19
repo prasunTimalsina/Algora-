@@ -6,6 +6,8 @@ import type { TProblem } from '@/types/schema'
 type ProblemStore = {
   problems: TProblem[] | []
   problem: TProblem | null
+  totalProblems: number
+  allTags: string[] | []
   solvedProblems: TProblem[] | []
   isProblemsLoading: boolean
   isProblemLoading: boolean
@@ -17,7 +19,9 @@ type ProblemStore = {
 
 export const useProblemStore = create<ProblemStore>(set => ({
   problems: [],
+  totalProblems: 0,
   problem: null,
+  allTags: [],
   solvedProblems: [],
   isProblemsLoading: false,
   isProblemLoading: false,
@@ -33,7 +37,9 @@ export const useProblemStore = create<ProblemStore>(set => ({
         `problems/get-all-problem?page=${page}&limit=${limit}`
       )
       console.log(res.data.data)
-      set({ problems: res.data.data })
+      set({ problems: res.data.data.problems })
+      set({ totalProblems: res.data.data.meta.totalNoOfProblems })
+      set({ allTags: res.data.data.meta.tags })
     } catch (error) {
       console.log('Error getting all problems', error)
       toast.error('Error in getting problems')

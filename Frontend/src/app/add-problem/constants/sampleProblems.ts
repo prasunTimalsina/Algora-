@@ -2,131 +2,50 @@ import type { TProblem } from '../../../types/schema'
 
 export const SAMPLE_PROBLEMS: Record<'dp' | 'string', TProblem> = {
   dp: {
-    title: 'Climbing Stairs',
-    description: `You are climbing a staircase. It takes n steps to reach the top.
-
-Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
-
-Input: A single integer n (1 ≤ n ≤ 45)
-Output: Number of distinct ways to reach the top`,
+    title: 'Reverse String',
+    description:
+      'Given a string s, reverse it and print the reversed string.\n\nInput: A single line containing the string (length ≤ 10^5).\nOutput: The reversed string.',
     difficulty: 'EASY',
-    tags: ['Dynamic Programming', 'Math', 'Memoization'],
-    constraints: '1 ≤ n ≤ 45',
+    tags: ['String'],
+    constraints: 'Length of s ≤ 100000',
     testcases: [
-      { input: '2', output: '2' },
-      { input: '3', output: '3' },
-      { input: '1', output: '1' },
-      { input: '5', output: '8' },
+      { input: 'hello', output: 'olleh' },
+      { input: 'a', output: 'a' },
+      { input: 'racecar', output: 'racecar' },
+      { input: 'Dashain', output: 'niahsad' },
     ],
     examples: {
       JAVASCRIPT: {
-        input: '3',
-        output: '3',
-        explanation: 'There are 3 ways: (1+1+1), (1+2), (2+1)',
+        input: 'hello',
+        output: 'olleh',
+        explanation: 'reverse of hello is olleh',
       },
       PYTHON: {
-        input: '2',
-        output: '2',
-        explanation: 'There are 2 ways: (1+1), (2)',
+        input: 'abc',
+        output: 'cba',
+        explanation: 'reverse of abc',
       },
       JAVA: {
-        input: '4',
-        output: '5',
-        explanation:
-          'There are 5 ways: (1+1+1+1), (1+1+2), (1+2+1), (2+1+1), (2+2)',
+        input: 'madam',
+        output: 'madam',
+        explanation: 'palindrome',
       },
     },
     codeSnippets: {
-      JAVASCRIPT: `// Read input
-const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());
-
-// Write your solution here
-// Use console.log() to output the result
-
-console.log(result);`,
-      PYTHON: `import sys
-
-# Read input
-n = int(sys.stdin.read().strip())
-
-# Write your solution here
-# Use print() to output the result
-
-print(result)`,
-      JAVA: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        // Read input
-        int n = sc.nextInt();
-        
-        // Write your solution here
-        // Use System.out.println() to output the result
-        
-        System.out.println(result);
-    }
-}`,
+      JAVASCRIPT:
+        "const s = require('fs').readFileSync(0, 'utf-8').replace(/\\r?\\n$/, '');\nconsole.log(s.split('').reverse().join(''))",
+      PYTHON: "import sys\ns = sys.stdin.read().rstrip('\\n')\nprint(s[::-1])",
+      JAVA: 'import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc = new Scanner(System.in);\n    String s = sc.nextLine();\n    StringBuilder sb = new StringBuilder(s);\n    System.out.println(sb.reverse().toString());\n  }\n}',
     },
     referenceSolutions: {
-      JAVASCRIPT: `const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());
-
-if (n <= 2) {
-    console.log(n);
-} else {
-    let dp = new Array(n + 1);
-    dp[1] = 1;
-    dp[2] = 2;
-    
-    for (let i = 3; i <= n; i++) {
-        dp[i] = dp[i-1] + dp[i-2];
-    }
-    
-    console.log(dp[n]);
-}`,
-      PYTHON: `import sys
-
-n = int(sys.stdin.read().strip())
-
-if n <= 2:
-    print(n)
-else:
-    dp = [0] * (n + 1)
-    dp[1] = 1
-    dp[2] = 2
-    
-    for i in range(3, n + 1):
-        dp[i] = dp[i-1] + dp[i-2]
-    
-    print(dp[n])`,
-      JAVA: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        
-        if (n <= 2) {
-            System.out.println(n);
-        } else {
-            int[] dp = new int[n + 1];
-            dp[1] = 1;
-            dp[2] = 2;
-            
-            for (int i = 3; i <= n; i++) {
-                dp[i] = dp[i-1] + dp[i-2];
-            }
-            
-            System.out.println(dp[n]);
-        }
-    }
-}`,
+      JAVASCRIPT:
+        "const s = require('fs').readFileSync(0, 'utf-8').replace(/\\r?\\n$/, '');\nconsole.log(s.split('').reverse().join(''))",
+      PYTHON: "import sys\ns = sys.stdin.read().rstrip('\\n')\nprint(s[::-1])",
+      JAVA: 'import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc = new Scanner(System.in);\n    String s = sc.nextLine();\n    StringBuilder sb = new StringBuilder(s);\n    System.out.println(sb.reverse().toString());\n  }\n}',
     },
-    hints:
-      'Think about how many ways you can reach step n from step n-1 and n-2. This follows the Fibonacci sequence pattern.',
+    hints: 'Use string slicing or in-place two-pointer reversal.',
     followUpQuestion:
-      'Can you solve this with O(1) space complexity instead of O(n)?',
+      'Do it in-place if the language allows mutable strings (or as a char array).',
   },
 
   string: {

@@ -10,7 +10,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Code2, Moon, Sun, User, Plus, Trophy, BookOpen } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
-import toast from 'react-hot-toast'
 
 interface NavigationProps {
   isDark: boolean

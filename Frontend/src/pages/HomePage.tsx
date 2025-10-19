@@ -83,15 +83,22 @@ const mockUser = {
 export default function HomePage() {
   const [isDark, setIsDark] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const { problems, getAllProblems, isProblemLoading } = useProblemStore()
+  const { problems, totalProblems, allTags, getAllProblems, isProblemLoading } =
+    useProblemStore()
   const itemsPerPage = 5
 
   // Mock admin status - in real app, this would come from auth
   const isAdmin = true
 
+  const stats = {
+    problemsSolved: 0,
+    totalProblems,
+    globalRank: 0,
+  }
+
   useEffect(() => {
-    getAllProblems()
-  }, [getAllProblems])
+    getAllProblems(currentPage)
+  }, [getAllProblems, currentPage])
 
   const toggleTheme = () => {
     setIsDark(!isDark)
@@ -110,7 +117,7 @@ export default function HomePage() {
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <HeroSection />
 
-        <StatsCards stats={statsData} />
+        <StatsCards stats={stats} />
 
         <div className="mt-16">
           <ProblemsTable
@@ -119,6 +126,9 @@ export default function HomePage() {
             setCurrentPage={setCurrentPage}
             itemsPerPage={itemsPerPage}
             isAdmin={isAdmin}
+            isProblemLoading={isProblemLoading}
+            totalProblems={totalProblems}
+            allTags={allTags}
           />
         </div>
       </main>

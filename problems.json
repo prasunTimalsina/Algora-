@@ -1,0 +1,203 @@
+[
+  {
+    "title": "Climbing Stairs",
+    "description": "You are climbing a staircase. It takes n steps to reach the top.\n\nEach time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?\n\nInput: A single integer n (1 ≤ n ≤ 45)\nOutput: Number of distinct ways to reach the top",
+    "difficulty": "EASY",
+    "tags": ["Dynamic Programming", "Math", "Memoization"],
+    "constraints": "1 ≤ n ≤ 45",
+    "testcases": [
+      { "input": "2", "output": "2" },
+      { "input": "3", "output": "3" },
+      { "input": "1", "output": "1" },
+      { "input": "5", "output": "8" }
+    ],
+    "examples": {
+      "JAVASCRIPT": {
+        "input": "3",
+        "output": "3",
+        "explanation": "There are 3 ways: (1+1+1), (1+2), (2+1)"
+      },
+      "PYTHON": {
+        "input": "2",
+        "output": "2",
+        "explanation": "There are 2 ways: (1+1), (2)"
+      },
+      "JAVA": {
+        "input": "4",
+        "output": "5",
+        "explanation": "There are 5 ways: (1+1+1+1), (1+1+2), (1+2+1), (2+1+1), (2+2)"
+      }
+    },
+    "codeSnippets": {
+      "JAVASCRIPT": "// Read input\nconst n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());\n\nif (n <= 2) console.log(n);\nelse {\n  const dp = new Array(n + 1).fill(0);\n  dp[1] = 1; dp[2] = 2;\n  for (let i = 3; i <= n; i++) dp[i] = dp[i-1] + dp[i-2];\n  console.log(dp[n]);\n}",
+      "PYTHON": "import sys\nn = int(sys.stdin.read().strip())\nif n <= 2:\n    print(n)\nelse:\n    dp = [0] * (n + 1)\n    dp[1] = 1\n    dp[2] = 2\n    for i in range(3, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]\n    print(dp[n])",
+      "JAVA": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        if (n <= 2) System.out.println(n);\n        else {\n            int[] dp = new int[n + 1];\n            dp[1] = 1; dp[2] = 2;\n            for (int i = 3; i <= n; i++) dp[i] = dp[i-1] + dp[i-2];\n            System.out.println(dp[n]);\n        }\n    }\n}"
+    },
+    "referenceSolutions": {
+      "JAVASCRIPT": "const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());\nif (n <= 2) console.log(n);\nelse {\n  const dp = new Array(n + 1).fill(0);\n  dp[1] = 1; dp[2] = 2;\n  for (let i = 3; i <= n; i++) dp[i] = dp[i-1] + dp[i-2];\n  console.log(dp[n]);\n}",
+      "PYTHON": "import sys\nn = int(sys.stdin.read().strip())\nif n <= 2:\n    print(n)\nelse:\n    dp = [0] * (n + 1)\n    dp[1] = 1\n    dp[2] = 2\n    for i in range(3, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]\n    print(dp[n])",
+      "JAVA": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        if (n <= 2) System.out.println(n);\n        else {\n            int[] dp = new int[n + 1];\n            dp[1] = 1; dp[2] = 2;\n            for (int i = 3; i <= n; i++) dp[i] = dp[i-1] + dp[i-2];\n            System.out.println(dp[n]);\n        }\n    }\n}"
+    },
+    "hints": "Think about how many ways you can reach step n from step n-1 and n-2. This follows the Fibonacci sequence pattern.",
+    "followUpQuestion": "Can you solve this with O(1) space complexity instead of O(n)?"
+  },
+
+  {
+    "title": "Two Sum (First Pair)",
+    "description": "Given an array of integers and a target integer, find indices (1-based) of the first pair of numbers that add up to the target. If multiple pairs exist, return the pair with the smallest first index; if none exist, output -1.\n\nInput: First line n (1 ≤ n ≤ 10^5) and target; second line has n integers.\nOutput: Two indices separated by space (1-based) or -1",
+    "difficulty": "EASY",
+    "tags": ["Hash Table", "Two Pointers"],
+    "constraints": "1 ≤ n ≤ 100000, |numbers| ≤ 10^9",
+    "testcases": [
+      { "input": "4 9\n2 7 11 15", "output": "1 2" },
+      { "input": "3 6\n3 2 4", "output": "1 3" },
+      { "input": "2 10\n5 5", "output": "1 2" },
+      { "input": "3 100\n1 2 3", "output": "-1" }
+    ],
+    "examples": {
+      "JAVASCRIPT": {
+        "input": "4 9\n2 7 11 15",
+        "output": "1 2",
+        "explanation": "2 + 7 = 9"
+      },
+      "PYTHON": {
+        "input": "3 6\n3 2 4",
+        "output": "1 3",
+        "explanation": "3 + 4 = 7 (first pair by first index is 3 and 4 -> indices 1 and 3)"
+      },
+      "JAVA": {
+        "input": "2 10\n5 5",
+        "output": "1 2",
+        "explanation": "5 + 5 = 10"
+      }
+    },
+    "codeSnippets": {
+      "JAVASCRIPT": "// Read input\nconst fs = require('fs');\nconst parts = fs.readFileSync(0, 'utf-8').trim().split(/\\s+/).map(Number);\nconst n = parts[0], target = parts[1];\nconst arr = parts.slice(2, 2 + n);\n\nconst map = new Map();\nfor (let i = 0; i < n; i++) {\n  const need = target - arr[i];\n  if (map.has(need)) {\n    console.log(map.get(need) + 1, i + 1);\n    process.exit(0);\n  }\n  if (!map.has(arr[i])) map.set(arr[i], i);\n}\nconsole.log(-1);",
+      "PYTHON": "import sys\ndata = list(map(int, sys.stdin.read().strip().split()))\nif not data: \n    print(-1); sys.exit()\nn, target = data[0], data[1]\narr = data[2:2+n]\nseen = {}\nfor i, v in enumerate(arr):\n    need = target - v\n    if need in seen:\n        print(seen[need] + 1, i + 1)\n        sys.exit(0)\n    if v not in seen:\n        seen[v] = i\nprint(-1)",
+      "JAVA": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int target = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        Map<Integer,Integer> map = new HashMap<>();\n        for (int i = 0; i < n; i++) {\n            int need = target - arr[i];\n            if (map.containsKey(need)) {\n                System.out.println((map.get(need)+1) + \" \" + (i+1));\n                return;\n            }\n            if (!map.containsKey(arr[i])) map.put(arr[i], i);\n        }\n        System.out.println(-1);\n    }\n}"
+    },
+    "referenceSolutions": {
+      "JAVASCRIPT": "const fs = require('fs');\nconst parts = fs.readFileSync(0, 'utf-8').trim().split(/\\s+/).map(Number);\nconst n = parts[0], target = parts[1];\nconst arr = parts.slice(2, 2 + n);\nconst map = new Map();\nfor (let i = 0; i < n; i++) {\n  const need = target - arr[i];\n  if (map.has(need)) { console.log(map.get(need) + 1, i + 1); process.exit(0); }\n  if (!map.has(arr[i])) map.set(arr[i], i);\n}\nconsole.log(-1);",
+      "PYTHON": "import sys\ndata = list(map(int, sys.stdin.read().strip().split()))\nif not data: print(-1); sys.exit()\nn, target = data[0], data[1]\narr = data[2:2+n]\nseen = {}\nfor i, v in enumerate(arr):\n    need = target - v\n    if need in seen:\n        print(seen[need] + 1, i + 1); sys.exit(0)\n    if v not in seen:\n        seen[v] = i\nprint(-1)",
+      "JAVA": "import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int target = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n        Map<Integer,Integer> map = new HashMap<>();\n        for (int i = 0; i < n; i++) {\n            int need = target - arr[i];\n            if (map.containsKey(need)) { System.out.println((map.get(need)+1) + \" \" + (i+1)); return; }\n            if (!map.containsKey(arr[i])) map.put(arr[i], i);\n        }\n        System.out.println(-1);\n    }\n}"
+    },
+    "hints": "Use a map to store seen values and their indices. Check complement while iterating.",
+    "followUpQuestion": "Can you return all pairs (unique) that sum to the target?"
+  },
+
+  {
+    "title": "Reverse String",
+    "description": "Given a string s, reverse it and print the reversed string.\n\nInput: A single line containing the string (length ≤ 10^5).\nOutput: The reversed string.",
+    "difficulty": "EASY",
+    "tags": ["String"],
+    "constraints": "Length of s ≤ 100000",
+    "testcases": [
+      { "input": "hello", "output": "olleh" },
+      { "input": "a", "output": "a" },
+      { "input": "racecar", "output": "racecar" },
+      { "input": "Dashain", "output": "niahsad" }
+    ],
+    "examples": {
+      "JAVASCRIPT": {
+        "input": "hello",
+        "output": "olleh",
+        "explanation": "reverse of hello is olleh"
+      },
+      "PYTHON": {
+        "input": "abc",
+        "output": "cba",
+        "explanation": "reverse of abc"
+      },
+      "JAVA": {
+        "input": "madam",
+        "output": "madam",
+        "explanation": "palindrome"
+      }
+    },
+    "codeSnippets": {
+      "JAVASCRIPT": "const s = require('fs').readFileSync(0, 'utf-8').replace(/\\r?\\n$/, '');\nconsole.log(s.split('').reverse().join(''))",
+      "PYTHON": "import sys\ns = sys.stdin.read().rstrip('\\n')\nprint(s[::-1])",
+      "JAVA": "import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc = new Scanner(System.in);\n    String s = sc.nextLine();\n    StringBuilder sb = new StringBuilder(s);\n    System.out.println(sb.reverse().toString());\n  }\n}"
+    },
+    "referenceSolutions": {
+      "JAVASCRIPT": "const s = require('fs').readFileSync(0, 'utf-8').replace(/\\r?\\n$/, '');\nconsole.log(s.split('').reverse().join(''))",
+      "PYTHON": "import sys\ns = sys.stdin.read().rstrip('\\n')\nprint(s[::-1])",
+      "JAVA": "import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc = new Scanner(System.in);\n    String s = sc.nextLine();\n    StringBuilder sb = new StringBuilder(s);\n    System.out.println(sb.reverse().toString());\n  }\n}"
+    },
+    "hints": "Use string slicing or in-place two-pointer reversal.",
+    "followUpQuestion": "Do it in-place if the language allows mutable strings (or as a char array)."
+  },
+
+  {
+    "title": "Palindrome Number",
+    "description": "Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.\n\nInput: One integer n (|n| ≤ 10^9)\nOutput: true or false",
+    "difficulty": "EASY",
+    "tags": ["Math", "String"],
+    "constraints": "|n| ≤ 1e9",
+    "testcases": [
+      { "input": "121", "output": "true" },
+      { "input": "-121", "output": "false" },
+      { "input": "10", "output": "false" },
+      { "input": "0", "output": "true" }
+    ],
+    "examples": {
+      "JAVASCRIPT": {
+        "input": "121",
+        "output": "true",
+        "explanation": "121 reversed is 121"
+      },
+      "PYTHON": {
+        "input": "-121",
+        "output": "false",
+        "explanation": "negative numbers are not palindrome when sign considered"
+      },
+      "JAVA": { "input": "10", "output": "false", "explanation": "01 != 10" }
+    },
+    "codeSnippets": {
+      "JAVASCRIPT": "const fs = require('fs');\nconst s = fs.readFileSync(0, 'utf-8').trim();\nconst ans = s === s.split('').reverse().join('');\nconsole.log(ans ? 'true' : 'false');",
+      "PYTHON": "import sys\ns = sys.stdin.read().strip()\nprint('true' if s == s[::-1] else 'false')",
+      "JAVA": "import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc=new Scanner(System.in);\n    String s = sc.next().trim();\n    String rev = new StringBuilder(s).reverse().toString();\n    System.out.println(s.equals(rev)?\"true\":\"false\");\n  }\n}"
+    },
+    "referenceSolutions": {
+      "JAVASCRIPT": "const fs = require('fs');\nconst s = fs.readFileSync(0, 'utf-8').trim();\nconsole.log(s === s.split('').reverse().join('') ? 'true' : 'false');",
+      "PYTHON": "import sys\ns = sys.stdin.read().strip()\nprint('true' if s == s[::-1] else 'false')",
+      "JAVA": "import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc=new Scanner(System.in);\n    String s = sc.next().trim();\n    String rev = new StringBuilder(s).reverse().toString();\n    System.out.println(s.equals(rev)?\"true\":\"false\");\n  }\n}"
+    },
+    "hints": "Convert to string and check reverse equality, beware of negative sign.",
+    "followUpQuestion": "Can you check palindrome without converting to string?"
+  },
+
+  {
+    "title": "Nth Fibonacci (Iterative)",
+    "description": "Compute the n-th Fibonacci number where F(1)=1, F(2)=1.\n\nInput: Single integer n (1 ≤ n ≤ 90)\nOutput: F(n)\nNote: n ≤ 90 so result fits in 64-bit signed integer.",
+    "difficulty": "EASY",
+    "tags": ["Math", "Iteration"],
+    "constraints": "1 ≤ n ≤ 90",
+    "testcases": [
+      { "input": "1", "output": "1" },
+      { "input": "2", "output": "1" },
+      { "input": "10", "output": "55" }
+    ],
+    "examples": {
+      "JAVASCRIPT": {
+        "input": "10",
+        "output": "55",
+        "explanation": "10th Fibonacci is 55"
+      },
+      "PYTHON": { "input": "5", "output": "5", "explanation": "F(5)=5" },
+      "JAVA": { "input": "6", "output": "8", "explanation": "F(6)=8" }
+    },
+    "codeSnippets": {
+      "JAVASCRIPT": "const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());\nlet a = 0n, b = 1n;\nfor (let i = 1; i <= n; i++) {\n  const t = a + b; a = b; b = t;\n}\nconsole.log(a.toString());",
+      "PYTHON": "import sys\nn = int(sys.stdin.read().strip())\na, b = 0, 1\nfor _ in range(n):\n    a, b = b, a + b\nprint(a)",
+      "JAVA": "import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc = new Scanner(System.in);\n    int n = sc.nextInt();\n    long a = 0, b = 1;\n    for (int i = 0; i < n; i++){\n      long t = a + b; a = b; b = t;\n    }\n    System.out.println(a);\n  }\n}"
+    },
+    "referenceSolutions": {
+      "JAVASCRIPT": "const n = parseInt(require('fs').readFileSync(0, 'utf-8').trim());\nlet a = 0n, b = 1n;\nfor (let i = 1; i <= n; i++) { const t = a + b; a = b; b = t; }\nconsole.log(a.toString());",
+      "PYTHON": "import sys\nn = int(sys.stdin.read().strip())\na, b = 0, 1\nfor _ in range(n):\n    a, b = b, a + b\nprint(a)",
+      "JAVA": "import java.util.*;\npublic class Main{\n  public static void main(String[] args){\n    Scanner sc = new Scanner(System.in);\n    int n = sc.nextInt();\n    long a = 0, b = 1;\n    for (int i = 0; i < n; i++){ long t = a + b; a = b; b = t; }\n    System.out.println(a);\n  }\n}"
+    },
+    "hints": "Use iterative approach to avoid recursion depth and repeated work.",
+    "followUpQuestion": "Can you compute F(n) in O(log n) time using matrix exponentiation?"
+  }
+]
