@@ -24,6 +24,7 @@ import {
 import { useState } from 'react'
 import { capitalizeFirstLetter } from '@/lib/utils'
 import type { TProblem } from '@/types/schema'
+import type { Difficulty, Filter } from '@/pages/HomePage'
 
 interface ProblemsTableProps {
   problems: TProblem[]
@@ -34,6 +35,8 @@ interface ProblemsTableProps {
   isAdmin: boolean
   isProblemLoading: boolean
   totalProblems: number
+  filters: Filter
+  setFilters: React.Dispatch<React.SetStateAction<Filter>>
 }
 
 export default function ProblemsTable({
@@ -45,15 +48,13 @@ export default function ProblemsTable({
   isProblemLoading,
   totalProblems,
   allTags,
+  filters,
+  setFilters,
 }: ProblemsTableProps) {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
-    null
-  )
-  const [selectedTags, setSelectedTags] = useState<string[]>([])
-
   const totalPages = Math.ceil(totalProblems / itemsPerPage)
   console.log('Total Problems:', totalPages)
+
   // const paginatedProblems = problems.slice(
   //   (currentPage - 1) * itemsPerPage,
   //   currentPage * itemsPerPage
@@ -73,16 +74,20 @@ export default function ProblemsTable({
   }
 
   const toggleTag = (tag: string) => {
-    setSelectedTags(prev =>
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    setFilters(prev =>
+      prev.tags.includes(tag)
+        ? { ...prev, tags: prev.tags.filter(t => t !== tag) }
+        : { ...prev, tags: [...prev.tags, tag] }
     )
     setCurrentPage(1)
   }
 
   const clearFilters = () => {
     setSearchQuery('')
-    setSelectedDifficulty(null)
-    setSelectedTags([])
+    setFilters({
+      difficulty: '',
+      tags: [],
+    })
     setCurrentPage(1)
   }
 
@@ -122,30 +127,38 @@ export default function ProblemsTable({
                 size="sm"
                 className="whitespace-nowrap bg-transparent"
               >
-                Difficulty {selectedDifficulty && `(${selectedDifficulty})`}
+                Difficulty{' '}
+                {filters.difficulty &&
+                  `(${capitalizeFirstLetter(filters.difficulty)})`}
                 <ChevronRight className="ml-2 h-4 w-4 rotate-90" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <DropdownMenuItem
                 onClick={() => {
-                  setSelectedDifficulty(null)
+                  setFilters(prev => ({
+                    ...prev,
+                    difficulty: '',
+                  }))
                   setCurrentPage(1)
                 }}
               >
                 All Difficulties
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              {['Easy', 'Medium', 'Hard'].map(diff => (
+              {['EASY', 'MEDIUM', 'HARD'].map(diff => (
                 <DropdownMenuItem
                   key={diff}
                   onClick={() => {
-                    setSelectedDifficulty(diff)
+                    setFilters(prev => ({
+                      ...prev,
+                      difficulty: diff as Difficulty,
+                    }))
                     setCurrentPage(1)
                   }}
-                  className={selectedDifficulty === diff ? 'bg-muted' : ''}
+                  className={filters.difficulty === diff ? 'bg-muted' : ''}
                 >
-                  {diff}
+                  {capitalizeFirstLetter(diff)}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -159,7 +172,7 @@ export default function ProblemsTable({
                 size="sm"
                 className="whitespace-nowrap bg-transparent"
               >
-                Tags {selectedTags.length > 0 && `(${selectedTags.length})`}
+                Tags {filters.tags.length > 0 && `(${filters.tags.length})`}
                 <ChevronRight className="ml-2 h-4 w-4 rotate-90" />
               </Button>
             </DropdownMenuTrigger>
@@ -168,12 +181,12 @@ export default function ProblemsTable({
                 <DropdownMenuItem
                   key={tag}
                   onClick={() => toggleTag(tag)}
-                  className={selectedTags.includes(tag) ? 'bg-muted' : ''}
+                  className={filters.tags.includes(tag) ? 'bg-muted' : ''}
                 >
                   <div className="flex items-center gap-2">
                     <div
                       className={`h-4 w-4 rounded border ${
-                        selectedTags.includes(tag)
+                        filters.tags.includes(tag)
                           ? 'bg-primary border-primary'
                           : 'border-border'
                       }`}
@@ -186,7 +199,7 @@ export default function ProblemsTable({
           </DropdownMenu>
 
           {/* Clear Filters Button */}
-          {(searchQuery || selectedDifficulty || selectedTags.length > 0) && (
+          {(searchQuery || filters.difficulty || filters.tags.length > 0) && (
             <Button
               variant="ghost"
               size="sm"
@@ -223,66 +236,82 @@ export default function ProblemsTable({
             </tr>
           </thead>
           <tbody>
-            {problems.map(problem => (
-              <tr
-                key={problem.id}
-                className="border-b border-border hover:bg-muted/50 transition-colors"
-              >
-                <td className="p-4">
-                  {problem.solved ? (
-                    <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-                  ) : (
-                    <Circle className="h-5 w-5 text-muted-foreground/30" />
-                  )}
-                </td>
-                <td className="p-4">
-                  <Link
-                    to={`/problem/${problem.id}`}
-                    className="font-medium hover:underline"
-                  >
-                    {problem.title}
-                  </Link>
-                </td>
-                <td className="p-4">
-                  <Badge
-                    variant="outline"
-                    className={`${getDifficultyColor(capitalizeFirstLetter(problem.difficulty))} font-medium`}
-                  >
-                    {capitalizeFirstLetter(problem.difficulty)}
-                  </Badge>
-                </td>
-                <td className="p-4">
-                  <div className="flex flex-wrap gap-1">
-                    {problem.tags.map(tag => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </td>
-                <td className="p-4 text-right">
-                  <div className="flex items-center justify-end gap-1">
-                    <Button size="icon" variant="ghost" className="h-8 w-8">
-                      <BookmarkPlus className="h-4 w-4" />
-                    </Button>
-                    {isAdmin && (
-                      <>
-                        <Button size="icon" variant="ghost" className="h-8 w-8">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-8 w-8 hover:text-destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </>
-                    )}
-                  </div>
+            {problems.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="text-center py-10">
+                  <p className="text-muted-foreground">No problems to show</p>
                 </td>
               </tr>
-            ))}
+            ) : (
+              problems.map(problem => (
+                <tr
+                  key={problem.id}
+                  className="border-b border-border hover:bg-muted/50 transition-colors"
+                >
+                  <td className="p-4">
+                    {problem.solved ? (
+                      <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                    ) : (
+                      <Circle className="h-5 w-5 text-muted-foreground/30" />
+                    )}
+                  </td>
+                  <td className="p-4">
+                    <Link
+                      to={`/problem/${problem.id}`}
+                      className="font-medium hover:underline"
+                    >
+                      {problem.title}
+                    </Link>
+                  </td>
+                  <td className="p-4">
+                    <Badge
+                      variant="outline"
+                      className={`${getDifficultyColor(capitalizeFirstLetter(problem.difficulty))} font-medium`}
+                    >
+                      {capitalizeFirstLetter(problem.difficulty)}
+                    </Badge>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex flex-wrap gap-1">
+                      {problem.tags.map(tag => (
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="p-4 text-right">
+                    <div className="flex items-center justify-end gap-1">
+                      <Button size="icon" variant="ghost" className="h-8 w-8">
+                        <BookmarkPlus className="h-4 w-4" />
+                      </Button>
+                      {isAdmin && (
+                        <>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-8 w-8"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-8 w-8 hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
