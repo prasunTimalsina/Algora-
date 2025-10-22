@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import Header from './components/Header'
-import { problemSchema, type TProblem } from '../../types/schema'
+import { problemSchema, type TProblemInput } from '../../types/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import BasicInformation from './components/BasicInformation'
 import TestCases from './components/TestCases'
@@ -14,7 +14,7 @@ import { SAMPLE_PROBLEMS } from './constants/sampleProblems'
 import axiosInstance from '@/lib/axios'
 
 const AddProblemPage = () => {
-  const form = useForm<TProblem>({
+  const form = useForm<TProblemInput>({
     resolver: zodResolver(problemSchema),
     defaultValues: {
       testcases: [{ input: '', output: '' }],
@@ -39,7 +39,7 @@ const AddProblemPage = () => {
     },
   })
 
-  const onSubmit = async (data: TProblem) => {
+  const onSubmit = async (data: TProblemInput) => {
     try {
       const res = await axiosInstance.post('/problems/create-problem', data)
       console.log('Problem submitted:', res.data.data)

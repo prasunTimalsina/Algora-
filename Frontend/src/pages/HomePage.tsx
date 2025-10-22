@@ -4,82 +4,7 @@ import HeroSection from '../components/home/HeroSection'
 import StatsCards from '../components/home/StatsCards'
 import ProblemsTable from '../components/home/ProblemTable'
 import { useProblemStore } from '@/store/useProblemStore'
-import { json } from 'zod'
-import { FitScreen } from '@mui/icons-material'
-
-// Mock data for problems
-const problems = [
-  {
-    id: 1,
-    title: 'Two Sum',
-    difficulty: 'Easy',
-    tags: ['Array', 'Hash Table'],
-    solved: true,
-  },
-  {
-    id: 2,
-    title: 'Add Two Numbers',
-    difficulty: 'Medium',
-    tags: ['Linked List', 'Math'],
-    solved: false,
-  },
-  {
-    id: 3,
-    title: 'Longest Substring Without Repeating Characters',
-    difficulty: 'Medium',
-    tags: ['String', 'Sliding Window'],
-    solved: true,
-  },
-  {
-    id: 4,
-    title: 'Median of Two Sorted Arrays',
-    difficulty: 'Hard',
-    tags: ['Array', 'Binary Search'],
-    solved: false,
-  },
-  {
-    id: 5,
-    title: 'Longest Palindromic Substring',
-    difficulty: 'Medium',
-    tags: ['String', 'Dynamic Programming'],
-    solved: false,
-  },
-  {
-    id: 6,
-    title: 'Zigzag Conversion',
-    difficulty: 'Medium',
-    tags: ['String'],
-    solved: true,
-  },
-  {
-    id: 7,
-    title: 'Reverse Integer',
-    difficulty: 'Easy',
-    tags: ['Math'],
-    solved: false,
-  },
-  {
-    id: 8,
-    title: 'String to Integer (atoi)',
-    difficulty: 'Medium',
-    tags: ['String'],
-    solved: false,
-  },
-]
-
-// Mock stats data
-const statsData = {
-  problemsSolved: 127,
-  totalProblems: 2847,
-  globalRank: 1234,
-}
-
-// Mock user data - in real app, this would come from auth
-const mockUser = {
-  name: 'John Doe',
-  email: 'john@example.com',
-  avatar: '/diverse-user-avatars.png',
-}
+import { useAuthStore } from '@/store/useAuthStore'
 
 export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD' | ''
 
@@ -95,6 +20,9 @@ export default function HomePage() {
     difficulty: '',
     tags: [],
   })
+
+  const { authUser } = useAuthStore()
+
   const { problems, totalProblems, allTags, getAllProblems, isProblemLoading } =
     useProblemStore()
 
@@ -102,7 +30,7 @@ export default function HomePage() {
   const itemsPerPage = 5
 
   // Mock admin status - in real app, this would come from auth
-  const isAdmin = true
+  const isAdmin = authUser?.role === 'ADMIN'
 
   const stats = {
     problemsSolved: 0,
@@ -144,12 +72,7 @@ export default function HomePage() {
 
   return (
     <div className={`min-h-screen bg-background ${isDark ? 'dark' : ''}`}>
-      <Navigation
-        isDark={isDark}
-        toggleTheme={toggleTheme}
-        user={mockUser}
-        isAdmin={isAdmin}
-      />
+      <Navigation isDark={isDark} toggleTheme={toggleTheme} />
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <HeroSection />

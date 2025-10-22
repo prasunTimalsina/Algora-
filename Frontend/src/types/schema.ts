@@ -102,4 +102,4 @@ export const problemSchema = z.object({
     JAVA: z.string().min(1, 'Java solution is required'),
   }),
 })
-export type TProblem = z.infer<typeof problemSchema>
+export type TProblemInput = z.infer<typeof problemSchema>

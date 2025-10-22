@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import axiosInstance from '@/lib/axios'
 import toast from 'react-hot-toast'
-import type { TProblem } from '@/types/schema'
+import type { TProblem } from '@/types/types'
 import axios from 'axios'
 
 type ProblemStore = {
@@ -21,6 +21,7 @@ type ProblemStore = {
     signal?: AbortSignal
   ) => Promise<void>
   getProblemById: (id: number) => Promise<void>
+  deleteProblem: (id: string) => Promise<void>
   // getSolvedProblemByUser: () => Promise<void>
 }
 
@@ -44,10 +45,10 @@ export const useProblemStore = create<ProblemStore>(set => ({
       set({ isProblemsLoading: true })
 
       const res = await axiosInstance.get(
-        `problems/get-all-problem?page=${page}&limit=${limit}&difficulty=${difficulty}&tags=${tags.join(',')}`,
+        `problems/get-all-problem?page=${page}&limit=${limit}${difficulty ? `&difficulty=${difficulty}` : ''}&tags=${tags.join(',')}`,
         { signal }
       )
-      console.log(res.data.data)
+
       set({ problems: res.data.data.problems })
       set({ totalProblems: res.data.data.meta.totalNoOfProblems })
       set({ allTags: res.data.data.meta.tags })
@@ -76,6 +77,25 @@ export const useProblemStore = create<ProblemStore>(set => ({
       toast.error('Error in getting problems')
     } finally {
       set({ isProblemLoading: false })
+    }
+  },
+
+  deleteProblem: async (id: string) => {
+    try {
+      // Instant local update
+      set(state => ({
+        problems: state.problems.filter(p => p.id !== id),
+        totalProblems: state.totalProblems - 1,
+      }))
+
+      const res = await axiosInstance.delete(`/problems/delete-problem/${id}`)
+      toast.success(res.data.message)
+
+      // Silent background sync
+      useProblemStore.getState().getAllProblems()
+    } catch (error) {
+      console.log('Error deleting problem', error)
+      toast.error('Error deleting problem')
     }
   },
 

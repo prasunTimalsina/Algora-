@@ -23,8 +23,19 @@ import {
 } from '../ui/dropdown-menu'
 import { useState } from 'react'
 import { capitalizeFirstLetter } from '@/lib/utils'
-import type { TProblem } from '@/types/schema'
+
 import type { Difficulty, Filter } from '@/pages/HomePage'
+import type { TProblem } from '@/types/types'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '../ui/alert-dialog'
+import { useProblemStore } from '@/store/useProblemStore'
 
 interface ProblemsTableProps {
   problems: TProblem[]
@@ -52,13 +63,15 @@ export default function ProblemsTable({
   setFilters,
 }: ProblemsTableProps) {
   const [searchQuery, setSearchQuery] = useState('')
-  const totalPages = Math.ceil(totalProblems / itemsPerPage)
-  console.log('Total Problems:', totalPages)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
-  // const paginatedProblems = problems.slice(
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage
-  // )
+  // ✅ Add missing state for tracking which problem to delete
+  const [problemToDelete, setProblemToDelete] = useState<TProblem | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+  // ✅ Get delete function from store
+  const { deleteProblem } = useProblemStore()
+
+  const totalPages = Math.ceil(totalProblems / itemsPerPage)
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -91,6 +104,35 @@ export default function ProblemsTable({
     setCurrentPage(1)
   }
 
+  // ✅ Fixed delete handler
+  const handleDeleteClick = (problem: TProblem) => {
+    setProblemToDelete(problem)
+    setDeleteDialogOpen(true)
+  }
+
+  // ✅ Fixed confirm delete handler
+  const handleConfirmDelete = async () => {
+    if (!problemToDelete) return
+
+    setIsDeleting(true)
+    try {
+      await deleteProblem(problemToDelete.id)
+      // ✅ Close dialog and reset state after successful deletion
+      setDeleteDialogOpen(false)
+      setProblemToDelete(null)
+    } catch (error) {
+      console.error('Failed to delete problem:', error)
+      // Keep dialog open on error so user can try again
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  // ✅ Cancel delete handler
+  const handleCancelDelete = () => {
+    setDeleteDialogOpen(false)
+    setProblemToDelete(null)
+  }
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -100,6 +142,37 @@ export default function ProblemsTable({
           Add to Playlist
         </Button>
       </div>
+      {/* ✅ Fixed AlertDialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-lg">
+              Delete Problem
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-muted-foreground mt-2">
+              {/* ✅ Show problem title in confirmation */}
+              Are you sure you want to delete "{problemToDelete?.title}"? This
+              action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex gap-3 justify-end mt-6">
+            <AlertDialogCancel
+              onClick={handleCancelDelete}
+              disabled={isDeleting}
+              className="bg-muted text-foreground hover:bg-muted/80"
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 disabled:opacity-50 "
+            >
+              {isDeleting ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="space-y-4">
         {/* Search Bar and Filters in same row with dropdown indicators */}
@@ -302,6 +375,8 @@ export default function ProblemsTable({
                             size="icon"
                             variant="ghost"
                             className="h-8 w-8 hover:text-destructive"
+                            onClick={() => handleDeleteClick(problem)}
+                            disabled={isDeleting}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
