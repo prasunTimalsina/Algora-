@@ -20,7 +20,7 @@ type ProblemStore = {
     difficulty?: 'EASY' | 'MEDIUM' | 'HARD' | '',
     signal?: AbortSignal
   ) => Promise<void>
-  getProblemById: (id: number) => Promise<void>
+  getProblemById: (id: string) => Promise<void>
   deleteProblem: (id: string) => Promise<void>
   // getSolvedProblemByUser: () => Promise<void>
 }
@@ -70,11 +70,11 @@ export const useProblemStore = create<ProblemStore>(set => ({
 
       const res = await axiosInstance.get(`/problems/get-problem/${id}`)
 
-      set({ problem: res.data.problem })
+      set({ problem: res.data.data })
       toast.success(res.data.message)
     } catch (error) {
-      console.log('Error getting all problems', error)
-      toast.error('Error in getting problems')
+      console.log('Error getting problem by id', error)
+      toast.error('Error in getting problem')
     } finally {
       set({ isProblemLoading: false })
     }

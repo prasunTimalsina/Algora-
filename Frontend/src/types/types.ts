@@ -11,3 +11,4 @@ export type User = {
 }
 
 export type TProblem = TProblemInput & { id: string }
+export type ProblemTab = 'description' | 'hints' | 'discussion'

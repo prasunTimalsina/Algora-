@@ -159,14 +159,14 @@ export default function ProblemsTable({
             <AlertDialogCancel
               onClick={handleCancelDelete}
               disabled={isDeleting}
-              className="bg-muted text-foreground hover:bg-muted/80"
+              className="bg-muted text-foreground hover:bg-muted/80 cursor-pointer"
             >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 disabled:opacity-50 "
+              className="bg-destructive text-white hover:bg-destructive/90 disabled:opacity-50 cursor-pointer"
             >
               {isDeleting ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
@@ -367,18 +367,18 @@ export default function ProblemsTable({
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-8 w-8"
+                            className="h-8 w-8 cursor-pointer"
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
                             size="icon"
                             variant="ghost"
-                            className="h-8 w-8 hover:text-destructive"
+                            className="h-8 w-8 hover:text-destructive cursor-pointer"
                             onClick={() => handleDeleteClick(problem)}
                             disabled={isDeleting}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4 " />
                           </Button>
                         </>
                       )}
