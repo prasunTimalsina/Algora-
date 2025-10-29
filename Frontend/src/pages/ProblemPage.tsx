@@ -9,6 +9,9 @@ import { useProblem } from '@/hooks/useProblem'
 import { useCodeEditor } from '@/hooks/useCodeEditor'
 import { useAuthStore } from '@/store/useAuthStore'
 import type { TestCase, Discussion } from '@/types/problem'
+import axiosInstance from '@/lib/axios'
+import { getLanguageId } from '@/utils/judge.util'
+import toast from 'react-hot-toast'
 
 // Mock data for test cases - TODO: Replace with API data
 const mockTestCases: TestCase[] = [
@@ -66,6 +69,7 @@ export default function ProblemPage() {
 
   // Problem data management
   const { problem, isLoading, error } = useProblem(id || '')
+  console.log('Loaded problem:', problem)
 
   // Code editor state management
   const {
@@ -118,11 +122,9 @@ export default function ProblemPage() {
   const handleMouseDown = () => {
     isDragging.current = true
   }
-
   const handleMouseUp = () => {
     isDragging.current = false
   }
-
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current || !containerRef.current) return
 
@@ -135,17 +137,25 @@ export default function ProblemPage() {
       setDividerPos(newPos)
     }
   }
-
   // Code execution handlers - TODO: Integrate with Judge0 API
   const handleRun = async () => {
     setIsRunning(true)
     try {
-      // TODO: Implement code execution with Judge0
+      const stdin = problem?.testcases.map(tc => tc.input)
+      const expected_outputs = problem?.testcases.map(tc => tc.output)
+
+      const response = await axiosInstance.post('/execute-code/', {
+        source_code: currentCode,
+        language_id: getLanguageId(selectedLanguage.toLocaleLowerCase()),
+        stdin,
+        expected_outputs,
+      })
+
+      if (response.data.success === true) {
+        toast.success('Code executed successfully')
+      }
+      console.log('Code execution response:', response.data)
       console.log('Running code:', currentCode, 'Language:', selectedLanguage)
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
       console.log('Code execution completed')
     } catch (error) {
       console.error('Error running code:', error)
@@ -157,7 +167,6 @@ export default function ProblemPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true)
     try {
-      // TODO: Implement code submission
       console.log(
         'Submitting code:',
         currentCode,

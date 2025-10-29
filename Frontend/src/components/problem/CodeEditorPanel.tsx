@@ -1,4 +1,4 @@
-import { ChevronDown, Settings, Play, Send, Loader2 } from 'lucide-react'
+import { ChevronDown, Play, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -13,8 +13,6 @@ const languages: { value: Language; label: string }[] = [
   { value: 'javascript', label: 'JavaScript' },
   { value: 'python', label: 'Python' },
   { value: 'java', label: 'Java' },
-  { value: 'cpp', label: 'C++' },
-  { value: 'typescript', label: 'TypeScript' },
 ]
 
 export default function CodeEditorPanel({
@@ -42,22 +40,25 @@ export default function CodeEditorPanel({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {languages.map((lang) => (
-                <DropdownMenuItem key={lang.value} onClick={() => onLanguageChange(lang.value)}>
+              {languages.map(lang => (
+                <DropdownMenuItem
+                  key={lang.value}
+                  onClick={() => onLanguageChange(lang.value)}
+                >
                   {lang.label}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button variant="ghost" size="icon" className="rounded-lg">
-            <Settings className="h-4 w-4" />
-          </Button>
+          {/* <Button variant="ghost" size="icon" className="rounded-lg">
+            <Settings className="h-4 w-4 line-through" />
+          </Button> */}
         </div>
 
         <div className="flex items-center gap-2">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="gap-2 bg-transparent"
             onClick={onRun}
             disabled={isRunning || isSubmitting}
@@ -74,7 +75,7 @@ export default function CodeEditorPanel({
               </>
             )}
           </Button>
-          <Button 
+          <Button
             className="gap-2 bg-foreground text-background hover:bg-foreground/90"
             onClick={onSubmit}
             disabled={isRunning || isSubmitting}
@@ -98,9 +99,9 @@ export default function CodeEditorPanel({
       <div className="flex-1 overflow-hidden">
         <Editor
           height="100%"
-          language={language === 'cpp' ? 'cpp' : language}
+          language={language === 'javascript' ? 'javascript' : language}
           value={code}
-          onChange={(value) => onCodeChange(value || '')}
+          onChange={value => onCodeChange(value || '')}
           theme="vs-dark"
           options={{
             minimap: { enabled: false },

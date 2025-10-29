@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { Language } from '@/types/problem'
 import type { TProblem } from '@/types/types'
-import { getCodeSnippetForLanguage } from '@/utils/problemMapper'
 
 /**
  * Custom hook for managing code editor state and language switching
@@ -23,9 +22,9 @@ export const useCodeEditor = (problem: TProblem | null) => {
     if (!problem) return
 
     const newCodeByLanguage: Record<Language, string> = {
-      javascript: getCodeSnippetForLanguage(problem, 'javascript'),
-      python: getCodeSnippetForLanguage(problem, 'python'),
-      java: getCodeSnippetForLanguage(problem, 'java'),
+      javascript: problem.codeSnippets?.JAVASCRIPT || '',
+      python: problem.codeSnippets?.PYTHON || '',
+      java: problem.codeSnippets?.JAVA || '',
     }
 
     setCodeByLanguage(newCodeByLanguage)
