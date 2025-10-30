@@ -12,6 +12,7 @@ import type { TestCase, Discussion } from '@/types/problem'
 import axiosInstance from '@/lib/axios'
 import { getLanguageId } from '@/utils/judge.util'
 import toast from 'react-hot-toast'
+import type { ExecutionResponse } from '@/types/types'
 
 // Mock data for test cases - TODO: Replace with API data
 const mockTestCases: TestCase[] = [
@@ -152,13 +153,22 @@ export default function ProblemPage() {
       })
 
       if (response.data.success === true) {
-        toast.success('Code executed successfully')
+        toast.success('Code executed successfully', {
+          duration: 1000,
+        })
       }
-      console.log('Code execution response:', response.data)
-      console.log('Running code:', currentCode, 'Language:', selectedLanguage)
-      console.log('Code execution completed')
+      const passed = response.data.data.every(
+        (res: ExecutionResponse) => res.passed
+      )
+      if (!passed) {
+        toast.error('Some test cases failed', {
+          duration: 3000,
+        })
+      }
     } catch (error) {
-      console.error('Error running code:', error)
+      toast.error('Failed to execute code', {
+        duration: 3000,
+      })
     } finally {
       setIsRunning(false)
     }
@@ -167,18 +177,34 @@ export default function ProblemPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true)
     try {
-      console.log(
-        'Submitting code:',
-        currentCode,
-        'Language:',
-        selectedLanguage
+      const stdin = problem?.testcases.map(tc => tc.input)
+      const expected_outputs = problem?.testcases.map(tc => tc.output)
+
+      const response = await axiosInstance.post('execute-code/submit-code', {
+        problemId: problem?.id,
+        source_code: currentCode,
+        language_id: getLanguageId(selectedLanguage.toLocaleLowerCase()),
+        stdin,
+        expected_outputs,
+      })
+      console.log('Submission response:', response.data)
+
+      const passed = response.data.data.testCases.every(
+        testCase => testCase.passed
       )
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 3000))
-
-      console.log('Code submission completed')
+      if (!passed) {
+        toast.error('Submission failed: Some test cases did not pass', {
+          duration: 3000,
+        })
+      } else {
+        toast.success('Code submitted successfully! All test cases passed.', {
+          duration: 3000,
+        })
+      }
     } catch (error) {
+      toast.error('Failed to submit code', {
+        duration: 3000,
+      })
       console.error('Error submitting code:', error)
     } finally {
       setIsSubmitting(false)

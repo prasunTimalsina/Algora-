@@ -5,6 +5,7 @@ import ProblemHints from './ProblemHints'
 import ProblemDiscussion from './ProblemDiscussion'
 import type { Discussion } from '@/types/problem'
 import type { ProblemTab, TProblem } from '@/types/types'
+import Submission from '../Submission'
 
 interface ProblemTabsProps {
   problem: TProblem
@@ -21,6 +22,7 @@ export default function ProblemTabs({
     { id: 'description' as const, label: 'Description' },
     { id: 'hints' as const, label: 'Hints' },
     { id: 'discussion' as const, label: 'Discussion' },
+    { id: 'submissions' as const, label: 'Submissions' },
   ]
 
   return (
@@ -58,6 +60,8 @@ export default function ProblemTabs({
         {activeTab === 'discussion' && (
           <ProblemDiscussion discussions={discussions} />
         )}
+
+        {activeTab === 'submissions' && <Submission problemId={problem.id} />}
       </div>
     </div>
   )
