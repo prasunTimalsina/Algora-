@@ -152,7 +152,7 @@ export const getAllProblem = asyncHandler(async (req, res) => {
 
 export const getProblemById = asyncHandler(async (req, res) => {
   const { problemId } = req.params;
-
+  console.log(problemId);
   const problem = await db.problem.findUnique({
     where: {
       id: problemId,
