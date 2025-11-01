@@ -20,7 +20,17 @@
 
 **LeetLab** is a modern, full-stack coding platform inspired by LeetCode, designed for developers to practice algorithmic problem-solving with real-time code execution, comprehensive analytics, and a sleek user interface.
 
-## 🌟 Features
+## � Demo Video
+
+<div align="center">
+
+https://github.com/user-attachments/assets/88a215a2-340a-42f4-a842-324c6e9bb322
+
+_🎥 Watch LeetLab in action! See the built part of the app (**Still building**) _
+
+</div>
+
+## �🌟 Features
 
 ### 🎯 Core Functionality
 
