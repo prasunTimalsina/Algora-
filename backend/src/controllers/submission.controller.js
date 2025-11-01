@@ -31,7 +31,7 @@ export const getSubmissionForProblem = asyncHandler(async (req, res) => {
       problemId: problemId,
     },
   });
-
+  console.log(submission);
   if (!submission) {
     throw new ApiError(404, "Submissions not found");
   }
