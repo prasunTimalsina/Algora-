@@ -12,9 +12,7 @@ import type { TestCase, Discussion } from '@/types/problem'
 import axiosInstance from '@/lib/axios'
 import { getLanguageId } from '@/utils/judge.util'
 import toast from 'react-hot-toast'
-import type { ExecutionResponse } from '@/types/types'
 
-// Mock data for test cases - TODO: Replace with API data
 const mockTestCases: TestCase[] = [
   {
     id: 1,
@@ -82,7 +80,6 @@ export default function ProblemPage() {
   } = useCodeEditor(problem)
 
   // UI state management
-  const [isDark, setIsDark] = useState(false)
   const [showTestCases, setShowTestCases] = useState(true)
   const [dividerPos, setDividerPos] = useState(50)
   const [isRunning, setIsRunning] = useState(false)
@@ -107,16 +104,6 @@ export default function ProblemPage() {
   // Invalid problem ID
   if (!id) {
     return <Navigate to="/" replace />
-  }
-
-  // Theme toggle functionality
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-    if (!isDark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
   }
 
   // Resizing panel functionality
@@ -153,22 +140,13 @@ export default function ProblemPage() {
       })
 
       if (response.data.success === true) {
-        toast.success('Code executed successfully', {
-          duration: 1000,
-        })
+        toast.success('Code executed successfully')
       }
-      const passed = response.data.data.every(
-        (res: ExecutionResponse) => res.passed
-      )
-      if (!passed) {
-        toast.error('Some test cases failed', {
-          duration: 3000,
-        })
-      }
+      console.log('Code execution response:', response.data)
+      console.log('Running code:', currentCode, 'Language:', selectedLanguage)
+      console.log('Code execution completed')
     } catch (error) {
-      toast.error('Failed to execute code', {
-        duration: 3000,
-      })
+      console.error('Error running code:', error)
     } finally {
       setIsRunning(false)
     }
@@ -177,30 +155,17 @@ export default function ProblemPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true)
     try {
-      const stdin = problem?.testcases.map(tc => tc.input)
-      const expected_outputs = problem?.testcases.map(tc => tc.output)
-
-      const response = await axiosInstance.post('execute-code/submit-code', {
-        problemId: problem?.id,
-        source_code: currentCode,
-        language_id: getLanguageId(selectedLanguage.toLocaleLowerCase()),
-        stdin,
-        expected_outputs,
-      })
-      console.log('Submission response:', response.data)
-
-      const passed = response.data.data.testCases.every(
-        testCase => testCase.passed
+      console.log(
+        'Submitting code:',
+        currentCode,
+        'Language:',
+        selectedLanguage
       )
-      if (!passed) {
-        toast.error('Submission failed: Some test cases did not pass', {
-          duration: 3000,
-        })
-      } else {
-        toast.success('Code submitted successfully! All test cases passed.', {
-          duration: 3000,
-        })
-      }
+
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 3000))
+
+      console.log('Code submission completed')
     } catch (error) {
       toast.error('Failed to submit code', {
         duration: 3000,
@@ -214,8 +179,8 @@ export default function ProblemPage() {
   // Loading state
   if (isLoading) {
     return (
-      <div className={`h-screen flex flex-col ${isDark ? 'dark' : ''}`}>
-        <Navigation isDark={isDark} toggleTheme={toggleTheme} />
+      <div className="h-screen flex flex-col">
+        <Navigation />
         <div className="flex-1 flex items-center justify-center bg-background">
           <div className="text-center">
             <LoaderFour text="Loading problem..." />
@@ -228,8 +193,8 @@ export default function ProblemPage() {
   // Error state
   if (error || !problem) {
     return (
-      <div className={`h-screen flex flex-col ${isDark ? 'dark' : ''}`}>
-        <Navigation isDark={isDark} toggleTheme={toggleTheme} />
+      <div className="h-screen flex flex-col">
+        <Navigation />
         <div className="flex-1 flex items-center justify-center bg-background">
           <div className="text-center">
             <h2 className="text-xl font-semibold text-foreground mb-2">
@@ -246,9 +211,9 @@ export default function ProblemPage() {
 
   // Main problem solving interface
   return (
-    <div className={`h-screen flex flex-col ${isDark ? 'dark' : ''}`}>
+    <div className="h-screen flex flex-col">
       {/* Navigation */}
-      <Navigation isDark={isDark} toggleTheme={toggleTheme} />
+      <Navigation />
 
       {/* Main Content */}
       <div

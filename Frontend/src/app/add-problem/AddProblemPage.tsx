@@ -44,7 +44,9 @@ const AddProblemPage = () => {
       const res = await axiosInstance.post('/problems/create-problem', data)
       console.log('Problem submitted:', res.data.data)
       toast.success(res.data.message || 'Problem created successfully!')
-    } catch (error) {
+      // Optionally redirect to problem list or reset form
+      form.reset()
+    } catch (error: any) {
       console.error('Error creating problem:', error)
       toast.error('Failed to create problem')
     }
@@ -113,7 +115,14 @@ const AddProblemPage = () => {
                 type="submit"
                 size="lg"
               >
-                Publish Problem
+                {form.formState.isSubmitting ? (
+                  <>
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    Validating & Publishing...
+                  </>
+                ) : (
+                  'Publish Problem'
+                )}
               </Button>
             </div>
           </form>

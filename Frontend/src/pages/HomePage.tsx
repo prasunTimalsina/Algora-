@@ -14,7 +14,6 @@ export type Filter = {
 }
 
 export default function HomePage() {
-  const [isDark, setIsDark] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [filters, setFilters] = useState<Filter>({
     difficulty: '',
@@ -65,14 +64,9 @@ export default function HomePage() {
     }
   }, [getAllProblems, currentPage, filters])
 
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-    document.documentElement.classList.toggle('dark')
-  }
-
   return (
-    <div className={`min-h-screen bg-background ${isDark ? 'dark' : ''}`}>
-      <Navigation isDark={isDark} toggleTheme={toggleTheme} />
+    <div className="min-h-screen bg-background">
+      <Navigation />
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <HeroSection />

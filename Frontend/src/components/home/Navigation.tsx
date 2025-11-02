@@ -7,24 +7,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  Code2,
-  Moon,
-  Sun,
-  User as UserIcon,
-  Plus,
-  Trophy,
-  BookOpen,
-} from 'lucide-react'
+import { Code2, User as UserIcon, Plus, Trophy, BookOpen } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
-interface NavigationProps {
-  isDark: boolean
-  toggleTheme: () => void
-}
-
-export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
+export default function Navigation() {
   const { logout, authUser: user } = useAuthStore()
 
   const isAdmin = user?.role === 'ADMIN'
@@ -87,18 +75,7 @@ export default function Navigation({ isDark, toggleTheme }: NavigationProps) {
 
           {/* Right side actions */}
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-lg"
-            >
-              {isDark ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-            </Button>
+            <ThemeToggle />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
