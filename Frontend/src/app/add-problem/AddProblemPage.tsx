@@ -77,7 +77,7 @@ const AddProblemPage = () => {
 
       <main className="mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-balance font-[family-name:var(--font-display)] text-text-light">
+          <h2 className="text-3xl font-bold text-balance font-[family-name:var(--font-display)] text-text-light dark:text-foreground">
             Add New Problem
           </h2>
           <p className="mt-2 text-subtext-light">
@@ -107,17 +107,23 @@ const AddProblemPage = () => {
 
             {/* Submit Buttons */}
             <div className="flex justify-end gap-4">
-              <Button type="button" variant="outline" onClick={handleSaveDraft}>
+              <Button
+                type="button"
+                className="cursor-pointer"
+                variant="outline"
+                onClick={handleSaveDraft}
+              >
                 Save as Draft
               </Button>
               <Button
                 disabled={form.formState.isSubmitting}
                 type="submit"
                 size="lg"
+                className="dark:text-foreground cursor-pointer"
               >
                 {form.formState.isSubmitting ? (
                   <>
-                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent " />
                     Validating & Publishing...
                   </>
                 ) : (

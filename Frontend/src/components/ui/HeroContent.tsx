@@ -1,19 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const ctaButtons = [
   {
-    text: "Sign up",
-    href: "signup",
+    text: 'Sign up',
+    href: 'signup',
     className:
-      "w-full sm:w-auto text-center bg-primary text-white px-10 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-lg",
+      'w-full sm:w-auto text-center bg-primary text-white px-10 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-lg',
   },
   {
-    text: "Log in",
-    href: "login",
+    text: 'Log in',
+    href: 'login',
     className:
-      "w-full sm:w-auto text-center bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark px-10 py-2 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-lg",
+      'w-full sm:w-auto text-center bg-gray-100 dark:bg-gray-700 text-text-light dark:text-text-dark px-10 py-2 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-lg',
   },
-];
+]
 
 export const HeroContent = () => {
   return (
@@ -37,8 +37,8 @@ export const HeroContent = () => {
       </div>
 
       <p className="text-sm text-subtext-light dark:text-subtext-dark mt-4">
-        Get a free 7-day trial of premium features | No credit card required
+        Compete with yourself, solve problems, and track your coding journey.
       </p>
     </>
-  );
-};
+  )
+}

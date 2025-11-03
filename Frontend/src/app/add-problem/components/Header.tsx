@@ -18,13 +18,18 @@ const Header = ({ loadSampleProblem }: HeaderProps) => {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="outline" onClick={() => loadSampleProblem('dp')}>
+            <Button
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() => loadSampleProblem('dp')}
+            >
               <Sparkles className="mr-2 h-4 w-4" />
               Load DP Sample
             </Button>
             <Button
               variant="outline"
               onClick={() => loadSampleProblem('string')}
+              className="cursor-pointer"
             >
               <Sparkles className="mr-2 h-4 w-4" />
               Load String Sample

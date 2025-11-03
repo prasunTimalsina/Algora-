@@ -12,6 +12,7 @@ import { LoaderOne } from './components/Loader'
 import AdminRoute from './components/AdminRoute'
 import ProblemPage from './pages/ProblemPage'
 import { ThemeProvider } from './components/theme/ThemeProvider'
+import PlaylistsPage from './pages/PlaylistsPage'
 
 function App() {
   const { authUser, isCheckingAuth, checkAuth } = useAuthStore()
@@ -50,6 +51,11 @@ function App() {
           <Route
             path="/problem/:id"
             element={authUser ? <ProblemPage /> : <Navigate to={'/login'} />}
+          />
+
+          <Route
+            path="/playlists"
+            element={authUser ? <PlaylistsPage /> : <Navigate to="/login" />}
           />
 
           <Route element={<AdminRoute />}>

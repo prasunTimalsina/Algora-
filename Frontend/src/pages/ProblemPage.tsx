@@ -155,17 +155,28 @@ export default function ProblemPage() {
   const handleSubmit = async () => {
     setIsSubmitting(true)
     try {
-      console.log(
-        'Submitting code:',
-        currentCode,
-        'Language:',
-        selectedLanguage
+      const stdin = problem?.testcases.map(tc => tc.input)
+      const expected_outputs = problem?.testcases.map(tc => tc.output)
+      const response = await axiosInstance.post('execute-code/submit-code', {
+        problemId: problem?.id,
+        source_code: currentCode,
+        language_id: getLanguageId(selectedLanguage.toLocaleLowerCase()),
+        stdin,
+        expected_outputs,
+      })
+      console.log('Submission response:', response.data)
+      const passed = response.data.data.testCases.every(
+        testCase => testCase.passed
       )
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 3000))
-
-      console.log('Code submission completed')
+      if (!passed) {
+        toast.error('Submission failed: Some test cases did not pass', {
+          duration: 3000,
+        })
+      } else {
+        toast.success('Code submitted successfully! All test cases passed.', {
+          duration: 3000,
+        })
+      }
     } catch (error) {
       toast.error('Failed to submit code', {
         duration: 3000,

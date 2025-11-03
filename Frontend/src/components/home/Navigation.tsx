@@ -8,13 +8,13 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Code2, User as UserIcon, Plus, Trophy, BookOpen } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
 import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 export default function Navigation() {
   const { logout, authUser: user } = useAuthStore()
-
+  const location = useLocation()
   const isAdmin = user?.role === 'ADMIN'
   const handleLogout = async () => {
     await logout()
@@ -45,31 +45,34 @@ export default function Navigation() {
             <span className="text-xl font-semibold">algora</span>
           </Link>
 
+          {/**
+           * TODO: Use array and map link and reduce code duplication
+           */}
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-8">
             <Link
-              to="/problems"
-              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+              to="#"
+              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors line-through"
             >
               Problems
             </Link>
             <Link
-              to="/contests"
-              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+              to="#"
+              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors line-through"
             >
               Contests
             </Link>
             <Link
-              to="/leaderboard"
-              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+              to="#"
+              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors line-through"
             >
               Leaderboard
             </Link>
             <Link
-              to="/discuss"
-              className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+              to="/playlists"
+              className={`text-sm font-medium text-foreground hover:text-muted-foreground transition-colors ${location.pathname === '/playlists' ? 'text-muted-foreground transition-colors' : ''}`}
             >
-              Discuss
+              Playlists
             </Link>
           </div>
 
@@ -82,7 +85,7 @@ export default function Navigation() {
                 <Button variant="ghost" className="relative h-9 w-9 rounded-lg">
                   <Avatar className="h-9 w-9">
                     <AvatarImage src={userImage} alt={displayName} />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                    <AvatarFallback className="bg-primary text-primary-foreground dark:bg-background-dark dark:text-background-light">
                       {getUserInitials(user?.fullName)}
                     </AvatarFallback>
                   </Avatar>
@@ -92,7 +95,7 @@ export default function Navigation() {
                 <div className="flex items-center gap-2 p-2">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={userImage} alt={displayName} />
-                    <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                    <AvatarFallback className="bg-primary text-primary-foreground dark:bg-background-dark dark:text-background-light">
                       {getUserInitials(user?.fullName)}
                     </AvatarFallback>
                   </Avatar>

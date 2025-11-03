@@ -278,9 +278,9 @@ const Submission = ({ problemId }: SubmissionProps) => {
               {/* View Code Button */}
               <button
                 onClick={() => toggleSubmissionExpanded(submission.id)}
-                className="mt-3 text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+                className="mt-3 text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1 dark:text-foreground"
               >
-                <Code2 className="h-3 w-3" />
+                <Code2 className="h-3 w-3 " />
                 {expandedSubmissions.has(submission.id)
                   ? 'Hide Code'
                   : 'View Code'}

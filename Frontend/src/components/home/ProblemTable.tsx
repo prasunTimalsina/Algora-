@@ -12,7 +12,7 @@ import {
   Search,
   X,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   DropdownMenu,
@@ -62,6 +62,7 @@ export default function ProblemsTable({
   filters,
   setFilters,
 }: ProblemsTableProps) {
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
@@ -137,9 +138,11 @@ export default function ProblemsTable({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Problems</h2>
-        <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-          <Plus className="mr-2 h-4 w-4" />
-          Add to Playlist
+        <Button
+          onClick={() => navigate('/playlists')}
+          className="bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer dark:text-foreground dark:bg-background-dark"
+        >
+          View Playlists
         </Button>
       </div>
       {/* ✅ Fixed AlertDialog */}
