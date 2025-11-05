@@ -1,4 +1,4 @@
-# 🧪 LeetLab
+# 🧪 Algora
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 
 </div>
 
-**LeetLab** is a modern, full-stack coding platform inspired by LeetCode, designed for developers to practice algorithmic problem-solving with real-time code execution, comprehensive analytics, and a sleek user interface.
+**Algora** is a modern, full-stack coding platform inspired by LeetCode, designed for developers to practice algorithmic problem-solving with real-time code execution, comprehensive analytics, and a sleek user interface.
 
 ## � Demo Video
 
@@ -26,7 +26,7 @@
 
 https://github.com/user-attachments/assets/88a215a2-340a-42f4-a842-324c6e9bb322
 
-_🎥 Watch LeetLab in action! See the built part of the app (**Still building**) _
+_🎥 Watch Algora in action! See the built part of the app (**Still building**) _
 
 </div>
 
@@ -146,7 +146,7 @@ _🎥 Watch LeetLab in action! See the built part of the app (**Still building**
 
    ```bash
    git clone https://github.com/prasunTimalsina/Algora-.git
-   cd LeetLab
+   cd Algora
    ```
 
 2. **🔙 Install Backend Dependencies**
@@ -168,7 +168,7 @@ _🎥 Watch LeetLab in action! See the built part of the app (**Still building**
    Create `.env` file in the backend directory:
 
    ```env
-   DATABASE_URL="postgresql://username:password@localhost:5432/leetlab"
+   DATABASE_URL="postgresql://username:password@localhost:5432/Algora"
    JWT_SECRET="your-jwt-secret"
    JWT_REFRESH_SECRET="your-jwt-refresh-secret"
 
