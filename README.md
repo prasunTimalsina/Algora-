@@ -24,7 +24,7 @@
 
 <div align="center">
 
-https://github.com/user-attachments/assets/88a215a2-340a-42f4-a842-324c6e9bb322
+https://github.com/user-attachments/assets/e7d8ea34-f1d6-43af-b1e3-5c326b3957c8
 
 _🎥 Watch Algora in action! See the built part of the app (**Still building**) _
 
